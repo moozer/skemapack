@@ -8,8 +8,7 @@ Created on Oct 15, 2010
 import unittest
 
 
-import webimport.loadWebPage
-
+from testpackage.testLoadWebPage.testLoadWeb import Test as testLoadWeb
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
