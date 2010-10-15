@@ -9,6 +9,7 @@ import unittest
 
 
 from testpackage.testLoadWebPage.testLoadWeb import Test as testLoadWeb
+#import testpackage
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
