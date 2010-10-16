@@ -19,8 +19,9 @@ class loadWebClass(object):
         Constructor
         '''
         
-    def printWebPage(self):
+    def _printWebPage(self):
         '''
+        
         Load a page and print the content to stdout
         '''
         page1 = urllib.urlopen('http://skema.sde.dk/laererSkema.aspx?idx=3735&lang=da-DK').read() 

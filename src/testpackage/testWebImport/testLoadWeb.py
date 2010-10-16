@@ -12,7 +12,7 @@ class Test(unittest.TestCase):
 
     def testPrintWebPage(self):
         myLoader = loadWeb.loadWebClass()
-        myLoader.printWebPage()
+        myLoader._printWebPage()
         pass
 
 

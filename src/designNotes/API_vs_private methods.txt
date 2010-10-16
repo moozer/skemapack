@@ -1,0 +1,11 @@
+
+Any method in an object that is not part of the API should be 
+named starting with an underscore. Ie _MyPrivateHelper()
+
+This will indicate to other developers, that this function is not 
+part of the API, and therefore subject to chance without notice.
+
+Great care should be taken to keep the API unchanged, so do not 
+introduce new / changed methods unless absolutely nescessary. "Old" methods 
+should be kept around in a functioning state if possible.
+
