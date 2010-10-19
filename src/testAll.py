@@ -9,7 +9,7 @@ import unittest
 
 from testpackage.testWebImport.testLoadWeb import Test as testLoadWeb
 #from testpackage.testLoadWebPage.testLoadWeb import Test as testLoadWeb
-#import testpackage
+#import testpackage + ændring for sjov
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
