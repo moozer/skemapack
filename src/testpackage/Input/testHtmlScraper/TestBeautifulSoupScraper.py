@@ -97,7 +97,7 @@ class TestInstantiations(unittest.TestCase):
         parser = BeautifulSkemaScraper()
         parser.feed( SimpleSkemaData )
         parser.close()
-        self.assertEqual(len( parser.Appointments ), len(SkemaDataBadCharsResult))
+        self.assertEqual(len( parser.Appointments ), len(SimpleSkemaDataResult))
         self.assertEqual(parser.Appointments , SimpleSkemaDataResult)  
 
     def testKnownTextBadChars( self ):

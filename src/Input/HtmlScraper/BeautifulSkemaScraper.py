@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """Extract list of URLs in a web page
 """
 
@@ -40,6 +43,7 @@ class BeautifulSkemaScraper( ):
 				continue;
 			
 			for NewLesson in NewWeekDay.findAll( 'div', {'class' : 'sizer'} ):
+				# sprint NewLesson
 				if not self.IncLesson( str( NewLesson.find( 'span', {"class": "sMainLektion"} ).contents[0] ) ):
 					continue;
 				
@@ -48,6 +52,9 @@ class BeautifulSkemaScraper( ):
 					#	print "skipped", NewLessonContent.contents
 					self.IncLessonContent( NewLessonContent.contents )
 
+		# last lesson must be included also (provided it is not empty)
+		if len( self.LessonContent ) > 0:
+			self.DumpLesson()
 
 			
 	def IncWeekDay( self, data ):
@@ -77,7 +84,7 @@ class BeautifulSkemaScraper( ):
 		del self.LessonContent[:]
 		self.LessonCount += 1
 		
-		# convert hours to abosulte time using the current day as offset
+		# convert hours to absolute time using the current day as offset
 		import datetime
 		TmpSplit = str.split( data, " " )
 		del self.LessonHours[:]
@@ -113,7 +120,7 @@ class BeautifulSkemaScraper( ):
 										"Class": self.LessonContent[6].contents[0],
 										"Location": self.LessonContent[10].contents[0]
 									} )
-		else: # entries wth "BOOKED"
+		else: # entries with "BOOKED"
 			self.Appointments.append( {	"Date": self.WeekdayDate, 
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
 										"Subject": unicode( self.LessonContent[2].contents[0], 'utf-8'),
