@@ -9,6 +9,7 @@ Created on Oct 15, 2010
 @author: pfl
 '''
 import unittest
+# ændre noget andet
 
 from testpackage.testWebImport.testLoadWeb import Test as testLoadWeb
 #from testpackage.testLoadWebPage.testLoadWeb import Test as testLoadWeb
