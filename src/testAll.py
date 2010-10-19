@@ -7,8 +7,8 @@ Created on Oct 15, 2010
 '''
 import unittest
 
-
-from testpackage.testLoadWebPage.testLoadWeb import Test as testLoadWeb
+from testpackage.testWebImport.testLoadWeb import Test as testLoadWeb
+#from testpackage.testLoadWebPage.testLoadWeb import Test as testLoadWeb
 #import testpackage
 
 if __name__ == "__main__":

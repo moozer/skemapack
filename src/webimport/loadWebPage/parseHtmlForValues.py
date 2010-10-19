@@ -11,6 +11,7 @@ class MyHTMLParser(HTMLParser):
         HTMLParser.__init__(self)
         self.values = {}
         
+        
 
     def handle_starttag(self, tag, attrs):
         self._name = ''
