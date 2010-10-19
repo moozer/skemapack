@@ -11,6 +11,7 @@ class Test(unittest.TestCase):
 
 
     def testPrintWebPage(self):
+        ''' noget med noget '''
         myLoader = loadWeb.loadWebClass()
         myLoader._printWebPage()
         pass
