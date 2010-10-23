@@ -4,15 +4,14 @@ Created on Oct 12, 2010
 @author: pfl
 '''
 import unittest
-import webimport.loadWebPage.loadWeb as loadWeb
-
+import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 
 class Test(unittest.TestCase):
 
 
     def testPrintWebPage(self):
-        ''' noget med noget '''
-        myLoader = loadWeb.loadWebClass()
+        ''' helper function for development '''
+        myLoader = loadWeb.htmlGetter()
         myLoader._printWebPage()
         pass
 

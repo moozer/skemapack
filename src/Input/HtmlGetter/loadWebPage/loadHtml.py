@@ -8,7 +8,7 @@ import urllib
 from parseHtmlForValues import MyHTMLParser as ParseForValues
  
 
-class loadWebClass(object):
+class htmlGetter(object):
     '''
     classdocs
     loads the skema web page for a particular person /  class / room
