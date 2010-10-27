@@ -50,6 +50,7 @@ class BeautifulSkemaScraper( ):
 				for NewLessonContent in NewLesson.findAll( 'div', {'class' : 'sMainContent'} ):
 					#if not self.IncLessonContent( NewLessonContent.contents ):
 					#	print "skipped", NewLessonContent.contents
+					#TODO: add support for meetings "Ingen Titel" in bold
 					self.IncLessonContent( NewLessonContent.contents )
 
 		# last lesson must be included also (provided it is not empty)
@@ -63,6 +64,7 @@ class BeautifulSkemaScraper( ):
 			return False
 
 		import datetime
+		# TODO: support more date formats. Particularly "04-10-2010"
 		self.WeekdayDate = datetime.datetime.strptime( str.strip( data ).split("d.")[1], self.DateFormat )
 		self.WeekDayCount += 1
 		self.LessonCount = 0

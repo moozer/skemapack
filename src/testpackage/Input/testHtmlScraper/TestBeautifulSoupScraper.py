@@ -25,6 +25,8 @@ import unittest
 import datetime
 
 # testdata
+from testpackage.Input.testHtmlScraper.FullWebpageInput import WebPageFromChrome43_43_19lektioner, WebPageFromHtmlGetter43_48_72lektioner, WebPageFromChrome43_48_72lektioner
+
 SimpleSkemaData = """
 <div class="time">
 <ul>
@@ -109,6 +111,34 @@ class TestInstantiations(unittest.TestCase):
         
         for i in range(0, len( parser.Appointments ) ):
             self.assertEqual(parser.Appointments[i] , SkemaDataBadCharsResult[i])  
+            
+    def testWebPageInput1week_c(self):
+        """ use webpage source from chrome - 1 week """
+        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        parser.feed( WebPageFromChrome43_43_19lektioner )
+        parser.close()
+        i = len(parser.Appointments)
+        self.assertEqual(i,19)
+        pass
+    
+    def testWebPageInput5weeks_c(self):
+        """ use webpage source from chrome - 5 weeks """
+        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        parser.feed( WebPageFromChrome43_48_72lektioner )
+        parser.close()
+        i = len(parser.Appointments)
+        self.assertEqual(i,72)
+        pass
+    
+    def testWebPageInput5weeks(self):
+        """ use webpage source from webgetter - 5 weeks """
+        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        parser.feed( WebPageFromHtmlGetter43_48_72lektioner )
+        parser.close()
+        i = len(parser.Appointments)
+        self.assertEqual(i,72)
+        pass
+    
 
 def main():
     suite = unittest.TestLoader().loadTestsFromTestCase(TestInstantiations)
