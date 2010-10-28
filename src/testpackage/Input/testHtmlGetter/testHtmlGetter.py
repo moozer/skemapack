@@ -22,8 +22,9 @@ class Test(unittest.TestCase):
     
     def testGetSkemaWithPost_2(self):
         ''' HtmlGetter : do a POST 5 weeks '''
+        # TODO : can we change this into a static test? As it is now it requires net-access and fails if changes are made
         myLoader = loadWeb.htmlGetter()
-        self._htmlResponse = myLoader.getSkemaWithPost(3735, 45, 45)
+        self._htmlResponse = myLoader.getSkemaWithPost(3735, 43, 48)
         parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( self._htmlResponse.read() )
         parser.close()
