@@ -115,7 +115,7 @@ class BeautifulSkemaScraper( ):
 	def DumpLesson( self ):
 		""" Appends current data as new appointment """
 		#print self.LessonContent
-		if len( self.LessonContent ) > 3:
+		if len( self.LessonContent ) > 9:
 			self.Appointments.append( {	"Date": self.WeekdayDate, 
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
 										"Subject": self.LessonContent[2].contents[0],
@@ -123,9 +123,11 @@ class BeautifulSkemaScraper( ):
 										"Location": self.LessonContent[10].contents[0]
 									} )
 		else: # entries with "BOOKED"
+			print self.LessonContent[2].contents[0]
 			self.Appointments.append( {	"Date": self.WeekdayDate, 
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
-										"Subject": unicode( self.LessonContent[2].contents[0], 'utf-8'),
+										#"Subject": unicode( self.LessonContent[2].contents[0], 'utf-8'),
+										"Subject":  self.LessonContent[2].contents[0],
 									} )
 		#print "lesson dump", self.Appointments[-1]
 	
