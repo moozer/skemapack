@@ -64,7 +64,8 @@ class BeautifulSkemaScraper( ):
 			return False
 
 		import datetime
-		# TODO: support more date formats. Particularly "04-10-2010"
+		# TODOne: support more date formats. Particularly "04-10-2010"
+		# already implemented by the constructor
 		self.WeekdayDate = datetime.datetime.strptime( str.strip( data ).split("d.")[1], self.DateFormat )
 		self.WeekDayCount += 1
 		self.LessonCount = 0
@@ -123,7 +124,7 @@ class BeautifulSkemaScraper( ):
 										"Location": self.LessonContent[10].contents[0]
 									} )
 		else: # entries with "BOOKED"
-			print self.LessonContent[2].contents[0]
+			#print self.LessonContent[2].contents[0]
 			self.Appointments.append( {	"Date": self.WeekdayDate, 
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
 										#"Subject": unicode( self.LessonContent[2].contents[0], 'utf-8'),

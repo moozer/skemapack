@@ -29,8 +29,9 @@ class Test(unittest.TestCase):
         parser.feed( self._htmlResponse.read() )
         parser.close()
         i = len(parser.Appointments)
-        self.assertEqual(i,72)
+        self.assertEqual(i,75)
         pass
+
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testPrintWebPage']
