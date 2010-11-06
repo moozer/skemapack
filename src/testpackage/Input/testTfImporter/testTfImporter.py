@@ -4,7 +4,7 @@ Testing basic tf import
 @author: mon
 '''
 import unittest
-import Input.TfImporter.TfCsvImport.TfCsvImport as TfCsvImport
+from Input.TfImporter.TfCsvImport import TfCsvImport
 
 # Test data
 TfInputCsvFile = "testdata/TF_skema.csv"
@@ -14,7 +14,8 @@ class Test(unittest.TestCase):
     def testConstruction(self):
         ''' test construction of TfCsvImport '''
         tfi = TfCsvImport(TfInputCsvFile )
-        self.assertEqual( tfi.getCsvFilename() == TfInputCsvFile )
+        self.assertEqual( tfi.getCsvFilename(), TfInputCsvFile )
+
 #    def testReadFromCsv(self):
 #        ''' TfImport : '''
 #        myLoader = loadWeb.htmlGetter()

@@ -1,6 +1,7 @@
-#Tue Oct 19 22:52:20 CEST 2010
+#Sat Nov 06 23:25:13 CET 2010
 eclipse.preferences.version=1
 encoding//src/Input/HtmlScraper/BeautifulSkemaScraper.py=utf-8
+encoding//src/Input/TfImporter/TF_extract_simple.py=utf-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
 encoding//src/Utilities/SkemaToIcs.py=utf-8
 encoding//src/testpackage/Input/testHtmlScraper/TestBeautifulSoupScraper.py=utf-8
