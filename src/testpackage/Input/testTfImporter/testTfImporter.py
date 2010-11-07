@@ -7,7 +7,7 @@ import unittest
 from Input.TfImporter.TfCsvImport import TfCsvImport
 
 # Test data
-TfInputCsvFile = "testdata/TF_skema.csv"
+TfInputCsvFile = "testpackage/Input/testTfImporter/testdata/TF_skema.csv"
 TfInputCsvDefaultMetaData = {'Weeknumbers by column': {}, 'Csv cell delimiter': '\t'}
 TfInputCsvWeekNoByColumns = {1: 38, 2: 39, 3: 40, 4: 41, 5: 42, 6: 43, 27: 12, 28: 13, 29: 14, 30: 15, 31: 16, 32: 17, 33: 18, 34: 19, 35: 20, 36: 21, 37: 22, 38: 23, 39: 24, 40: 25, 41: 26, 42: 27, 43: 28, 44: 29, 45: 30, 46: 31, 47: 32, 48: 33, 49: 34, 50: 35, 51: 36, 52: 37}
 TfInputCsvMetaData = dict( TfInputCsvDefaultMetaData.items()
