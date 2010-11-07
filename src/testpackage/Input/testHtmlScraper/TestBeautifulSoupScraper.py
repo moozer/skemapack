@@ -75,27 +75,27 @@ SkemaDataBadCharsResult =  [
 
 class TestInstantiations(unittest.TestCase):                            
     def testEmptyData( self ):
-        """ use empty text in parser """
+        """ BeautifulSoupScraper : use empty text in parser """
         parser = BeautifulSkemaScraper()
         parser.feed("")
         parser.close()
         self.assertEqual(parser.Appointments , [])                  
 
     def testBogusTextData( self ):
-        """ use non-HTML text in parser """
+        """ BeautifulSoupScraper : use non-HTML text in parser """
         parser = BeautifulSkemaScraper()
         parser.feed("ThisHasNothingToDoWithHtml")
         parser.close()
         self.assertEqual(parser.Appointments , [])                  
 
     def testNonTextData( self ):
-        """ use integer instead of text in parser """
+        """ BeautifulSoupScraper : use integer instead of text in parser """
         parser = BeautifulSkemaScraper()
         self.assertRaises(TypeError, parser.feed, 1)
         parser.close()
     
     def testKnownText( self ):
-        """ use known data to get known result """
+        """ BeautifulSoupScraper : use known data to get known result """
         parser = BeautifulSkemaScraper()
         parser.feed( SimpleSkemaData )
         parser.close()
@@ -103,7 +103,7 @@ class TestInstantiations(unittest.TestCase):
         self.assertEqual(parser.Appointments , SimpleSkemaDataResult)  
 
     def testKnownTextBadChars( self ):
-        """ use known data to get known result (including øæå) """
+        """ BeautifulSoupScraper : use known data to get known result (including øæå) """
         parser = BeautifulSkemaScraper()
         parser.feed( SkemaDataBadChars )
         parser.close()
@@ -113,7 +113,7 @@ class TestInstantiations(unittest.TestCase):
             self.assertEqual(parser.Appointments[i] , SkemaDataBadCharsResult[i])  
             
     def testWebPageInput1week_c(self):
-        """ use webpage source from chrome - 1 week """
+        """ BeautifulSoupScraper : use webpage source from chrome - 1 week """
         parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( WebPageFromChrome43_43_19lektioner )
         parser.close()
@@ -122,7 +122,7 @@ class TestInstantiations(unittest.TestCase):
         pass
     
     def testWebPageInput5weeks_c(self):
-        """ use webpage source from chrome - 5 weeks """
+        """ BeautifulSoupScraper : use webpage source from chrome - 5 weeks """
         parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( WebPageFromChrome43_48_72lektioner )
         parser.close()
@@ -131,7 +131,7 @@ class TestInstantiations(unittest.TestCase):
         pass
     
     def testWebPageInput5weeks(self):
-        """ use webpage source from webgetter - 5 weeks """
+        """ BeautifulSoupScraper : use webpage source from webgetter - 5 weeks """
         parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( WebPageFromHtmlGetter43_48_72lektioner )
         parser.close()

@@ -29,30 +29,30 @@ Teacher2FirstClass = {'Lessons by week': {36: 4, 37: 4, 38: 4, 39: 4, 40: 4, 41:
 class Test(unittest.TestCase):
 
     def testConstruction(self):
-        ''' test construction of TfCsvImport '''
+        ''' TfImporter : test construction of TfCsvImport '''
         tfi = TfCsvImport(TfInputCsvFile )
         self.assertEqual( tfi.GetCsvFilename(), TfInputCsvFile )
 
     def testEnableSearchByTeacher(self):
-        ''' test selecting teacher based search '''
+        ''' TfImporter : test selecting teacher based search '''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher(Teacher1Initials)
         self.assertEqual( tfi.IsSearchEnabled(), True )
 
     def testGetNextEntry(self):
-        ''' test the retrieval of the first entry (Teacher1) '''
+        ''' TfImporter : test the retrieval of the first entry (Teacher1) '''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher(Teacher1Initials)        
         self.assertEqual( tfi.GetNextEntry(), Teacher1FirstClass )
 
     def testGetNextEntryWithDiffTeacher(self):
-        ''' test the retrieval of the first entry (teacher2)'''
+        ''' TfImporter : test the retrieval of the first entry (teacher2)'''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher(Teacher2Initials)        
         self.assertEqual( tfi.GetNextEntry(), Teacher2FirstClass )
 
     def testRestartSearch(self):
-        ''' test restarting search with new teacher '''
+        ''' TfImporter : test restarting search with new teacher '''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher(Teacher1Initials)        
         self.assertEqual( tfi.GetNextEntry(), Teacher1FirstClass )
@@ -60,7 +60,7 @@ class Test(unittest.TestCase):
         self.assertEqual( tfi.GetNextEntry(), Teacher2FirstClass )
 
     def testGetNextEntryMultipleTimes(self):
-        ''' test the retrieval of the mulitple entries '''
+        ''' TfImporter : test the retrieval of the mulitple entries '''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher(Teacher1Initials)        
             
@@ -68,12 +68,12 @@ class Test(unittest.TestCase):
             self.assertEqual( tfi.GetNextEntry(), Teacher1Classes[i] )
             
     def testGetDefaultMetadata(self):
-        ''' test we have some base metadata '''
+        ''' TfImporter : test we have some base metadata '''
         tfi = TfCsvImport(TfInputCsvFile )
         self.assertEqual(tfi.GetMetaData(), TfInputCsvDefaultMetaData)
 
     def testGetMetadataAfterFirstEntry(self):
-        ''' test that the metadata gets populated during retrieval of entries '''
+        ''' TfImporter : test that the metadata gets populated during retrieval of entries '''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher(Teacher1Initials)        
         tfi.GetNextEntry()
