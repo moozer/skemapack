@@ -24,7 +24,8 @@ class TfCsvImport():
         self._NewClassKeywords = ["ANTAL STUDERENDE:"]
         self._EndClassKeywords = ["I ALT", "I  ALT"]
         self._CsvDelimiter = '\t'
-
+        self._LinenoWithWeekinfo = 2
+        
         self._InitSearchParams()
  
     def _InitSearchParams(self):
@@ -36,6 +37,7 @@ class TfCsvImport():
         self._CurrentClass = ""
         self._CurrentTeacher = ""
         self._CurrentCourse = ""
+        self._WeekNoByColumn = {}
         
 # --- get/set functions --
     def GetCsvFilename( self ):
@@ -46,6 +48,10 @@ class TfCsvImport():
         ''' if true, system is ready to return entries '''
         return self._IsSearchEnabled;
     
+    def GetMetaData(self):
+        ''' returns information about the search and the csv file '''
+        return { 'Csv cell delimiter': self._CsvDelimiter, 'Weeknumbers by column': self._WeekNoByColumn }
+        
 # --- other methods ---
     def EnableImportByTeacher( self, TeacherInitials ):
         '''
@@ -67,13 +73,7 @@ class TfCsvImport():
 
             self._lineno += 1
             if self._state in ['FILEHEADER',  'NEXTCLASS']:
-                if len(row) > 5 :
-                    if row[0] in self._NewClassKeywords :
-                        self._state = 'CLASSHEADER'
-                        self._classStartLine = self._lineno
-                    if  row[5] == "LÆRER":
-                        self._state = 'CLASSHEADER'
-                        self._classStartLine = self._lineno - 1
+                self._DoStateFileHeader( row )
             
             if self._state == 'CLASSHEADER':
                 if self._lineno ==  self._classStartLine+1:
@@ -100,3 +100,32 @@ class TfCsvImport():
                     return {'Teacher': self._CurrentTeacher, 
                             'Class': self._CurrentClass,
                             'Course':   self._CurrentCourse }
+                    
+    def _DoStateFileHeader(self, row ):
+        ''' handles extracting info in state FILEHEADER and NEXTCLASS '''
+        if len(row) > 5 :
+            # extract week numbers by columns
+            if self._lineno == self._LinenoWithWeekinfo:
+                LastWeekNo = 0 # to check for increasing weeknumbers
+                for ColumnNo in range(0, len(row) ):
+                    cell = row[ColumnNo]
+                    QuitOnNextError = False
+                    try:
+                        # enforce increasing week numbers
+                        if not int(cell) > LastWeekNo:
+                            return
+                                                                                                
+                        self._WeekNoByColumn[int(cell)] = ColumnNo
+                        QuitOnNextError = True
+                    except( ValueError ):
+                        if QuitOnNextError:
+                            return
+                return
+                
+            if row[0] in self._NewClassKeywords :
+                self._state = 'CLASSHEADER'
+                self._classStartLine = self._lineno
+            if  row[5] == "LÆRER":
+                self._state = 'CLASSHEADER'
+                self._classStartLine = self._lineno - 1
+
