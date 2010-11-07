@@ -97,9 +97,10 @@ class TfCsvImport():
             # if we have a match, return the line        
             if self._state in ['INCLASS']:
                 if self._CurrentTeacher == self._TeacherToSearchFor:
-                    return {'Teacher': self._CurrentTeacher, 
-                            'Class': self._CurrentClass,
-                            'Course':   self._CurrentCourse }
+                    return {'Teacher':  self._CurrentTeacher, 
+                            'Class':    self._CurrentClass,
+                            'Course':   self._CurrentCourse,
+                            'Lessons by week':   self._RetrieveLessonsByWeek(row)}
                     
     def _DoStateFileHeader(self, row ):
         ''' handles extracting info in state FILEHEADER and NEXTCLASS '''
@@ -129,3 +130,19 @@ class TfCsvImport():
                 self._state = 'CLASSHEADER'
                 self._classStartLine = self._lineno - 1
 
+    def _RetrieveLessonsByWeek(self, row):
+        ''' returns the lessons by week for the current course '''
+        Lessons = {}
+        for Week in self._WeekNoByColumn.keys():
+            Column = self._WeekNoByColumn[Week]
+            try:
+                if int( row[Column] ) > 0:
+                    Lessons[Week] = int( row[Column] )       
+            except( ValueError ):
+                pass
+            # else we don't include it
+        
+        if len( Lessons.keys() ) > 0:
+            return Lessons
+        else:
+            return None

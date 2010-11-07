@@ -14,17 +14,17 @@ TfInputCsvMetaData = dict( TfInputCsvDefaultMetaData.items()
                            + {'Weeknumbers by column': TfInputCsvWeekNoByColumns}.items()  )
 
 Teacher1Initials = 'Teacher 7'
-Teacher1Classes = [     {'Course': 'Subject H1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
-                        {'Course': 'Subject L1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
-                        {'Course': 'Subject O1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
-                        {'Course': 'Subject D1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'},
-                        {'Course': 'Subject G1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'},
-                        {'Course': 'Subject H1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'},
-                        {'Course': 'Subject T1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'}
+Teacher1Classes = [     {'Lessons by week': {40: 6, 41: 8, 43: 10, 39: 4}, 'Course': 'Subject H1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
+                        {'Lessons by week': {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4}, 'Course': 'Subject L1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
+                        {'Lessons by week': {1: 8, 2: 8, 3: 8, 50: 4}, 'Course': 'Subject O1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
+                        {'Lessons by week': {40: 6, 41: 8, 39: 4}, 'Course': 'Subject D1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'},
+                        {'Lessons by week': {40: 8, 41: 8, 43: 8, 39: 4}, 'Course': 'Subject G1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'},
+                        {'Lessons by week': {36: 4, 37: 6, 38: 8, 39: 10}, 'Course': 'Subject H1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'},
+                        {'Lessons by week': {1: 8, 2: 8, 3: 8, 44: 6, 45: 6, 46: 6, 47: 6, 48: 8, 49: 8, 50: 8}, 'Course': 'Subject T1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'}
                     ]
 Teacher1FirstClass = Teacher1Classes[0]
 Teacher2Initials = 'Teacher2'
-Teacher2FirstClass = {'Course': 'Subject B1', 'Teacher': 'Teacher2', 'Class': '1. Sem A Elektronik'}
+Teacher2FirstClass = {'Lessons by week': {36: 4, 37: 4, 38: 4, 39: 4, 40: 4, 41: 4, 43: 4}, 'Course': 'Subject B1', 'Teacher': 'Teacher2', 'Class': '1. Sem A Elektronik'}
 
 class Test(unittest.TestCase):
 
