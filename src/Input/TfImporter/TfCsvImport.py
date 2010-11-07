@@ -38,7 +38,7 @@ class TfCsvImport():
         self._CurrentCourse = ""
         
 # --- get/set functions --
-    def getCsvFilename( self ):
+    def GetCsvFilename( self ):
         ''' returns the csv file specified for input '''
         return self._InputFile
     

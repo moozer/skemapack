@@ -27,7 +27,7 @@ class Test(unittest.TestCase):
     def testConstruction(self):
         ''' test construction of TfCsvImport '''
         tfi = TfCsvImport(TfInputCsvFile )
-        self.assertEqual( tfi.getCsvFilename(), TfInputCsvFile )
+        self.assertEqual( tfi.GetCsvFilename(), TfInputCsvFile )
 
     def testEnableSearchByTeacher(self):
         ''' test selecting teacher based search '''
@@ -62,6 +62,14 @@ class Test(unittest.TestCase):
             
         for i in range(0, len(Teacher1Classes )):
             self.assertEqual( tfi.GetNextEntry(), Teacher1Classes[i] )
+            
+#    def testGetWeekColumns(self):
+#        ''' test that the week number have been extracted properly '''
+#        tfi = TfCsvImport(TfInputCsvFile )
+#        tfi.EnableImportByTeacher(Teacher1Initials)        
+#        tfi.GetNextEntry()
+#        
+#        self.assertEqual(tfi.GetMetaData(), False)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testPrintWebPage']
