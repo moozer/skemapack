@@ -14,6 +14,7 @@ from testpackage.Input.testHtmlGetter.testHtmlGetter import Test as testHtmlGett
 #
 from testpackage.Input.testHtmlScraper import *
 from testpackage.Input.testHtmlScraper.TestBeautifulSoupScraper import TestInstantiations as testHtmlScraper
+from testpackage.Input.testTfImporter.testTfImporter import Test as testTfImporter
 
 if __name__ == "__main__":
     unittest.main()
