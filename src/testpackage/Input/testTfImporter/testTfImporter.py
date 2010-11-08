@@ -26,6 +26,19 @@ Teacher1FirstClass = Teacher1Classes[0]
 Teacher2Initials = 'Teacher2'
 Teacher2FirstClass = {'Lessons by week': {36: 4, 37: 4, 38: 4, 39: 4, 40: 4, 41: 4, 43: 4}, 'Course': 'Subject B1', 'Teacher': 'Teacher2', 'Class': '1. Sem A Elektronik'}
 
+TeacherData = { 'Teacher2': {'FirstCourse': Teacher2FirstClass},
+               'Teacher 7': {'FirstCourse': Teacher1FirstClass} }
+
+def RepeatTest( ParamList ):
+    def RepeatT( TestToRun ):
+        def Inner( *args, **kwargs ):
+            for param in ParamList:
+                ret = TestToRun( *args, **param ) 
+            return ret
+        return Inner
+    return RepeatT
+
+
 class Test(unittest.TestCase):
 
     def testConstruction(self):
@@ -79,6 +92,12 @@ class Test(unittest.TestCase):
         tfi.GetNextEntry()
         self.assertEqual(tfi.GetMetaData(), TfInputCsvMetaData)
         
+    @RepeatTest( [ {'Teacher': 'Teacher 7'}, {'Teacher': 'Teacher2'}] )
+    def testGetNextEntryRepeated(self, Teacher):
+        ''' test the retrieval of the first entry (by list)'''
+        tfi = TfCsvImport(TfInputCsvFile )
+        tfi.EnableImportByTeacher(Teacher ) 
+        self.assertEqual( tfi.GetNextEntry(), TeacherData[Teacher]['FirstCourse'] )
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testPrintWebPage']
