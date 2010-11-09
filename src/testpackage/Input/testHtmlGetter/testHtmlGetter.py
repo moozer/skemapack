@@ -14,7 +14,10 @@ class Test(unittest.TestCase):
     def testGetSkemaWithPost_1(self):
         ''' HtmlGetter : do a POST 1 week'''
         myLoader = loadWeb.htmlGetter()
-        self._htmlResponse = myLoader.getSkemaWithPost(3735, 43, 43)
+        try:
+            self._htmlResponse = myLoader.getSkemaWithPost(3735, 43, 43)
+        except IOError:
+            self.fail("IOError. No internet?")
         parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( self._htmlResponse.read() )
         parser.close()
@@ -26,7 +29,10 @@ class Test(unittest.TestCase):
         ''' HtmlGetter : do a POST 5 weeks '''
         # TODO : can we change this into a static test? As it is now it requires net-access and fails if changes are made
         myLoader = loadWeb.htmlGetter()
-        self._htmlResponse = myLoader.getSkemaWithPost(3735, 43, 48)
+        try:
+            self._htmlResponse = myLoader.getSkemaWithPost(3735, 43, 48)
+        except IOError:
+            self.fail("IOError. No internet?")
         parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( self._htmlResponse.read() )
         parser.close()
