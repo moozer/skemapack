@@ -33,7 +33,7 @@ def main():
     print (opt.url)
     
     myHtmlGetter = HtmlGetter.htmlGetter()
-    htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,48)
+    htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,51)
     
     htmlScraper = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
     htmlScraper.feed(htmlResponse.read())
@@ -42,9 +42,7 @@ def main():
     
     
     for Appointment in htmlScraper.Appointments:
-        #print (Appointment)
         myGmailOutput.addAppointment(Appointment)
-        #break
     
     
     return 0

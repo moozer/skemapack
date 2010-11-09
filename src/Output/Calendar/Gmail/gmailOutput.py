@@ -31,14 +31,15 @@ class GmailOutput():
         return (Popen("gcalcli --user %s --pw %s --nc list"%( self._username, self._password), stdout=PIPE, shell=True).stdout.read()) 
 
     def addAppointment(self, Appointment):
+        print ('gcalcli --user %s --pw %s --nc quick "%s"'%( self._username, self._password,self._appointmentToString(Appointment)))
         return (Popen('gcalcli --user %s --pw %s --nc quick "%s"'%( self._username, self._password,self._appointmentToString(Appointment)), stdout=PIPE, shell=True).stdout.read()) 
-        #print ('gcalcli --user %s --pw %s --nc quick "%s"'%( self._username, self._password,self._appointmentToString(Appointment)))
-               
+              
     def _appointmentToString(self, Appointment):
         appointmentString = ""
-        appointmentString = appointmentString + Appointment.get("Hours")[0].strftime("%d-%m-%Y %H:%M") + " " +Appointment.get("Hours")[1].strftime("%H:%M") + " "
-        appointmentString = appointmentString + Appointment.get("Subject") + "\n"
-        appointmentString = appointmentString + Appointment.get("Location") + "\n"
+        appointmentString = appointmentString + Appointment.get("Hours")[0].strftime("%-d/%-m/%Y %H:%M") + "-" +Appointment.get("Hours")[1].strftime("%H:%M") + " "
+        #appointmentString = appointmentString + Appointment.get("Hours")[0].strftime("%x %H:%M") + "-" +Appointment.get("Hours")[1].strftime("%H:%M") + " "
+        appointmentString = appointmentString + Appointment.get("Subject") + " "
+        appointmentString = appointmentString + Appointment.get("Location") + " "
         #appointmentString = appointmentString + Appointment.get("Class")
         return appointmentString
         

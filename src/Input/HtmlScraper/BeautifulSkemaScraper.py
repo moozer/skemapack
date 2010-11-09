@@ -129,6 +129,8 @@ class BeautifulSkemaScraper( ):
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
 										#"Subject": unicode( self.LessonContent[2].contents[0], 'utf-8'),
 										"Subject":  self.LessonContent[2].contents[0],
+										"Class": "",
+										"Location": "",
 									} )
 		#print "lesson dump", self.Appointments[-1]
 	
