@@ -68,7 +68,7 @@ class TfCsvImport():
         returns empty list on eof
         '''
         
-        # needs error handling
+        # TODO: needs error handling
         for row in self._TfReader:
 
             self._lineno += 1
