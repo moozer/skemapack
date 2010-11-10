@@ -21,6 +21,9 @@ def ParseCmdLineOptions():
     parser.add_option("-u", "--url", dest="url", default="http://skema.sde.dk/laerer/3735/en-US.aspx",
                       help="Skema url", metavar="URL")
     
+    parser.add_option( "-i", "--interface", dest="interface", default="cli",
+                      help="Interface cli or api", metavar="CLI")
+    
     (options, args) =  parser.parse_args()
     return options
 
@@ -31,9 +34,10 @@ def main():
     print (opt.user)
     print (opt.pw)
     print (opt.url)
+    print (opt.interface)
     
     myHtmlGetter = HtmlGetter.htmlGetter()
-    htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,51)
+    htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,44)
     
     htmlScraper = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
     htmlScraper.feed(htmlResponse.read())
