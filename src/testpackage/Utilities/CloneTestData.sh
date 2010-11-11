@@ -4,4 +4,5 @@
 SRCDATADIR="testdata"
 DSTDATADIR="tempdata"
 
-cp -R $SRCDATADIR/* $DSTDATADIR
+cd $SRCDATADIR
+cp -R . ../$DSTDATADIR
