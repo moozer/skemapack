@@ -9,7 +9,7 @@ from Output.IcsOutput.IcsOutput import IcsOutput
 import Input.HtmlGetter.loadWebPage.loadHtml as HtmlGetter
 from Input.HtmlScraper.BeautifulSkemaScraper import  BeautifulSkemaScraper
 
-from Output.Calendar.Gmail.gmailOutput import GmailOutput
+from Output.Calendar.Gmail.gmailOutput import GmailOutput_cli,GmailOutput_API
 
 def ParseCmdLineOptions():
     from optparse import OptionParser
@@ -21,6 +21,9 @@ def ParseCmdLineOptions():
     parser.add_option("-u", "--url", dest="url", default="http://skema.sde.dk/laerer/3735/en-US.aspx",
                       help="Skema url", metavar="URL")
     
+    parser.add_option( "-i", "--interface", dest="interface", default="cli",
+                      help="Interface cli or api", metavar="CLI")
+    
     (options, args) =  parser.parse_args()
     return options
 
@@ -31,18 +34,28 @@ def main():
     print (opt.user)
     print (opt.pw)
     print (opt.url)
+    print (opt.interface)
     
     myHtmlGetter = HtmlGetter.htmlGetter()
-    htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,51)
+    htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,52)
     
     htmlScraper = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
     htmlScraper.feed(htmlResponse.read())
     
-    myGmailOutput = GmailOutput("poul.flindt.skema","minmine1")
+    if opt.interface == "cli":
+        myGmailOutput = GmailOutput_cli("poul.flindt.skema","minmine1")
+    else:
+        try:
+            myGmailOutput = GmailOutput_API("poul.flindt.skema","minmine1")
+        except :
+            #TODO : GmailOutput_API should raise a common exception when gdata throws gdata.service.BasAuthentication
+            print ( "login to gmail failed - please check username and password")
+            exit()
     
     
     for Appointment in htmlScraper.Appointments:
         myGmailOutput.addAppointment(Appointment)
+    
     
     
     return 0
