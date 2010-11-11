@@ -29,6 +29,8 @@ def ParseCmdLineOptions():
 	                  help="File to read html data from", metavar="INFILE")
 	parser.add_option("-u", "--url", dest="url", default="http://skema.sde.dk/laerer/5421/en-US.aspx",
 	                  help="Skema url", metavar="URL")
+	parser.add_option("-d", "--date-format", dest="dateformat", default="%m/%d/%Y",
+	                  help="Date format used", metavar="DATEFORMAT")	
 	
 	(options, args) =  parser.parse_args()
 	
@@ -43,12 +45,16 @@ def main():
 	
 	if opt.infile:
 		try:
-			Apps = ProcessFile( opt.infile )
+			Apps = ProcessFile( opt.infile, opt.dateformat )
 		except IOError as e:
 			print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
-			return 0
-	else:
-		Apps = ProcessWebPage( opt.url)
+			exit( 1 )
+		except ValueError as e:
+			print "Data reading or conversion failure. (Reason: %s)" % e.message
+			print "If this is date conversion related consider using the --date-format option."
+			exit( 2 )
+ 	else:
+		Apps = ProcessWebPage( opt.url )
 	print len(Apps), "appointments extracted"
 	
 	#print Apps[0]['Subject']

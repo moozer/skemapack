@@ -66,7 +66,7 @@ class BeautifulSkemaScraper( ):
 		import datetime
 		# TODOne: support more date formats. Particularly "04-10-2010"
 		# already implemented by the constructor
-		self.WeekdayDate = datetime.datetime.strptime( str.strip( data ).split("d.")[1], self.DateFormat )
+		self.WeekdayDate = datetime.datetime.strptime( str.strip( data ).split("d.")[1], self.DateFormat )			
 		self.WeekDayCount += 1
 		self.LessonCount = 0
 		#print "New weekday: ", self.WeekDayCount, " with title: ", self.WeekdayDate
@@ -138,11 +138,11 @@ class BeautifulSkemaScraper( ):
 		""" dummy function to be compatible"""
 		return
 
-def ProcessFile( FileToRead ):
+def ProcessFile( FileToRead, DateFormat ):
 	""" Utility function. Reads the files and pipes it to SkemaScraper """
-	f = open( FileToRead, "rb" )
+	f = open( FileToRead, "rb" )	
 	data = f.read();
-	parser = BeautifulSkemaScraper()
+	parser = BeautifulSkemaScraper( DateFormat )
 	parser.feed(data)
 	parser.close()
 	f.close()
