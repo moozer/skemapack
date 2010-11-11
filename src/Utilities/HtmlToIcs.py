@@ -42,7 +42,11 @@ def main():
 	opt = ParseCmdLineOptions()
 	
 	if opt.infile:
-		Apps = ProcessFile( opt.infile )
+		try:
+			Apps = ProcessFile( opt.infile )
+		except IOError as e:
+			print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
+			return 0
 	else:
 		Apps = ProcessWebPage( opt.url)
 	print len(Apps), "appointments extracted"
