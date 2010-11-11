@@ -31,6 +31,8 @@ def ParseCmdLineOptions():
 	                  help="Skema url", metavar="URL")
 	parser.add_option("-d", "--date-format", dest="dateformat", default="%m/%d/%Y",
 	                  help="Date format used", metavar="DATEFORMAT")	
+	parser.add_option("-o", "--outfile", dest="outfile", default="SkemaCurrentWeek.ics",
+	                  help="Filename of output file", metavar="OUTFILE")	
 	
 	(options, args) =  parser.parse_args()
 	
@@ -60,11 +62,10 @@ def main():
 	#print Apps[0]['Subject']
 	io = IcsOutput( Apps )
 
-	FileName = "SkemaCurrentWeek.ics"
-	f = open( FileName, "wb" )
+	f = open( opt.outfile, "wb" )
 	f.write( io.GetIcsString() )
 	f.close()
-	print "Ics file saved as", FileName
+	print "Ics file saved as", opt.outfile
 	
 	return 0
 
