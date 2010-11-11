@@ -13,7 +13,7 @@ IcsResultFile = "HtmlFromSkema/laererSkema.aspx_29-52.ics"
 Outputfilename = "testReasult.ics"
 
 class Test(unittest.TestCase):
-
+    ''' Testing HtmlToIcs from an external shell like perspective '''
     def setUp(self):
         ''' makes a copy of the test data to avoid overwriting something '''
         self._StartDir = os.getcwd()
