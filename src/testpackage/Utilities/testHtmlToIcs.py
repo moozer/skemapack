@@ -40,7 +40,7 @@ class Test(unittest.TestCase):
             os.chdir("testpackage/Utilities")
         except:
             pass
-        #os.system('sh RemoveTestData.sh')
+        os.system('sh RemoveTestData.sh')
         pass
 
     def testHtmlToIcsWithDatestring(self):
