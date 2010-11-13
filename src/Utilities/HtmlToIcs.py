@@ -19,25 +19,29 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPage, ProcessFile
+from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPageById, ProcessWebPageByUrl, ProcessFile
 from Output.IcsOutput.IcsOutput import IcsOutput
+from optparse import OptionParser
 
 def ParseCmdLineOptions():
-	from optparse import OptionParser
 	parser = OptionParser()
 	parser.add_option("-i", "--infile", dest="infile",
 	                  help="File to read html data from", metavar="INFILE")
-	parser.add_option("-u", "--url", dest="url", default="http://skema.sde.dk/laerer/5421/en-US.aspx",
+	parser.add_option("-u", "--url", dest="url",
 	                  help="Skema url", metavar="URL")
 	parser.add_option("-d", "--date-format", dest="dateformat", default="%m/%d/%Y",
 	                  help="Date format used", metavar="DATEFORMAT")	
 	parser.add_option("-o", "--outfile", dest="outfile", default="SkemaCurrentWeek.ics",
 	                  help="Filename of output file", metavar="OUTFILE")	
+	parser.add_option("-I", "--Id", dest="id",
+	                  help="Id of teacher or room", metavar="ID")	
+	parser.add_option("-F", "--first-week", dest="FirstWeek", default="1",
+	                  help="Start week of schedule", metavar="STARTWEEK")	
+	parser.add_option("-E", "--end-week", dest="EndWeek", default="52",
+	                  help="Lest week of schedule (included)", metavar="ENDWEEK")	
 	
 	(options, args) =  parser.parse_args()
 
-	#~ if options.infile and options.url:
-		#~ parser.error( "-i and -u are mutually exclusive" )  
 	print options
 
 	return options
@@ -53,8 +57,10 @@ def main():
 			except IOError as e:
 				print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
 				exit( 1 )
-		else:
-			Apps = ProcessWebPage( opt.url, opt.dateformat )
+		elif opt.url:
+			Apps = ProcessWebPageByUrl( opt.url, opt.dateformat )
+		elif opt.id:
+			Apps = ProcessWebPageById( opt.id, opt.dateformat )
 	except ValueError as e:
 		print "Data reading or conversion failure. (Reason: %s)" % e.message
 		print "If this is date conversion related consider using the --date-format option."

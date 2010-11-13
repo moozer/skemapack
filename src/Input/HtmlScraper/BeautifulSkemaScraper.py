@@ -5,6 +5,8 @@
 """
 
 from BeautifulSoup import BeautifulSoup
+import urllib
+import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 
 class BeautifulSkemaScraper( ):
 	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M"):
@@ -20,7 +22,7 @@ class BeautifulSkemaScraper( ):
 		self.Appointments = []
 		
 	def feed( self, data ):
-		''' entry ser sxledes ud
+		''' entry ser således ud
 <div class="time">
 <ul>
 <li class="sHeader">Wednesday d.2/17/2010</li>
@@ -139,7 +141,10 @@ class BeautifulSkemaScraper( ):
 		return
 
 def ProcessFile( FileToRead, DateFormat ):
-	""" Utility function. Reads the files and pipes it to SkemaScraper """
+	""" Utility function. Reads the files and pipes it to SkemaScraper 
+	
+	"""
+	# TODO: The function should be moved elsewhere.
 	f = open( FileToRead, "rb" )	
 	data = f.read();
 	parser = BeautifulSkemaScraper( DateFormat )
@@ -148,25 +153,40 @@ def ProcessFile( FileToRead, DateFormat ):
 	f.close()
 	return  parser.Appointments 
 
-def ProcessWebPage( UrlToOpen = "http://skema.sde.dk/laerer/5421/en-US.aspx", DateFormat = "%Y/%m/%d"  ):
+def ProcessWebPageByUrl( UrlToOpen = "http://skema.sde.dk/laerer/5421/en-US.aspx", DateFormat = "%Y/%m/%d"  ):
 	""" 
 	Utility function. Fetches webpage from the internet and parses it
 	
 	@param UrlToOpen: The full url with the data to fetch, default "http://skema.sde.dk/laerer/5421/en-US.aspx" 
 	@param DateFormat: The dateformat default %Y/%m/%d
 	"""
-	import urllib
-
+	# TODO: The function should be moved elsewhere.
 	usock = urllib.urlopen(UrlToOpen)
 	parser = BeautifulSkemaScraper( DateFormat )
 	parser.feed(usock.read())
 	parser.close()
 	usock.close()
 	return  parser.Appointments 
+
+def ProcessWebPageById( Id, FirstWeek, LastWeek, DateFormat = "%Y/%m/%d"  ):
+	""" 
+	Utility function. Fetches webpage from the internet and parses it
+	
+	@param Id: The identifier of the teacher or room. @see: Input.HtmlGetter.LoadHtml.getSkemaWithPost
+	@param FirstWeek: Start week of resulting schedule
+	@param LastWweek: End week of resulting schedule	 
+	@param DateFormat: The dateformat. Defaults to "%Y/%m/%d"
+	"""
+	# TODO: The function should be moved elsewhere.
+	myLoader = loadWeb.htmlGetter()
+	parser = BeautifulSkemaScraper( DateFormat )
+	parser.feed(myLoader.getSkemaWithPost(Id, FirstWeek, LastWeek).read())
+	parser.close()
+	return  parser.Appointments 
 	
 	
 if __name__ == "__main__":
-	app1 =ProcessWebPage( "http://skema.sde.dk/laerer/5421/en-US.aspx" )
+	app1 = ProcessWebPageByUrl( "http://skema.sde.dk/laerer/5421/en-US.aspx" )
 	#for a in app1:
 	#	print a["Date"], a["Hours"]
 
