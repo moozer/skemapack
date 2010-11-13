@@ -23,7 +23,13 @@ class htmlGetter(object):
         '''
     
     def getSkemaWithPost(self, idx, weekStart=1, weekEnd=52):
-        ''' Does a POST to get the skema for the person/room indicated by idx '''
+        ''' Does a POST to get the skema for the person/room indicated by idx 
+        
+        @param idx: The id of the teacher or room to extract schedule for, e.g. 3735 for PFL
+        @param weekStart: The first week of the schedule to fetch
+        @param weekEnd: The last week of the schedule to fetch
+        @return: A connection to the page showing the desired weeks.      
+        '''
         self._getInitialPage(idx)
         self._parseForValues(weekStart, weekEnd)
         self._doPost(idx)
