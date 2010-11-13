@@ -35,28 +35,31 @@ def ParseCmdLineOptions():
 	                  help="Filename of output file", metavar="OUTFILE")	
 	
 	(options, args) =  parser.parse_args()
-	
+
 	#~ if options.infile and options.url:
 		#~ parser.error( "-i and -u are mutually exclusive" )  
-	
+	print options
+
 	return options
 
 
 def main():
 	opt = ParseCmdLineOptions()
+
+	try:
+		if opt.infile:
+			try: # processfile specific stuff
+				Apps = ProcessFile( opt.infile, opt.dateformat )
+			except IOError as e:
+				print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
+				exit( 1 )
+		else:
+			Apps = ProcessWebPage( opt.url, opt.dateformat )
+	except ValueError as e:
+		print "Data reading or conversion failure. (Reason: %s)" % e.message
+		print "If this is date conversion related consider using the --date-format option."
+		exit( 2 )
 	
-	if opt.infile:
-		try:
-			Apps = ProcessFile( opt.infile, opt.dateformat )
-		except IOError as e:
-			print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
-			exit( 1 )
-		except ValueError as e:
-			print "Data reading or conversion failure. (Reason: %s)" % e.message
-			print "If this is date conversion related consider using the --date-format option."
-			exit( 2 )
- 	else:
-		Apps = ProcessWebPage( opt.url )
 	print len(Apps), "appointments extracted"
 	
 	#print Apps[0]['Subject']

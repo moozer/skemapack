@@ -148,14 +148,17 @@ def ProcessFile( FileToRead, DateFormat ):
 	f.close()
 	return  parser.Appointments 
 
-def ProcessWebPage( UrlToOpen = "http://skema.sde.dk/laerer/5421/en-US.aspx" ):
+def ProcessWebPage( UrlToOpen = "http://skema.sde.dk/laerer/5421/en-US.aspx", DateFormat = "%Y/%m/%d"  ):
 	""" 
 	Utility function. Fetches webpage from the internet and parses it
+	
+	@param UrlToOpen: The full url with the data to fetch, default "http://skema.sde.dk/laerer/5421/en-US.aspx" 
+	@param DateFormat: The dateformat default %Y/%m/%d
 	"""
 	import urllib
 
 	usock = urllib.urlopen(UrlToOpen)
-	parser = BeautifulSkemaScraper()
+	parser = BeautifulSkemaScraper( DateFormat )
 	parser.feed(usock.read())
 	parser.close()
 	usock.close()
