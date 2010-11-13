@@ -25,7 +25,7 @@ from optparse import OptionParser
 
 def ParseCmdLineOptions():
 	parser = OptionParser()
-	parser.add_option("-i", "--infile", dest="infile",
+	parser.add_option("-i", "--infile", dest="infile", 
 	                  help="File to read html data from", metavar="INFILE")
 	parser.add_option("-u", "--url", dest="url",
 	                  help="Skema url", metavar="URL")
@@ -33,16 +33,14 @@ def ParseCmdLineOptions():
 	                  help="Date format used", metavar="DATEFORMAT")	
 	parser.add_option("-o", "--outfile", dest="outfile", default="SkemaCurrentWeek.ics",
 	                  help="Filename of output file", metavar="OUTFILE")	
-	parser.add_option("-I", "--Id", dest="id",
+	parser.add_option("-I", "--id", dest="id", type="int",
 	                  help="Id of teacher or room", metavar="ID")	
-	parser.add_option("-F", "--first-week", dest="FirstWeek", default="1",
+	parser.add_option("-F", "--first-week", dest="firstweek", default="1",type="int",
 	                  help="Start week of schedule", metavar="STARTWEEK")	
-	parser.add_option("-E", "--end-week", dest="EndWeek", default="52",
+	parser.add_option("-E", "--end-week", dest="endweek", default="52",type="int",
 	                  help="Lest week of schedule (included)", metavar="ENDWEEK")	
 	
 	(options, args) =  parser.parse_args()
-
-	print options
 
 	return options
 
@@ -60,7 +58,7 @@ def main():
 		elif opt.url:
 			Apps = ProcessWebPageByUrl( opt.url, opt.dateformat )
 		elif opt.id:
-			Apps = ProcessWebPageById( opt.id, opt.dateformat )
+			Apps = ProcessWebPageById( opt.id, opt.firstweek, opt.endweek, opt.dateformat )
 	except ValueError as e:
 		print "Data reading or conversion failure. (Reason: %s)" % e.message
 		print "If this is date conversion related consider using the --date-format option."
