@@ -41,6 +41,7 @@ class Test(unittest.TestCase):
         except:
             pass
         os.system('sh RemoveTestData.sh')
+        os.chdir(self._StartDir )
         pass
 
     def testHtmlToIcsWithDatestring(self):
