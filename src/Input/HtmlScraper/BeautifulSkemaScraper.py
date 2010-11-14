@@ -7,7 +7,8 @@
 from BeautifulSoup import BeautifulSoup
 import urllib
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
-
+import datetime
+		
 class BeautifulSkemaScraper( ):
 	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M"):
 		""" Initialisation """
@@ -65,7 +66,6 @@ class BeautifulSkemaScraper( ):
 		if len( data ) <= 2:
 			return False
 
-		import datetime
 		# TODOne: support more date formats. Particularly "04-10-2010"
 		# already implemented by the constructor
 		self.WeekdayDate = datetime.datetime.strptime( str.strip( data ).split("d.")[1], self.DateFormat )			
