@@ -20,7 +20,7 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-from Input.HtmlScraper.BeautifulSkemaScraper import  BeautifulSkemaScraper
+from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import unittest
 import datetime
 
@@ -75,36 +75,36 @@ SkemaDataBadCharsResult =  [
 
 class TestInstantiations(unittest.TestCase):                            
     def testEmptyData( self ):
-        """ BeautifulSoupScraper : use empty text in parser """
-        parser = BeautifulSkemaScraper()
+        """ SdeSkemaScraper : use empty text in parser """
+        parser = SdeSkemaScraper()
         parser.feed("")
         parser.close()
         self.assertEqual(parser.Appointments , [])                  
 
     def testBogusTextData( self ):
-        """ BeautifulSoupScraper : use non-HTML text in parser """
-        parser = BeautifulSkemaScraper()
+        """ SdeSkemaScraper : use non-HTML text in parser """
+        parser = SdeSkemaScraper()
         parser.feed("ThisHasNothingToDoWithHtml")
         parser.close()
         self.assertEqual(parser.Appointments , [])                  
 
     def testNonTextData( self ):
-        """ BeautifulSoupScraper : use integer instead of text in parser """
-        parser = BeautifulSkemaScraper()
+        """ SdeSkemaScraper : use integer instead of text in parser """
+        parser = SdeSkemaScraper()
         self.assertRaises(TypeError, parser.feed, 1)
         parser.close()
     
     def testKnownText( self ):
-        """ BeautifulSoupScraper : use known data to get known result """
-        parser = BeautifulSkemaScraper()
+        """ SdeSkemaScraper : use known data to get known result """
+        parser = SdeSkemaScraper()
         parser.feed( SimpleSkemaData )
         parser.close()
         self.assertEqual(len( parser.Appointments ), len(SimpleSkemaDataResult))
         self.assertEqual(parser.Appointments , SimpleSkemaDataResult)  
 
     def testKnownTextBadChars( self ):
-        """ BeautifulSoupScraper : use known data to get known result (including øæå) """
-        parser = BeautifulSkemaScraper()
+        """ SdeSkemaScraper : use known data to get known result (including øæå) """
+        parser = SdeSkemaScraper()
         parser.feed( SkemaDataBadChars )
         parser.close()
         self.assertEqual(len( parser.Appointments ), len(SkemaDataBadCharsResult))  
@@ -113,8 +113,8 @@ class TestInstantiations(unittest.TestCase):
             self.assertEqual(parser.Appointments[i] , SkemaDataBadCharsResult[i])  
             
     def testWebPageInput1week_c(self):
-        """ BeautifulSoupScraper : use webpage source from chrome - 1 week """
-        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        """ SdeSkemaScraper : use webpage source from chrome - 1 week """
+        parser = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( WebPageFromChrome43_43_19lektioner )
         parser.close()
         i = len(parser.Appointments)
@@ -122,8 +122,8 @@ class TestInstantiations(unittest.TestCase):
         pass
     
     def testWebPageInput5weeks_c(self):
-        """ BeautifulSoupScraper : use webpage source from chrome - 5 weeks """
-        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        """ SdeSkemaScraper : use webpage source from chrome - 5 weeks """
+        parser = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( WebPageFromChrome43_48_72lektioner )
         parser.close()
         i = len(parser.Appointments)
@@ -131,8 +131,8 @@ class TestInstantiations(unittest.TestCase):
         pass
     
     def testWebPageInput5weeks(self):
-        """ BeautifulSoupScraper : use webpage source from webgetter - 5 weeks """
-        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        """ SdeSkemaScraper : use webpage source from webgetter - 5 weeks """
+        parser = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( WebPageFromHtmlGetter43_48_72lektioner )
         parser.close()
         i = len(parser.Appointments)

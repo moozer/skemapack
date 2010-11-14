@@ -9,7 +9,7 @@ import urllib
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 import datetime
 		
-class BeautifulSkemaScraper( ):
+class SdeSkemaScraper( ):
 	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M"):
 		""" Initialisation """
 		
@@ -147,7 +147,7 @@ def ProcessFile( FileToRead, DateFormat ):
 	# TODO: The function should be moved elsewhere.
 	f = open( FileToRead, "rb" )	
 	data = f.read();
-	parser = BeautifulSkemaScraper( DateFormat )
+	parser = SdeSkemaScraper( DateFormat )
 	parser.feed(data)
 	parser.close()
 	f.close()
@@ -162,7 +162,7 @@ def ProcessWebPageByUrl( UrlToOpen = "http://skema.sde.dk/laerer/5421/en-US.aspx
 	"""
 	# TODO: The function should be moved elsewhere.
 	usock = urllib.urlopen(UrlToOpen)
-	parser = BeautifulSkemaScraper( DateFormat )
+	parser = SdeSkemaScraper( DateFormat )
 	parser.feed(usock.read())
 	parser.close()
 	usock.close()
@@ -179,7 +179,7 @@ def ProcessWebPageById( Id, FirstWeek, LastWeek, DateFormat = "%Y/%m/%d"  ):
 	"""
 	# TODO: The function should be moved elsewhere.
 	myLoader = loadWeb.htmlGetter()
-	parser = BeautifulSkemaScraper( DateFormat )
+	parser = SdeSkemaScraper( DateFormat )
 	parser.feed(myLoader.getSkemaWithPost(Id, FirstWeek, LastWeek).read())
 	parser.close()
 	return  parser.Appointments 

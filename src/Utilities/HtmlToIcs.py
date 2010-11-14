@@ -19,7 +19,7 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPageById, ProcessWebPageByUrl, ProcessFile
+from Input.HtmlScraper.SdeSkemaScraper import ProcessWebPageById, ProcessWebPageByUrl, ProcessFile
 from Output.IcsOutput.IcsOutput import IcsOutput
 from optparse import OptionParser
 
