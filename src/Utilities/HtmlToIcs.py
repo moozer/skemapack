@@ -38,7 +38,7 @@ def ParseCmdLineOptions():
 	parser.add_option("-F", "--first-week", dest="firstweek", default="1",type="int",
 	                  help="Start week of schedule", metavar="STARTWEEK")	
 	parser.add_option("-E", "--end-week", dest="endweek", default="52",type="int",
-	                  help="Lest week of schedule (included)", metavar="ENDWEEK")	
+	                  help="Last week of schedule (included)", metavar="ENDWEEK")	
 	
 	(options, args) =  parser.parse_args()
 
