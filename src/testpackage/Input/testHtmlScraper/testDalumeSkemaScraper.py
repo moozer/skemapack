@@ -78,6 +78,12 @@ class Test(unittest.TestCase):
         BadWeekNo = 100
         s = DalumSkemaScraper( DalumId, [BadWeekNo]  )
         self.assertRaises( ValueError, s.ExtractAppointments )
+
+    def testGetFromWebWithGracefullBadWeek(self):
+        ''' DalumSkemaScraper : test failure to process bad html from internet (non-fatal) '''
+        BadWeekNo = 100
+        s = DalumSkemaScraper( DalumId, [BadWeekNo]  )
+        self.assertEqual( s.ExtractAppointments( NonFatal = True ), 0 )                
                 
     def testGetFromWeb(self):
         ''' DalumSkemaScraper : test correct retrieval of html from internet '''

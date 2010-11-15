@@ -57,8 +57,9 @@ class DalumSkemaScraper():
         ''' @return the extracted appointments '''
         return self._Appointments
     
-    def ExtractAppointments(self):
+    def ExtractAppointments(self, NonFatal = False):
         ''' Starts the parsing
+        @param NonFatal: If false, then raise exception on bad first row, otherwise silently ignore entire week. Default false 
         @return The number of appointments extracted '''
         self._Appointments = []
         if self.IsSourceWeb():
@@ -67,20 +68,27 @@ class DalumSkemaScraper():
 
             for WeekNo in self._WeekNo:
                 self._RetrieveHtml( WeekNo )
-                self._ProcessHtml()
+                self._ProcessHtml( NonFatal )
         else:
-            self._ProcessHtml()
+            self._ProcessHtml( NonFatal )
         return len( self._Appointments )
     
-    def _ProcessHtml(self):
-        ''' Handles html parsing and convertions '''
+    def _ProcessHtml(self, NonFatal):
+        ''' Handles html parsing and convertions 
+        @param NonFatal: If false, then raise exception on bad first row, otherwise silently ignore entire week. Default false 
+        '''
         ti = TableIterator( self._HtmlData )
 
         self._Lessons = []
         IsFirstRow = True
         for row in TableIterator( self._HtmlData ):
             if IsFirstRow:
-                self._ProcessFirstRow( row )
+                try:
+                    self._ProcessFirstRow( row )
+                except ValueError:
+                    if NonFatal:
+                        continue
+                    raise
                 IsFirstRow = False
                 continue
             try:
