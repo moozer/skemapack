@@ -10,7 +10,7 @@ Created on Nov 14, 2010
 # includes
 from optparse import OptionParser
 import datetime, os, filecmp, shutil
-from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPageById
+from Input.HtmlScraper.SdeSkemaScraper import ProcessWebPageById
 from Output.IcsOutput.IcsOutput import IcsOutput
 
 def ParseCmdLineOptions():
