@@ -75,17 +75,25 @@ class Test(unittest.TestCase):
     def testGetFromWebWithBadWeek(self):
         ''' DalumSkemaScraper : test failure to process bad html from internet '''
         BadWeekNo = 100
-        s = DalumSkemaScraper( DalumId, BadWeekNo  )
+        s = DalumSkemaScraper( DalumId, [BadWeekNo]  )
         self.assertRaises( ValueError, s.ExtractAppointments )
                 
     def testGetFromWeb(self):
         ''' DalumSkemaScraper : test correct retrieval of html from internet '''
-        s = DalumSkemaScraper( DalumId, DalumWeek  )
+        s = DalumSkemaScraper( DalumId, [DalumWeek]  )
         s.ExtractAppointments()
         self.assertEqual( s.GetDates(), DalumDataDates )
         self.assertEqual( s.ExtractAppointments(), DalumDataAppCount )
         self.assertEqual( s.GetAppointments(), DalumDataAppointment)
-                
+        
+#    def testGetMultiWeekFromWeb(self):
+#        ''' DalumSkemaScraper : test correct retrieval of html from internet '''
+#        s = DalumSkemaScraper( DalumId, [DalumWeek, DalumWeek+1]  )
+#        s.ExtractAppointments()
+#        self.assertEqual( s.GetDates(), DalumDataDates )
+#        self.assertEqual( s.ExtractAppointments(), DalumDataAppCount )
+#        self.assertEqual( s.GetAppointments(), DalumDataAppointment)
+                 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testConstructor']
     unittest.main()

@@ -50,7 +50,7 @@ class DalumSkemaScraper():
         return self._HtmlData
     
     def GetDates(self):
-        ''' @return The dates extracted from html '''
+        ''' @return The dates from the latest week extracted from html '''
         return self._Dates
     
     def GetAppointments(self):
@@ -60,9 +60,20 @@ class DalumSkemaScraper():
     def ExtractAppointments(self):
         ''' Starts the parsing
         @return The number of appointments extracted '''
+        self._Appointments = []
         if self.IsSourceWeb():
-            self._RetrieveHtml( self._WeekNo )
-        
+            if not self._WeekNo:
+                raise ValueError( "Week number must be supplied" )
+
+            for WeekNo in self._WeekNo:
+                self._RetrieveHtml( WeekNo )
+                self._ProcessHtml()
+        else:
+            self._ProcessHtml()
+        return len( self._Appointments )
+    
+    def _ProcessHtml(self):
+        ''' Handles html parsing and convertions '''
         ti = TableIterator( self._HtmlData )
 
         self._Lessons = []
@@ -78,7 +89,7 @@ class DalumSkemaScraper():
                 continue
         
         self._ConvertToApp()
-        return len( self._Appointments )
+        
     
     def _ProcessFirstRow(self, Row):
         ''' First row is special. It contains the dates. '''
@@ -106,7 +117,6 @@ class DalumSkemaScraper():
 
     def _ConvertToApp(self):
         ''' converts self._Dates and _Lessons to appointments '''
-        self._Appointments = []
         SkipList = [u' .']
         for WeekDay in self._WeekDays:
             for Lesson in self._Lessons:
@@ -125,8 +135,8 @@ class DalumSkemaScraper():
     
     def _RetrieveHtml( self, WeekNo ):
         ''' Retrieves the proper page based on week and Id '''
-        if not WeekNo:
-            raise ValueError( "Week number must be supplied" )
+        if type( WeekNo ) != type( int(0) ):
+            raise ValueError( "Bad Week number supplied" )
         
         self._UrlToOpen = "http://80.208.123.243/uge %i/3_%i.htm"%( WeekNo, self._Id )
         usock = urllib.urlopen(self._UrlToOpen)
