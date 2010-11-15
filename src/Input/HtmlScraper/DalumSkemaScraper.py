@@ -4,7 +4,7 @@ Created on Nov 14, 2010
 @author: morten
 '''
 
-import BeautifulSoup, datetime
+import BeautifulSoup, datetime, urllib
 from TableIterator import TableIterator
 
 class DalumSkemaScraper():
@@ -14,7 +14,7 @@ class DalumSkemaScraper():
     '''
 
 
-    def __init__(self, Id ):
+    def __init__(self, Id, WeekNo = None ):
         '''
         Constructor
         '''
@@ -25,6 +25,8 @@ class DalumSkemaScraper():
         self._WeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         self._Dates = {}
         self._DateFormat = "%d-%m-%y"
+        self._WeekNo = WeekNo
+        self._UrlToOpen = "(No URL)"
         
     def GetId(self):
         ''' @return The internal Id used '''
@@ -58,6 +60,9 @@ class DalumSkemaScraper():
     def ExtractAppointments(self):
         ''' Starts the parsing
         @return The number of appointments extracted '''
+        if self.IsSourceWeb():
+            self._RetrieveHtml( self._WeekNo )
+        
         ti = TableIterator( self._HtmlData )
 
         self._Lessons = []
@@ -77,9 +82,11 @@ class DalumSkemaScraper():
     
     def _ProcessFirstRow(self, Row):
         ''' First row is special. It contains the dates. '''
-        
-        for i in range(1,6):
-            self._Dates[self._WeekDays[i-1]] = datetime.datetime.strptime( Row[i].split(" ")[1], self._DateFormat )
+        try:
+            for i in range(1,6):
+                self._Dates[self._WeekDays[i-1]] = datetime.datetime.strptime( Row[i].split(" ")[1], self._DateFormat )
+        except IndexError:
+            raise ValueError( "Failed to extract dates from HTML. Check web page: %s"%self._UrlToOpen)
 
     def _ProcessLessons(self, Row):
         ''' Lessons are retrieved horizontally '''
@@ -115,5 +122,14 @@ class DalumSkemaScraper():
                                 "Class": Lesson[WeekDay][1],
                                 "Location": Lesson[WeekDay][2]
                             } )
-
+    
+    def _RetrieveHtml( self, WeekNo ):
+        ''' Retrieves the proper page based on week and Id '''
+        if not WeekNo:
+            raise ValueError( "Week number must be supplied" )
+        
+        self._UrlToOpen = "http://80.208.123.243/uge %i/3_%i.htm"%( WeekNo, self._Id )
+        usock = urllib.urlopen(self._UrlToOpen)
+        self._HtmlData = usock.read()
+        usock.close()
     

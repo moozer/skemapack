@@ -8,6 +8,8 @@ from Input.HtmlScraper.DalumSkemaScraper import DalumSkemaScraper
 
 # test data
 DalumDataFile = "Dalum/Merete_2010_35.htm"
+DalumId = 1427
+DalumWeek = 35
 DalumData = open(DalumDataFile, 'r').read()
 DalumDataAppCount = 21
 DalumDataDates = {   'Monday': datetime.datetime(2010, 8, 30, 0, 0),
@@ -39,32 +41,51 @@ DalumDataAppointment = [
     {'Date': datetime.datetime(2010, 9, 3, 0, 0), 'Hours': [datetime.datetime(2010, 9, 3, 10, 10), datetime.datetime(2010, 9, 3, 10, 55)], 'Location': u'KE', 'Class': u'GRFE', 'Subject': u'Husdyrbiologi'}, 
     {'Date': datetime.datetime(2010, 9, 3, 0, 0), 'Hours': [datetime.datetime(2010, 9, 3, 11, 0), datetime.datetime(2010, 9, 3, 11, 45)], 'Location': u'KE', 'Class': u'GRFE', 'Subject': u'Husdyrbiologi'}] 
 
+DalumUrl = "http://80.208.123.243/uge%2035/"
 
 class Test(unittest.TestCase):
 
     def testConstructor(self):
-        ''' Test construction of dalum scraper '''
-        s = DalumSkemaScraper( 1427 )
-        self.assertEqual( s.GetId(), 1427)
+        ''' DalumSkemaScraper : Test construction of dalum scraper '''
+        s = DalumSkemaScraper( DalumId )
+        self.assertEqual( s.GetId(), DalumId)
         self.assertEqual( s.IsSourceWeb(), True )
 
     def testSetSource(self):
-        ''' Test get/set html'''
-        s = DalumSkemaScraper( 1427 )
+        ''' DalumSkemaScraper : Test get/set html'''
+        s = DalumSkemaScraper( DalumId )
         s.SetHtml( DalumData )
         self.assertEqual( s.IsSourceWeb(), False)
         self.assertEqual( s.GetHtml(),DalumData )
 
     def testExtractAppointmentsFromHtml(self):
-        ''' Extract the appointments from the tests data file '''
-        s = DalumSkemaScraper( 1427 )
+        ''' DalumSkemaScraper : Extract the appointments from the tests data file '''
+        s = DalumSkemaScraper( DalumId )
         s.SetHtml( DalumData )
         s.ExtractAppointments()
         self.assertEqual( s.GetDates(), DalumDataDates )
         self.assertEqual( s.ExtractAppointments(), DalumDataAppCount )
         self.assertEqual( s.GetAppointments(), DalumDataAppointment)
 
-        
+    def testGetFromWebWithoutWeek(self):
+        ''' DalumSkemaScraper : test failure to retrieve html from internet '''
+        s = DalumSkemaScraper( DalumId  )
+        self.assertRaises( ValueError, s.ExtractAppointments )
+                
+    def testGetFromWebWithBadWeek(self):
+        ''' DalumSkemaScraper : test failure to process bad html from internet '''
+        BadWeekNo = 100
+        s = DalumSkemaScraper( DalumId, BadWeekNo  )
+        self.assertRaises( ValueError, s.ExtractAppointments )
+                
+    def testGetFromWeb(self):
+        ''' DalumSkemaScraper : test correct retrieval of html from internet '''
+        s = DalumSkemaScraper( DalumId, DalumWeek  )
+        s.ExtractAppointments()
+        self.assertEqual( s.GetDates(), DalumDataDates )
+        self.assertEqual( s.ExtractAppointments(), DalumDataAppCount )
+        self.assertEqual( s.GetAppointments(), DalumDataAppointment)
+                
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testConstructor']
     unittest.main()
