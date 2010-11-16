@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 #
 #       SkemaToIcs.py
 #       
@@ -19,44 +20,51 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPage, ProcessFile
+from Input.HtmlScraper.SdeSkemaScraper import ProcessWebPageById, ProcessWebPageByUrl, ProcessFile
 from Output.IcsOutput.IcsOutput import IcsOutput
+from optparse import OptionParser
 
 def ParseCmdLineOptions():
-	from optparse import OptionParser
 	parser = OptionParser()
-	parser.add_option("-i", "--infile", dest="infile",
+	parser.add_option("-i", "--infile", dest="infile", 
 	                  help="File to read html data from", metavar="INFILE")
-	parser.add_option("-u", "--url", dest="url", default="http://skema.sde.dk/laerer/5421/en-US.aspx",
+	parser.add_option("-u", "--url", dest="url",
 	                  help="Skema url", metavar="URL")
 	parser.add_option("-d", "--date-format", dest="dateformat", default="%m/%d/%Y",
 	                  help="Date format used", metavar="DATEFORMAT")	
 	parser.add_option("-o", "--outfile", dest="outfile", default="SkemaCurrentWeek.ics",
 	                  help="Filename of output file", metavar="OUTFILE")	
+	parser.add_option("-I", "--id", dest="id", type="int",
+	                  help="Id of teacher or room", metavar="ID")	
+	parser.add_option("-F", "--first-week", dest="firstweek", default="1",type="int",
+	                  help="Start week of schedule", metavar="STARTWEEK")	
+	parser.add_option("-E", "--end-week", dest="endweek", default="52",type="int",
+	                  help="Last week of schedule (included)", metavar="ENDWEEK")	
 	
 	(options, args) =  parser.parse_args()
-	
-	#~ if options.infile and options.url:
-		#~ parser.error( "-i and -u are mutually exclusive" )  
-	
+
 	return options
 
 
 def main():
 	opt = ParseCmdLineOptions()
+
+	try:
+		if opt.infile:
+			try: # processfile specific stuff
+				Apps = ProcessFile( opt.infile, opt.dateformat )
+			except IOError as e:
+				print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
+				exit( 1 )
+		elif opt.url:
+			Apps = ProcessWebPageByUrl( opt.url, opt.dateformat )
+		elif opt.id:
+			Apps = ProcessWebPageById( opt.id, opt.firstweek, opt.endweek, opt.dateformat )
+	except ValueError as e:
+		print "Data reading or conversion failure. (Reason: %s)" % e.message
+		print "If this is date conversion related consider using the --date-format option."
+		exit( 2 )
 	
-	if opt.infile:
-		try:
-			Apps = ProcessFile( opt.infile, opt.dateformat )
-		except IOError as e:
-			print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
-			exit( 1 )
-		except ValueError as e:
-			print "Data reading or conversion failure. (Reason: %s)" % e.message
-			print "If this is date conversion related consider using the --date-format option."
-			exit( 2 )
- 	else:
-		Apps = ProcessWebPage( opt.url )
 	print len(Apps), "appointments extracted"
 	
 	#print Apps[0]['Subject']

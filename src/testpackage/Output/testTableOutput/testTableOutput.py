@@ -19,17 +19,17 @@ ObjectAsHtml = '\t<table>\n\t\t<tr>\n\t\t\t<td>Class</td>\n\t\t\t<td>Teacher</td
 
 class Test(unittest.TestCase):
     def testConstruction(self):
-        ''' constructs the TableOutput class '''
+        ''' TableOutput : constructs the TableOutput class '''
         TO = TableOutput( IterableObject )
         pass
 
     def testGetTextile(self):
-        ''' test building the textile table '''
+        ''' TableOutput : test building the textile table '''
         TO = TableOutput( IterableObject )
         self.assertEqual( TO.GetTextileTable(), ObjectAsTextile )
 
     def testGetHtml(self):
-        ''' test the output converted to HTML '''
+        ''' TableOutput : test the output converted to HTML '''
         TO = TableOutput( IterableObject )
         HTML = TO.GetHtmlTable()
         self.assertEqual( HTML, ObjectAsHtml )

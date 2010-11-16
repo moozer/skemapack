@@ -6,10 +6,13 @@ Perhaps you need to set up your PYTHONPATH properly
 On my machine
 export PYTHONPATH=~/EclipseDev/skemapack/src/:~/EclipseDev/skemapack/src/Support/iCalendar-1.2/src/
 
-
 Example:
 
 SkematoIcs.py -u http://skema.sde.dk/laererSkema.aspx?idx=5421&lang=da-DK
 
 and the ics data is dumped in SkemaCurrentWeek.ics
+
+
+SkemaOnCron.py -I 5421 -n 5 -d ~/bin/ics
+dump the next five weeks of schedule in ~/bin/ics/FromCron.ics
 
