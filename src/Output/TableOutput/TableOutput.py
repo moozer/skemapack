@@ -23,6 +23,7 @@ class TableOutput(object):
         ''' Loops through the data and builds a textile table '''
         TTable = ""
         FirstEntry = True
+        Sums = {}
         for entry in self._ItObject:
             # first entry to be used for headers 
             if FirstEntry:
@@ -43,15 +44,29 @@ class TableOutput(object):
                     TTable += "|"
                     if Week in entry[self._HeaderWeeks].keys(): 
                         TTable += str(entry[self._HeaderWeeks][Week])
+                        if str(Week) in Sums:
+                            Sums[str(Week)] = entry[self._HeaderWeeks][Week] + Sums[str(Week)]
+                        else:
+                            Sums[str(Week)] = entry[self._HeaderWeeks][Week]
             
             TTable += "|\n"
+        
+        
+        for e in self._HeaderElements:
+            TTable += "|"
+        for Week in WeekNo:
+            TTable += "|"
+            if str(Week) in Sums:
+                TTable += str( Sums[str(Week)])
+        
+        TTable += "|\n"            
             
         self._TextileTable = TTable
         return TTable
 
-    def GetHtmlTable(self):
+    def GetHtmlTable(self, StartWeek=38, EndWeek=52):
         ''' Converts the textile to html '''
-        self.GetTextileTable()
+        self.GetTextileTable( StartWeek, EndWeek)
         result = textile.textile( self._TextileTable)
         return result
     

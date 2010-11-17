@@ -26,7 +26,8 @@ def main():
     
     myTable = TableOutput(myImporter.GetNextEntryIterator())
 
-    print myTable.GetTextileTable(1, 26)
+    #print myTable.GetTextileTable(1, 26)
+    print (myTable.GetHtmlTable(1,26))
     
     
     return 0
