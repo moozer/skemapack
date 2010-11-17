@@ -4,7 +4,7 @@ Created on Nov 14, 2010
 @author: morten
 '''
 
-import BeautifulSoup, datetime
+import BeautifulSoup, datetime, urllib
 from TableIterator import TableIterator
 
 class DalumSkemaScraper():
@@ -14,7 +14,7 @@ class DalumSkemaScraper():
     '''
 
 
-    def __init__(self, Id ):
+    def __init__(self, Id, WeekNo = None ):
         '''
         Constructor
         '''
@@ -25,6 +25,8 @@ class DalumSkemaScraper():
         self._WeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         self._Dates = {}
         self._DateFormat = "%d-%m-%y"
+        self._WeekNo = WeekNo
+        self._UrlToOpen = "(No URL)"
         
     def GetId(self):
         ''' @return The internal Id used '''
@@ -48,23 +50,45 @@ class DalumSkemaScraper():
         return self._HtmlData
     
     def GetDates(self):
-        ''' @return The dates extracted from html '''
+        ''' @return The dates from the latest week extracted from html '''
         return self._Dates
     
     def GetAppointments(self):
         ''' @return the extracted appointments '''
         return self._Appointments
     
-    def ExtractAppointments(self):
+    def ExtractAppointments(self, NonFatal = False):
         ''' Starts the parsing
+        @param NonFatal: If false, then raise exception on bad first row, otherwise silently ignore entire week. Default false 
         @return The number of appointments extracted '''
+        self._Appointments = []
+        if self.IsSourceWeb():
+            if not self._WeekNo:
+                raise ValueError( "Week number must be supplied" )
+
+            for WeekNo in self._WeekNo:
+                self._RetrieveHtml( WeekNo )
+                self._ProcessHtml( NonFatal )
+        else:
+            self._ProcessHtml( NonFatal )
+        return len( self._Appointments )
+    
+    def _ProcessHtml(self, NonFatal):
+        ''' Handles html parsing and convertions 
+        @param NonFatal: If false, then raise exception on bad first row, otherwise silently ignore entire week. Default false 
+        '''
         ti = TableIterator( self._HtmlData )
 
         self._Lessons = []
         IsFirstRow = True
         for row in TableIterator( self._HtmlData ):
             if IsFirstRow:
-                self._ProcessFirstRow( row )
+                try:
+                    self._ProcessFirstRow( row )
+                except ValueError:
+                    if NonFatal:
+                        continue
+                    raise
                 IsFirstRow = False
                 continue
             try:
@@ -73,13 +97,15 @@ class DalumSkemaScraper():
                 continue
         
         self._ConvertToApp()
-        return len( self._Appointments )
+        
     
     def _ProcessFirstRow(self, Row):
         ''' First row is special. It contains the dates. '''
-        
-        for i in range(1,6):
-            self._Dates[self._WeekDays[i-1]] = datetime.datetime.strptime( Row[i].split(" ")[1], self._DateFormat )
+        try:
+            for i in range(1,6):
+                self._Dates[self._WeekDays[i-1]] = datetime.datetime.strptime( Row[i].split(" ")[1], self._DateFormat )
+        except IndexError:
+            raise ValueError( "Failed to extract dates from HTML. Check web page: %s"%self._UrlToOpen)
 
     def _ProcessLessons(self, Row):
         ''' Lessons are retrieved horizontally '''
@@ -99,7 +125,6 @@ class DalumSkemaScraper():
 
     def _ConvertToApp(self):
         ''' converts self._Dates and _Lessons to appointments '''
-        self._Appointments = []
         SkipList = [u' .']
         for WeekDay in self._WeekDays:
             for Lesson in self._Lessons:
@@ -115,5 +140,14 @@ class DalumSkemaScraper():
                                 "Class": Lesson[WeekDay][1],
                                 "Location": Lesson[WeekDay][2]
                             } )
-
+    
+    def _RetrieveHtml( self, WeekNo ):
+        ''' Retrieves the proper page based on week and Id '''
+        if type( WeekNo ) != type( int(0) ):
+            raise ValueError( "Bad Week number supplied" )
+        
+        self._UrlToOpen = "http://80.208.123.243/uge %i/3_%i.htm"%( WeekNo, self._Id )
+        usock = urllib.urlopen(self._UrlToOpen)
+        self._HtmlData = usock.read()
+        usock.close()
     

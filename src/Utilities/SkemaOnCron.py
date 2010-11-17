@@ -24,15 +24,17 @@ def ParseCmdLineOptions():
                       help="The number of weeks to fetch", metavar="NWEEK")    
     parser.add_option("-d", "--work-dir", dest="workdir",
                       help="The directory used for data", metavar="WORKDIR")    
-
+    parser.add_option("-P", "--parser", dest="parser", default = "SDE",
+                      help="The parser to use (SDE or Dalum)", metavar="PARSER")    
+    parser.add_option("-o", "--outputfile", dest="outfile", default = "FromCron.ics",
+                      help="The name of the resulting .ics file", metavar="OUTFILE")    
+    
     (options, args) =  parser.parse_args()
     return options
 
 if __name__ == '__main__':
     # constants
     TempOutputFilename = "TempIcsOutput.ics"
-    IcsDataFilename = "FromCron.ics"
-    DiffFilename = "Diff.txt"
     DefaultDateformat = "%d-%m-%Y"
     
     opt = ParseCmdLineOptions()
@@ -48,12 +50,20 @@ if __name__ == '__main__':
         os.chdir(opt.workdir)
         
     print "Fetching data from week %i and the following %i weeks."%(CurrentWeek, opt.nweeks-1)
-    print "Id to fetch %i"%opt.id
+    print "Id to fetch %i using parser %s"%(opt.id, opt.parser)
     
     # get data and create .ics file
     try:
-        Apps = ProcessWebPageById( Id = opt.id, DateFormat = DefaultDateformat,
+        if opt.parser == 'SDE':
+            Apps = ProcessWebPageById( Id = opt.id, DateFormat = DefaultDateformat,
                                    FirstWeek = CurrentWeek, LastWeek = CurrentWeek+opt.nweeks-1 )
+        elif opt.parser == "Dalum":
+            s = DalumSkemaScraper( opt.id, range(CurrentWeek, CurrentWeek+opt.nweeks-1)  )
+            s.ExtractAppointments( NonFatal = True )
+            Apps = s.GetAppointments()
+        else:
+            print "Invalid parser. Please specify 'SDE' or 'Dalum'"
+            exit(4)
     except ValueError as e:
         print "Error processing data from web. (ValueError: %s)"%e.message
         print "Check dateformat. Current is %s"%DefaultDateformat
@@ -70,9 +80,9 @@ if __name__ == '__main__':
     f.close()
 
     # doing comparison
-    print "Comparing %s and %s"%(TempOutputFilename, IcsDataFilename)
+    print "Comparing %s and %s"%(TempOutputFilename, opt.outfile)
     try:
-        CmpRes = filecmp.cmp( TempOutputFilename, IcsDataFilename )
+        CmpRes = filecmp.cmp( TempOutputFilename, opt.outfile )
     except OSError as e:
         print "Comparison failed or other system call failed - assuming missing or corrupt current data file."
         CmpRes = False
@@ -81,11 +91,11 @@ if __name__ == '__main__':
         print "Files match. No change."
     else:
         print "Files differ - using newest"
-        print "Saving latest data in %s"%IcsDataFilename
+        print "Saving latest data in %s"%opt.outfile
         
         print "Diff dump follows"
-        os.system( "diff %s %s"%( TempOutputFilename, IcsDataFilename ))
+        os.system( "diff %s %s"%( TempOutputFilename, opt.outfile ))
 
-        shutil.copy2( TempOutputFilename, IcsDataFilename )                        
+        shutil.copy2( TempOutputFilename, opt.outfile )                        
 
         
