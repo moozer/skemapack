@@ -112,6 +112,15 @@ class Test(unittest.TestCase):
         tfi.EnableImportByTeacher(Teacher ) 
         self.assertEqual( tfi.GetNextEntry(), TeacherData[Teacher]['FirstCourse'] )
         
+    def testGetNextEntryIterator(self):
+        tfi = TfCsvImport(TfInputCsvFile )
+        tfi.EnableImportByTeacher('Teacher 7' )
+        
+        count = 0
+        for entry in tfi.GetNextEntryIterator():
+            count = count +1
+        self.assertEqual( count, 9, 'Wrong number of classes returned')
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testPrintWebPage']
     unittest.main()

@@ -3,7 +3,7 @@ Created on Oct 13, 2010
 
 @author: pfl
 '''
-
+  
 from HTMLParser import HTMLParser
 
 class MyHTMLParser(HTMLParser):

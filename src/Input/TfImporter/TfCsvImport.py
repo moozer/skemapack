@@ -102,6 +102,47 @@ class TfCsvImport():
                             'Course':   self._CurrentCourse,
                             'Lessons by week':   self._RetrieveLessonsByWeek(row)}
                     
+    def GetNextEntryIterator( self ):
+        ''' 
+        based on the current search method, the next entry found is yielded
+        raise StopIteration when done
+        '''
+        
+        # TODO: needs error handling
+        for row in self._TfReader:
+
+            self._lineno += 1
+            if self._state in ['FILEHEADER',  'NEXTCLASS']:
+                self._DoStateFileHeader( row )
+            
+            if self._state == 'CLASSHEADER':
+                if self._lineno ==  self._classStartLine+1:
+                    self._CurrentClass = row[0]
+                if self._lineno - 2 > self._classStartLine :
+                    self._state = 'INCLASS'
+            
+            if self._state == 'INCLASS':
+                if row[0] in self._EndClassKeywords :
+                    self._state = 'CLASSFOOTER'
+                    self._classEndLine = self._lineno
+                else: 
+                    if len(row) > 5 :
+                        self._CurrentTeacher = row[5]
+                        self._CurrentCourse = row[0]
+            
+            if self._state == 'CLASSFOOTER':
+                if  self._lineno  > self._classEndLine:
+                    self._state = 'NEXTCLASS'
+
+            # if we have a match, return the line        
+            if self._state in ['INCLASS']:
+                if self._CurrentTeacher == self._TeacherToSearchFor:
+                    yield {'Teacher':  self._CurrentTeacher, 
+                            'Class':    self._CurrentClass,
+                            'Course':   self._CurrentCourse,
+                            'Lessons by week':   self._RetrieveLessonsByWeek(row)}
+        raise StopIteration
+    
     def _DoStateFileHeader(self, row ):
         ''' handles extracting info in state FILEHEADER and NEXTCLASS '''
         if len(row) > 5 :
