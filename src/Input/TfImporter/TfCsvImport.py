@@ -28,6 +28,10 @@ class TfCsvImport():
         
         self._InitSearchParams()
  
+    def __iter__(self):
+        ''' system stuff for iterators '''
+        return self
+ 
     def _InitSearchParams(self):
         ''' inits the variables needed in the search '''
         self._state = 'FILEHEADER'
@@ -62,7 +66,7 @@ class TfCsvImport():
         self._TfReader = csv.reader(open(self._InputFile), delimiter=self._CsvDelimiter, quotechar='\"')
         self._IsSearchEnabled = True
         
-    def GetNextEntry( self ):
+    def next( self ):
         ''' 
         based on the current search method, the next entry found is returned
         returns empty list on eof
