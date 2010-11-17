@@ -41,7 +41,7 @@ class TableOutput(object):
             if self._HeaderWeeks in entry:
                 for Week in WeekNo:
                     TTable += "|"
-                    if Week in entry[self._HeaderWeeks]: 
+                    if Week in entry[self._HeaderWeeks].keys(): 
                         TTable += str(entry[self._HeaderWeeks][Week])
             
             TTable += "|\n"
