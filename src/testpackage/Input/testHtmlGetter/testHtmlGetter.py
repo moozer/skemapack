@@ -7,7 +7,7 @@ Created on Oct 12, 2010
 '''
 import unittest
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
-from Input.HtmlScraper.BeautifulSkemaScraper import  BeautifulSkemaScraper
+from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 
 class Test(unittest.TestCase):
 
@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
             self._htmlResponse = myLoader.getSkemaWithPost(3735, 43, 43)
         except IOError:
             self.fail("IOError. No internet?")
-        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        parser = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( self._htmlResponse.read() )
         parser.close()
         i = len(parser.Appointments)
@@ -33,7 +33,7 @@ class Test(unittest.TestCase):
             self._htmlResponse = myLoader.getSkemaWithPost(3735, 43, 48)
         except IOError:
             self.fail("IOError. No internet?")
-        parser = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+        parser = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
         parser.feed( self._htmlResponse.read() )
         parser.close()
         i = len(parser.Appointments)
