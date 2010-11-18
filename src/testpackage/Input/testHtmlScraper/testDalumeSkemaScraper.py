@@ -6,6 +6,8 @@ Created on Nov 14, 2010
 import unittest, datetime
 from Input.HtmlScraper.DalumSkemaScraper import DalumSkemaScraper
 
+# TODO: testDalumSkemaScraper is not included when running unittest on testpackage
+
 # test data
 DalumDataFile = "Dalum/Merete_2010_35.htm"
 DalumId = 1427
