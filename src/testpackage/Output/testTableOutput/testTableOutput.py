@@ -8,8 +8,9 @@ import unittest
 from Output.TableOutput.TableOutput import TableOutput
 
 # test data
-IterableObject = [{'Lessons by week': {40: 6, 41: 8, 43: 10, 39: 4}, 'Course': 'Subject H1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
-                        {'Lessons by week': {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4}, 'Course': 'Subject L1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
+IterableObject = [
+    {'Lessons by week': {40: 6, 41: 8, 43: 10, 39: 4}, 'Course': 'Subject H1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
+    {'Lessons by week': {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4}, 'Course': 'Subject L1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
                 ]
 ObjectAsTextile = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10|||||||||
@@ -20,13 +21,14 @@ ObjectAsHtml = '\t<table>\n\t\t<tr>\n\t\t\t<td>Class</td>\n\t\t\t<td>Teacher</td
 class Test(unittest.TestCase):
     def testConstruction(self):
         ''' TableOutput : constructs the TableOutput class '''
-        TO = TableOutput( IterableObject )
+        TableOutput( IterableObject )
         pass
 
     def testGetTextile(self):
         ''' TableOutput : test building the textile table '''
         TO = TableOutput( IterableObject )
-        self.assertEqual( TO.GetTextileTable(), ObjectAsTextile )
+        Result = TO.GetTextileTable()        
+        self.assertEqual( Result, ObjectAsTextile )
 
     def testGetHtml(self):
         ''' TableOutput : test the output converted to HTML '''

@@ -19,7 +19,7 @@ class TableOutput(object):
         self._HeaderWeeks = 'Lessons by week'
         self._TextileTable = ""
     
-    def GetTextileTable(self, StartWeek=38, EndWeek=52):
+    def GetTextileTable(self, StartWeek=38, EndWeek=52, IncludeColumnSums = False):
         ''' Loops through the data and builds a textile table '''
         TTable = ""
         FirstEntry = True
@@ -51,15 +51,14 @@ class TableOutput(object):
             
             TTable += "|\n"
         
-        
-        for e in self._HeaderElements:
-            TTable += "|"
-        for Week in WeekNo:
-            TTable += "|"
-            if str(Week) in Sums:
-                TTable += str( Sums[str(Week)])
-        
-        TTable += "|\n"            
+        if IncludeColumnSums:
+            for e in self._HeaderElements:
+                TTable += "|"
+                for Week in WeekNo:
+                    TTable += "|"
+                if str(Week) in Sums:
+                    TTable += str( Sums[str(Week)])
+            TTable += "|\n"            
             
         self._TextileTable = TTable
         return TTable

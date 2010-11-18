@@ -1,8 +1,10 @@
-#Thu Nov 18 17:22:37 CET 2010
+#Thu Nov 18 22:05:19 CET 2010
 eclipse.preferences.version=1
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
 encoding//src/Output/TableOutput/__init__.py=utf-8
+encoding//src/Support/iCalendar-1.2/src/icalendar/cal.py=latin1
+encoding//src/Support/iCalendar-1.2/src/icalendar/prop.py=latin1
 encoding//src/Utilities/HtmlToIcs.py=UTF-8
 encoding//src/testpackage/Input/testHtmlScraper/TestSdeSkemaScraper.py=utf-8
 encoding//src/testpackage/Output/testTableOutput/testTableOutput.py=utf-8
