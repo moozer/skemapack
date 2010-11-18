@@ -23,7 +23,7 @@ Teacher1Classes = [     {'Lessons by week': {40: 6, 41: 8, 43: 10, 39: 4}, 'Cour
                         {'Lessons by week': {1: 8, 2: 8, 3: 8, 44: 6, 45: 6, 46: 6, 47: 6, 48: 8, 49: 8, 50: 8}, 'Course': 'Subject T1', 'Teacher': 'Teacher 7', 'Class': '1. Sem B Netv\xc3\xa6rk'}
                     ]
 Teacher1FirstClass = Teacher1Classes[0]
-TfNumEntriesTeacher1 = 12
+TfNumEntriesTeacher1 = 9
 Teacher2Initials = 'Teacher2'
 Teacher2FirstClass = {'Lessons by week': {36: 4, 37: 4, 38: 4, 39: 4, 40: 4, 41: 4, 43: 4}, 'Course': 'Subject B1', 'Teacher': 'Teacher2', 'Class': '1. Sem A Elektronik'}
 

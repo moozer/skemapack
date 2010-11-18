@@ -105,6 +105,10 @@ class TfCsvImport():
                             'Class':    self._CurrentClass,
                             'Course':   self._CurrentCourse,
                             'Lessons by week':   self._RetrieveLessonsByWeek(row)}
+
+        # end iteration on file end.
+        raise StopIteration
+    
                     
     def _DoStateFileHeader(self, row ):
         ''' handles extracting info in state FILEHEADER and NEXTCLASS '''
