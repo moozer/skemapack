@@ -4,7 +4,7 @@ Created on Nov 14, 2010
 @author: morten
 '''
 
-import BeautifulSoup, datetime, urllib
+import datetime, urllib
 from TableIterator import TableIterator
 
 class DalumSkemaScraper():
@@ -77,8 +77,6 @@ class DalumSkemaScraper():
         ''' Handles html parsing and convertions 
         @param NonFatal: If false, then raise exception on bad first row, otherwise silently ignore entire week. Default false 
         '''
-        ti = TableIterator( self._HtmlData )
-
         self._Lessons = []
         IsFirstRow = True
         for row in TableIterator( self._HtmlData ):

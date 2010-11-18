@@ -90,7 +90,6 @@ class SdeSkemaScraper( ):
 		self.LessonCount += 1
 		
 		# convert hours to absolute time using the current day as offset
-		import datetime
 		TmpSplit = str.split( data, " " )
 		del self.LessonHours[:]
 		for i in [2, 4]:
