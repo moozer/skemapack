@@ -1,7 +1,6 @@
-#Sun Nov 14 16:23:46 CET 2010
+#Thu Nov 18 17:22:37 CET 2010
 eclipse.preferences.version=1
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
-encoding//src/Input/TfImporter/TF_extract_simple.py=utf-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
 encoding//src/Output/TableOutput/__init__.py=utf-8
 encoding//src/Utilities/HtmlToIcs.py=UTF-8
