@@ -7,11 +7,10 @@ Created on Nov 14, 2010
 @author: morten
 '''
 
-# includes
+# includes 
 from optparse import OptionParser
 import datetime, os, filecmp, shutil
 from Input.HtmlScraper.SdeSkemaScraper import ProcessWebPageById
-from Input.HtmlScraper.DalumSkemaScraper import DalumSkemaScraper
 from Output.IcsOutput.IcsOutput import IcsOutput
 
 def ParseCmdLineOptions():

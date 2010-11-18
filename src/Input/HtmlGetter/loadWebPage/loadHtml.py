@@ -10,7 +10,6 @@ from parseHtmlForValues import MyHTMLParser as ParseForValues
 
 class htmlGetter(object):
     '''
-    classdocs
     loads the skema web page for a particular person /  class / room
     parses it to get the keys needed to do a POST and get skema for more than one week
     does a POST to get the full skema for the period wanted
@@ -18,8 +17,7 @@ class htmlGetter(object):
 
 
     def __init__(self):
-        '''
-        Constructor
+        ''' Initialisation
         '''
     
     def getSkemaWithPost(self, idx, weekStart=1, weekEnd=52):

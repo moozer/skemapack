@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 '''
@@ -9,7 +10,7 @@ Created on Nov 9, 2010
 #from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPage, ProcessFile
 from Output.IcsOutput.IcsOutput import IcsOutput
 import Input.HtmlGetter.loadWebPage.loadHtml as HtmlGetter
-from Input.HtmlScraper.BeautifulSkemaScraper import  BeautifulSkemaScraper
+from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 
 from Output.Calendar.Gmail.gmailOutput import GmailOutput_cli,GmailOutput_API
 
@@ -41,7 +42,7 @@ def main():
     myHtmlGetter = HtmlGetter.htmlGetter()
     htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,52)
     
-    htmlScraper = BeautifulSkemaScraper(DateFormat = "%d-%m-%Y")
+    htmlScraper = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
     htmlScraper.feed(htmlResponse.read())
     
     if opt.interface == "cli":
