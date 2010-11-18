@@ -37,7 +37,7 @@ class UIDGenerator:
 
     def rnd_string(self, length=16):
         "Generates a string with random characters of length"
-        return ''.join([random.choice(self.chars) for i in range(length)])
+        return ''.join([random.choice(self.chars) for i in range(length)]) #@UnusedVariable
 
     def uid(self, host_name='example.com', unique=''):
         """

@@ -21,7 +21,7 @@ class IComponent(Interface):
 
     # MANIPULATORS
 
-    def __setitem__(name, value):
+    def __setitem__(name, value): #@NoSelf
         """Set a property.
 
         name - case insensitive name
@@ -40,7 +40,7 @@ class IComponent(Interface):
         See also set_inline() for an easier way to deal with this case.
         """
 
-    def set_inline(name, values, encode=1):
+    def set_inline(name, values, encode=1): #@NoSelf
         """Set list of INLINE values for property.
 
         Converts a list of values into valid iCalendar comma seperated
@@ -51,19 +51,19 @@ class IComponent(Interface):
         encode - if True, encode Python values as iCalendar types first.
         """
 
-    def add(name, value):
+    def add(name, value): #@NoSelf
         """Add a property. Can be called multiple times to set a list.
 
         name - case insensitive name
         value - value of property to set or add to list for this property.
         """
 
-    def add_component(component):
+    def add_component(component): #@NoSelf
         """Add a nested subcomponent to this component.
         """
 
     # static method, can be called on class directly
-    def from_string(st, multiple=False):
+    def from_string(st, multiple=False): #@NoSelf
         """Populates the component recursively from a iCalendar string.
 
         Reads the iCalendar string and constructs components and
@@ -71,7 +71,7 @@ class IComponent(Interface):
         """
 
     # ACCESSORS
-    def __getitem__(name):
+    def __getitem__(name): #@NoSelf
         """Get a property
 
         name - case insensitive name
@@ -79,7 +79,7 @@ class IComponent(Interface):
         Returns an iCalendar property object such as vText.
         """
 
-    def decoded(name, default=_marker):
+    def decoded(name, default=_marker): #@NoSelf
         """Get a property as a python object.
 
         name - case insensitive name
@@ -90,7 +90,7 @@ class IComponent(Interface):
         Returns python object (such as unicode string, datetime, etc).
         """
 
-    def get_inline(name, decode=1):
+    def get_inline(name, decode=1): #@NoSelf
         """Get list of INLINE values from property.
 
         name - case insensitive name
@@ -99,7 +99,7 @@ class IComponent(Interface):
         Returns list of python objects.
         """
 
-    def as_string():
+    def as_string(): #@NoSelf
         """Render the component in the RFC 2445 (iCalendar) format.
 
         Returns a string in RFC 2445 format.
@@ -113,7 +113,7 @@ class IComponent(Interface):
         Name of this component (VEVENT, etc)
         """)
 
-    def walk(name=None):
+    def walk(name=None): #@NoSelf
         """Recursively traverses component and subcomponents.
 
         name - optional, if given, only return components with that name
@@ -121,7 +121,7 @@ class IComponent(Interface):
         Returns sequence of components.
         """
 
-    def property_items():
+    def property_items(): #@NoSelf
         """Return properties as (name, value) tuples.
 
         Returns all properties in this comopnent and subcomponents as
@@ -165,12 +165,12 @@ class IPropertyValue(Interface):
     assert x == vDataType.from_ical(vDataType(x).ical())
     """
 
-    def ical():
+    def ical(): #@NoSelf
         """Render property as string, as defined in iCalendar RFC 2445.
         """
 
     # this is a static method
-    def from_ical(ical):
+    def from_ical(ical): #@NoSelf
         """Parse property from iCalendar RFC 2445 text.
 
         Inverse of ical().

@@ -577,7 +577,7 @@ class vDDDTypes:
         elif isinstance(dt, timedelta):
             return vDuration(dt).ical()
         else:
-            raise ValueEror ('Unknown date type')
+            raise ValueError ('Unknown date type')
 
     def from_ical(ical):
         "Parses the data format from ical text format"
