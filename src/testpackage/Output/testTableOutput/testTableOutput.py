@@ -21,7 +21,11 @@ ObjectAsHtml = '\t<table>\n\t\t<tr>\n\t\t\t<td>Class</td>\n\t\t\t<td>Teacher</td
 ObjectAsTextileNoHeader = '''|. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10|||||||||
 |. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4||
 '''
-
+ObjectAsTextileColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|
+|. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10|||||||||
+|. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4||
+|||||4|6|8||10|4|4|4|4|4|4|4||
+'''
 
 class Test(unittest.TestCase):
     def testConstruction(self):
@@ -36,10 +40,16 @@ class Test(unittest.TestCase):
         self.assertEqual( Result, ObjectAsTextile )
 
     def testGetTextileNoHeader(self):
-        ''' TableOutput : test building the textile table '''
+        ''' TableOutput : test building the textile table without headers '''
         TO = TableOutput( IterableObject, IncludeHeader=False )
         Result = TO.GetTextileTable()        
         self.assertEqual( Result, ObjectAsTextileNoHeader )
+
+    def testGetTextileWithCSums(self):
+        ''' TableOutput : test building the textile table with column sums'''
+        TO = TableOutput( IterableObject, IncludeColumnSums=True )
+        Result = TO.GetTextileTable()        
+        self.assertEqual( Result, ObjectAsTextileColumnSum )
 
     def testGetHtml(self):
         ''' TableOutput : test the output converted to HTML '''
