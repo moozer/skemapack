@@ -26,6 +26,10 @@ ObjectAsTextileColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|4
 |. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4||
 |||||4|6|8||10|4|4|4|4|4|4|4||
 '''
+ObjectAsTextileRowSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|. Sum|
+|. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10|||||||||28|
+|. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4||28|
+'''
 
 class Test(unittest.TestCase):
     def testConstruction(self):
@@ -51,6 +55,12 @@ class Test(unittest.TestCase):
         Result = TO.GetTextileTable()        
         self.assertEqual( Result, ObjectAsTextileColumnSum )
 
+    def testGetTextileWithRSums(self):
+        ''' TableOutput : test building the textile table with Row sums'''
+        TO = TableOutput( IterableObject, IncludeRowSums=True )
+        Result = TO.GetTextileTable()        
+        self.assertEqual( Result, ObjectAsTextileRowSum )
+        
     def testGetHtml(self):
         ''' TableOutput : test the output converted to HTML '''
         TO = TableOutput( IterableObject )
