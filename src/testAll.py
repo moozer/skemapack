@@ -8,6 +8,8 @@ Created on Oct 15, 2010
 
 @author: pfl
 '''
+# TODO: Can testAll be removed?
+
 import unittest
 
 from testpackage.Input.testHtmlGetter.testHtmlGetter import Test as testHtmlGetter
