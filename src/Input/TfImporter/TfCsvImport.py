@@ -5,7 +5,7 @@ Created on Nov 6, 2010
 
 @author: morten
 '''
-import csv
+import csv, os
 
 class TfCsvImport():
     '''
@@ -16,6 +16,9 @@ class TfCsvImport():
         '''
         @param CsvInputFilename The file to retrieve data from.
         '''
+        if not os.path.exists(CsvInputFilename):
+            raise ValueError( "CSV file not found: %s"%CsvInputFilename)
+            
         self._InputFile = CsvInputFilename
         self._IsSearchEnabled = False
  
@@ -63,7 +66,7 @@ class TfCsvImport():
         '''
         self._InitSearchParams()
         self._TeacherToSearchFor = TeacherInitials
-        self._TfReader = csv.reader(open(self._InputFile), delimiter=self._CsvDelimiter, quotechar='\"')
+        self._TfReader = csv.reader(open(self._InputFile, "r"), delimiter=self._CsvDelimiter, quotechar='\"')
         self._IsSearchEnabled = True
         
     def next( self ):

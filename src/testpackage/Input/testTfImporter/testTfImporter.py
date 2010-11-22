@@ -59,6 +59,10 @@ class Test(unittest.TestCase):
         tfi = TfCsvImport(TfInputCsvFile )
         self.assertEqual( tfi.GetCsvFilename(), TfInputCsvFile )
 
+    def testBadCsvFileName(self):
+        ''' TfImporter : test use of bad filename '''
+        self.assertRaises( ValueError, TfCsvImport, 'ThisFileDoesNotExist.csv' )
+
     def testEnableSearchByTeacher(self):
         ''' TfImporter : test selecting teacher based search '''
         print os.getcwd()
@@ -125,6 +129,7 @@ class Test(unittest.TestCase):
         self.assertEqual( i, TfNumEntriesTeacher1 )
         
     def testGetNextEntryIterator(self):
+        ''' TfImporter : Check use of TfCsvImporter as interator '''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher('Teacher 7' )
         
