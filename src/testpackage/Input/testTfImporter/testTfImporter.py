@@ -63,6 +63,10 @@ class Test(unittest.TestCase):
         ''' TfImporter : test use of bad filename '''
         self.assertRaises( ValueError, TfCsvImport, 'ThisFileDoesNotExist.csv' )
 
+    def testNoCsvFileName(self):
+        ''' TfImporter : test use of bad filename (None) '''
+        self.assertRaises( ValueError, TfCsvImport, None )
+
     def testEnableSearchByTeacher(self):
         ''' TfImporter : test selecting teacher based search '''
         print os.getcwd()

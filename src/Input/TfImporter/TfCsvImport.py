@@ -16,7 +16,7 @@ class TfCsvImport():
         '''
         @param CsvInputFilename The file to retrieve data from.
         '''
-        if not os.path.exists(CsvInputFilename):
+        if not CsvInputFilename or not os.path.exists(CsvInputFilename):
             raise ValueError( "CSV file not found: %s"%CsvInputFilename)
             
         self._InputFile = CsvInputFilename

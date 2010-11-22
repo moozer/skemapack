@@ -12,12 +12,12 @@ from Output.TableOutput.TableOutput import TableOutput
 
 def ParseCmdLineOptions():
     parser = OptionParser()
-    parser.add_option("-i", "--infile", dest="infile", 
+    parser.add_option("-i", "--infile", dest="infile", default = None,
                       help="Location of TF csv file to read", metavar="INFILE")
-    parser.add_option("-o", "--outfile", dest="outfile", default="tf.html" 
+    parser.add_option("-o", "--outfile", dest="outfile", default="tf.html", 
                       help="Location of resulting html file", metavar="OUTFILE")
     
-    (options, args) =  parser.parse_args()
+    (options, args) =  parser.parse_args() #@UnusedVariable
 
     return options
 
@@ -25,10 +25,13 @@ def ParseCmdLineOptions():
 def main():
     opt = ParseCmdLineOptions()
     
-    TfCsvImport( opt.infile )
-    tfi.EnableImportByTeacher('MON')       
+    tfi = TfCsvImport( opt.infile )
+    tfi.EnableImportByTeacher(u'MON')       
 
     TO = TableOutput( tfi )
     HTML = TO.GetHtmlTable()
     
     print HTML
+    
+if __name__ == '__main__': 
+    main()
