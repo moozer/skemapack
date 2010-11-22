@@ -28,9 +28,11 @@ def ParseCmdLineOptions():
     parser.add_option("-P", "--parser", dest="parser", default = "SDE",
                       help="The parser to use (SDE or Dalum)", metavar="PARSER")    
     parser.add_option("-o", "--outputfile", dest="outfile", default = "FromCron.ics",
-                      help="The name of the resulting .ics file", metavar="OUTFILE")    
+                      help="The name of the resulting .ics file", metavar="OUTFILE")
+    parser.add_option("-O", "--offset", dest="offset", default = 0, type = "int",
+                      help="Startweek offset in week numbers (relative to current)", metavar="OFFSET")
     
-    (options, args) =  parser.parse_args()
+    (options, args) =  parser.parse_args() #@UnusedVariable
     return options
 
 if __name__ == '__main__':
@@ -40,7 +42,7 @@ if __name__ == '__main__':
     
     opt = ParseCmdLineOptions()
     
-    CurrentWeek = datetime.datetime.now().isocalendar()[1]
+    StartWeek = datetime.datetime.now().isocalendar()[1] + opt.offset
 
     # parameter check
     if not opt.id:
@@ -50,16 +52,16 @@ if __name__ == '__main__':
     if opt.workdir:
         os.chdir(opt.workdir)
         
-    print "Fetching data from week %i and the following %i weeks."%(CurrentWeek, opt.nweeks-1)
+    print "Fetching data from week %i and the following %i weeks."%(StartWeek, opt.nweeks-1)
     print "Id to fetch %i using parser %s"%(opt.id, opt.parser)
     
     # get data and create .ics file
     try:
         if opt.parser == 'SDE':
             Apps = ProcessWebPageById( Id = opt.id, DateFormat = DefaultDateformat,
-                                   FirstWeek = CurrentWeek, LastWeek = CurrentWeek+opt.nweeks-1 )
+                                   FirstWeek = StartWeek, LastWeek = StartWeek+opt.nweeks-1 )
         elif opt.parser == "Dalum":
-            s = DalumSkemaScraper( opt.id, range(CurrentWeek, CurrentWeek+opt.nweeks-1)  )
+            s = DalumSkemaScraper( opt.id, range(StartWeek, StartWeek+opt.nweeks)  )
             s.ExtractAppointments( NonFatal = True )
             Apps = s.GetAppointments()
         else:
