@@ -60,7 +60,7 @@ def main():
             f.write( HTML )
             f.write( "<br />")
     except ValueError as e:
-        print "Failed to load csv file: %s (Reason: %s)"%(opt.infile, e.message)
+        print "Failed to load or process csv file (Reason: %s)"%(opt.infile, e.message)
         exit(1)
 
     f.write( Footer )
