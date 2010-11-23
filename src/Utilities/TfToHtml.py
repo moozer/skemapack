@@ -13,8 +13,16 @@ from Output.TableOutput.TableOutput import TableOutput
 Header = '''<html>
     <header>
         <title>TF</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style TYPE="text/css"> 
+        <!-- 
+            table { border: solid 1px black; } 
+            tr    { background: #ddd }
+        --> 
+        </style>
     </header>
-    <body>'''
+    <body>
+    '''
 Footer = '''    </body>
 </html>'''
     
@@ -28,6 +36,10 @@ def ParseCmdLineOptions():
                       help="Location of resulting html file", metavar="OUTFILE")
     parser.add_option("--teachers", dest="teachers", default = None,
                       help="A comma separated list of teacher initials", metavar="TEACHERS")
+    parser.add_option("-s", "--startweek", dest="startweek", type="int", default = 1,
+                      help="The start week number (default: 1)", metavar="STARTWEEK")
+    parser.add_option("-e", "--endweek", dest="endweek", type="int", default = 52,
+                      help="The end week number (default: 52)", metavar="ENDWEEK")
     
     (options, args) =  parser.parse_args() #@UnusedVariable
 
@@ -52,8 +64,8 @@ def main():
             tfi.EnableImportByTeacher(Teacher)
             
             print "Processing data and generating HTML for teacher %s"%Teacher
-            TO = TableOutput( tfi )
-            HTML = TO.GetHtmlTable()
+            TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True )
+            HTML = TO.GetHtmlTable(opt.startweek, opt.endweek)
             
             print "Saving HTML"
             f.write( "<h2>Schedule for %s</h2><br />"%Teacher)
