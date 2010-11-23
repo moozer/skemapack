@@ -12,7 +12,8 @@ class TableOutput(object):
     # TODO: TableOutput should be converted to a function
     # TODO: Tableoutput should not use textile, maybe... TBD
 
-    def __init__(self, ItObject, IncludeHeader=True, IncludeColumnSums = False, IncludeRowSums = False ):
+    def __init__(self, ItObject, IncludeHeader=True, 
+                 IncludeColumnSums = False, IncludeRowSums = False ):
         '''
         Constructor
         '''
@@ -23,7 +24,7 @@ class TableOutput(object):
         self._IncludeHeader = IncludeHeader
         self._IncludeColumnSums = IncludeColumnSums
         self._IncludeRowSums = IncludeRowSums
-    
+        self._WeekNo = []
 
     def _GenerateHeader(self, WeekNo, entry, IncludeRowSums):
         ''' Generates the header line
@@ -108,12 +109,16 @@ class TableOutput(object):
         TTable = ""
         FirstEntry = True
         ColumnSums = {}
-        WeekNo = range(StartWeek, EndWeek+1)
+
         for entry in self._ItObject:
             # first entry to be used for header titles (course, teacher etc)
-            if self._IncludeHeader and FirstEntry:
-                TTable += self._GenerateHeader(WeekNo, entry, self._IncludeRowSums)
+            if FirstEntry:
+                WeekNo = range(StartWeek, EndWeek+1)    
+                if self._IncludeHeader:
+                    TTable += self._GenerateHeader(WeekNo, entry, self._IncludeRowSums)
+                    
                 FirstEntry = False
+                
             # other entries
             TTable += self._GenerateTableEntries(ColumnSums, WeekNo, entry, self._IncludeRowSums)
         
@@ -121,6 +126,7 @@ class TableOutput(object):
         if self._IncludeColumnSums:
             TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo)            
             
+        self._WeekNo = WeekNo
         self._TextileTable = TTable
         return TTable
 
@@ -130,3 +136,6 @@ class TableOutput(object):
         result = textile.textile( self._TextileTable)
         return result
     
+    def GetWeeks(self):
+        ''' returns the resulting week used in html generation '''
+        return self._WeekNo    

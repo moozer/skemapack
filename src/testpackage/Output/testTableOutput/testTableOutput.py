@@ -63,13 +63,13 @@ class Test(unittest.TestCase):
         Result = TO.GetTextileTable()        
         self.assertEqual( Result, ObjectAsTextileRowSum )
 
+# TODO: auto extraction of weeks would be nice
 #    def testExtractWeeksFromData(self):
 #        ''' TableOutput : test using weeks from ItObject '''
 #        TO = TableOutput( IterableObject, AutoWeeks=True )
 #        Result = TO.GetTextileTable()        
 #        self.assertEqual( Result, ObjectAsTextile )
 #        self.assertEqual( TO.GetWeeks(), WeeksInObject )
-#        
         
     def testGetHtml(self):
         ''' TableOutput : test the output converted to HTML '''
