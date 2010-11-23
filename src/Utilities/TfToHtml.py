@@ -25,12 +25,19 @@ def ParseCmdLineOptions():
 def main():
     opt = ParseCmdLineOptions()
     
-    tfi = TfCsvImport( opt.infile )
-    tfi.EnableImportByTeacher(u'MON')       
-
+    print "Loading CSV file:%s"%opt.infile
+    try:
+        tfi = TfCsvImport( opt.infile )
+        tfi.EnableImportByTeacher('Teacher 7')       
+    except ValueError as e:
+        print "Failed to load csv file: %s (Reason: %s)"%(opt.infile, e.message)
+        exit(1)
+    
+    print "Processing data and generating HTML"
     TO = TableOutput( tfi )
     HTML = TO.GetHtmlTable()
     
+    print "Resulting HTML"
     print HTML
     
 if __name__ == '__main__': 
