@@ -108,7 +108,7 @@ class TableOutput(object):
         TTable = ""
         FirstEntry = True
         ColumnSums = {}
-        WeekNo = range(StartWeek, EndWeek)
+        WeekNo = range(StartWeek, EndWeek+1)
         for entry in self._ItObject:
             # first entry to be used for header titles (course, teacher etc)
             if self._IncludeHeader and FirstEntry:
