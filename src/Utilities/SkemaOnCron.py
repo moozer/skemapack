@@ -68,7 +68,7 @@ def SendFile( Recipients, Filename ):
     msg.attach(IcsDataFile)
 
     # Send the email via our own SMTP server.
-    s = smtplib.SMTP()
+    s = smtplib.SMTP( "localhost")
     s.sendmail(msg['From'], msg['To'], msg.as_string())
     s.quit()
 
