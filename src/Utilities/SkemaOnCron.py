@@ -3,6 +3,7 @@
 
 '''
 Created on Nov 14, 2010
+This utility is intended to be run as a cron job.
 
 @author: morten
 '''
@@ -31,9 +32,45 @@ def ParseCmdLineOptions():
                       help="The name of the resulting .ics file", metavar="OUTFILE")
     parser.add_option("-O", "--offset", dest="offset", default = 0, type = "int",
                       help="Startweek offset in week numbers (relative to current)", metavar="OFFSET")
+    parser.add_option("-E", "--email", dest="email", default = 0,
+                      help="list of email to sent to, if skema has changed", metavar="EMAIL")
+    parser.add_option("-f", "--force", dest="force", default = False, action="store_true",
+                      help="If set to true, skema is considered changed regardless of the actual state", 
+                      metavar="FORCE")
     
     (options, args) =  parser.parse_args() #@UnusedVariable
     return options
+
+def SendFile( Recipients, Filename ):
+    """ Sends the specified file as an email attachment
+    Function is mostly copied from http://docs.python.org/library/email-examples.html
+    
+    @param Filename The file to send
+    @param Recipient A comma separated list of email addresses
+    """
+    # Import smtplib for the actual sending function
+    import smtplib
+    
+    # Here are the email package modules we'll need
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    
+    # Create the container (outer) email message.
+    msg = MIMEMultipart()
+    msg['Subject'] = 'Skemachanges'
+    msg['From'] = "mbn@mobo.dk"
+    msg['To'] = Recipients
+    msg.preamble = 'This is the preamble...'
+    
+    fp = open(Filename, 'rb')
+    IcsDataFile = MIMEText(fp.read(), _subtype='ics')
+    fp.close()
+    msg.attach(IcsDataFile)
+
+    # Send the email via our own SMTP server.
+    s = smtplib.SMTP()
+    s.sendmail(msg['From'], msg['To'], msg.as_string())
+    s.quit()
 
 if __name__ == '__main__':
     # constants
@@ -90,7 +127,10 @@ if __name__ == '__main__':
         print "Comparison failed or other system call failed - assuming missing or corrupt current data file."
         CmpRes = False
 
-    if CmpRes:
+    if opt.force:
+        print "Force option enabled."
+
+    if CmpRes and (not opt.force):
         print "Files match. No change."
     else:
         print "Files differ - using newest"
@@ -101,4 +141,6 @@ if __name__ == '__main__':
 
         shutil.copy2( TempOutputFilename, opt.outfile )                        
 
-        
+        if opt.email:
+            SendFile( opt.email, TempOutputFilename )
+
