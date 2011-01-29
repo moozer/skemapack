@@ -92,6 +92,11 @@ class Test(unittest.TestCase):
             
         Params = myLoader.getParameters()
         self.assertEqual(ExpectedParams, Params )
+        
+    def testBadParameters(self):
+        ''' HtmlGetter : checks for exception on non-integers '''
+        myLoader = loadWeb.htmlGetter()
+        self.assertRaises( ValueError, myLoader.getSkemaWithPost, 3735, 'text', 04, 2011 )
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testPrintWebPage']

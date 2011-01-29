@@ -29,6 +29,14 @@ class htmlGetter(object):
         @param year: The year. Defaults to current year
         @return: A connection to the page showing the desired weeks.      
         '''
+        
+        # stuff to force type checking in params
+        idx = int( idx)
+        weekStart = int( weekStart )
+        weekEnd = int( weekEnd )
+        year = int( year )
+        
+        # handle default year
         if year == 0:
             year = datetime.datetime.now().year
         
