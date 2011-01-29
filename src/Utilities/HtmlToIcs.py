@@ -55,14 +55,14 @@ def main():
 		if opt.infile:
 			try: # processfile specific stuff
 				Apps = ProcessFile( opt.infile, opt.dateformat )
-			except IOError as e:
+			except IOError, e:
 				print "Failed to open file %s. (Reason: %s)" % (opt.infile, e.strerror)
 				exit( 1 )
 		elif opt.url:
 			Apps = ProcessWebPageByUrl( opt.url, opt.dateformat )
 		elif opt.id:
 			Apps = ProcessWebPageById( opt.id, opt.firstweek, opt.endweek, opt.year, opt.dateformat )
-	except ValueError as e:
+	except ValueError, e:
 		print "Data reading or conversion failure. (Reason: %s)" % e.message
 		print "If this is date conversion related consider using the --date-format option."
 		exit( 2 )
