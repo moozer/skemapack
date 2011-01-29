@@ -67,7 +67,6 @@ class DalumSkemaScraper():
 
             for WeekNo in self._WeekNo:
                 self._RetrieveHtml( WeekNo )
-                print self._HtmlData
                 self._ProcessHtml( NonFatal )
         else:
             self._ProcessHtml( NonFatal )
