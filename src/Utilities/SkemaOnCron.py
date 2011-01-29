@@ -111,6 +111,10 @@ if __name__ == '__main__':
                                    FirstWeek = StartWeek, LastWeek = StartWeek+opt.nweeks-1, Year=0 )
         elif opt.parser == "Dalum":
             s = DalumSkemaScraper( opt.id, range(StartWeek, StartWeek+opt.nweeks)  )
+
+            print s.GetId()
+            print s.GetDates()
+            print s.GetHtml()
             s.ExtractAppointments( NonFatal = True )
             Apps = s.GetAppointments()
         else:
