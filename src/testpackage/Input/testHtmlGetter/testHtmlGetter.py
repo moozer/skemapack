@@ -5,7 +5,7 @@ Created on Oct 12, 2010
 
 @author: pfl
 '''
-import unittest, datetime
+import unittest, datetime, os
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 
@@ -13,7 +13,19 @@ from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 Filename_pfl_2011_04 = "testPage_pfl_2011_04.html"
 
 class Test(unittest.TestCase):
-
+    def setUp(self):
+        ''' makes a copy of the test data to avoid overwriting something '''
+        self._StartDir = os.getcwd()
+        try: # if it fails, then we are in the correct directory.
+            os.chdir("testpackage/Input/testHtmlGetter")
+        except:
+            pass
+        pass
+    
+    def tearDown(self):
+        os.chdir(self._StartDir )
+        pass
+ 
     def testGetSkemaWithPost_1(self):
         ''' HtmlGetter : do a POST 1 week'''
         myLoader = loadWeb.htmlGetter()
