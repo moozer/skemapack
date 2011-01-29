@@ -108,7 +108,7 @@ if __name__ == '__main__':
     try:
         if opt.parser == 'SDE':
             Apps = ProcessWebPageById( Id = opt.id, DateFormat = DefaultDateformat,
-                                   FirstWeek = StartWeek, LastWeek = StartWeek+opt.nweeks-1 )
+                                   FirstWeek = StartWeek, LastWeek = StartWeek+opt.nweeks-1, Year=0 )
         elif opt.parser == "Dalum":
             s = DalumSkemaScraper( opt.id, range(StartWeek, StartWeek+opt.nweeks)  )
             s.ExtractAppointments( NonFatal = True )
@@ -122,6 +122,7 @@ if __name__ == '__main__':
         exit(2)
     except Exception, e:
         print "Unknown exception while collecting appointments: %s" % type(e)
+        print e.message
         exit(3)
     print "%i appointments extracted"%len(Apps)
     io = IcsOutput( Apps )
