@@ -13,7 +13,6 @@ class DalumSkemaScraper():
     e.g from http://80.208.123.243/uge%2035/3_1427.htm
     '''
 
-
     def __init__(self, Id, WeekNo = None ):
         '''
         Constructor
