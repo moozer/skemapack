@@ -67,6 +67,7 @@ class DalumSkemaScraper():
 
             for WeekNo in self._WeekNo:
                 self._RetrieveHtml( WeekNo )
+                print self._HtmlData
                 self._ProcessHtml( NonFatal )
         else:
             self._ProcessHtml( NonFatal )
@@ -144,7 +145,6 @@ class DalumSkemaScraper():
             raise ValueError( "Bad Week number supplied" )
         
         self._UrlToOpen = "http://80.208.123.243/uge %i/3_%i.htm"%( WeekNo, self._Id )
-        print "url: ", self._UrlToOpen
         usock = urllib.urlopen(self._UrlToOpen)
         self._HtmlData = usock.read()
         usock.close()

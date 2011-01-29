@@ -113,10 +113,8 @@ if __name__ == '__main__':
             s = DalumSkemaScraper( opt.id, range(StartWeek, StartWeek+opt.nweeks)  )
             #s.ExtractAppointments( NonFatal = True )
 
-            print s.GetId()
             s.ExtractAppointments( NonFatal = False )
             print s.GetDates()
-            print s.GetHtml()
             Apps = s.GetAppointments()
         else:
             print "Invalid parser. Please specify 'SDE' or 'Dalum'"
