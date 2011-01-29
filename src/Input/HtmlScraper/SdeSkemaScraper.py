@@ -167,20 +167,23 @@ def ProcessWebPageByUrl( UrlToOpen = "http://skema.sde.dk/laerer/5421/en-US.aspx
 	usock.close()
 	return  parser.Appointments 
 
-def ProcessWebPageById( Id, FirstWeek, LastWeek, DateFormat = "%Y/%m/%d"  ):
+def ProcessWebPageById( Id, FirstWeek, LastWeek, Year, DateFormat = "%Y/%m/%d"  ):
 	""" 
 	Utility function. Fetches webpage from the internet and parses it
 	
 	@param Id: The identifier of the teacher or room. @see: Input.HtmlGetter.LoadHtml.getSkemaWithPost
 	@param FirstWeek: Start week of resulting schedule
 	@param LastWweek: End week of resulting schedule	 
+	@param Year: The year to extract data for. Defaults to current year.
 	@param DateFormat: The dateformat. Defaults to "%Y/%m/%d"
 	"""
 	# TODO: The function should be moved elsewhere.
 	myLoader = loadWeb.htmlGetter()
 	parser = SdeSkemaScraper( DateFormat )
-	parser.feed(myLoader.getSkemaWithPost(Id, FirstWeek, LastWeek).read())
+	parser.feed(myLoader.getSkemaWithPost(Id, FirstWeek, LastWeek, Year).read())
 	parser.close()
+	
+	print myLoader.getParameters()
 	return  parser.Appointments 
 	
 	

@@ -39,7 +39,9 @@ def ParseCmdLineOptions():
 	parser.add_option("-F", "--first-week", dest="firstweek", default="1",type="int",
 	                  help="Start week of schedule", metavar="STARTWEEK")	
 	parser.add_option("-E", "--end-week", dest="endweek", default="52",type="int",
-	                  help="Last week of schedule (included)", metavar="ENDWEEK")	
+	                  help="Last week of schedule (included)", metavar="ENDWEEK")
+	parser.add_option("-y", "--year", dest="year", default="0",
+	                  help="The year to extract for, defaults to current year", metavar="YEAR")	
 	
 	(options, args) =  parser.parse_args()
 
@@ -59,7 +61,7 @@ def main():
 		elif opt.url:
 			Apps = ProcessWebPageByUrl( opt.url, opt.dateformat )
 		elif opt.id:
-			Apps = ProcessWebPageById( opt.id, opt.firstweek, opt.endweek, opt.dateformat )
+			Apps = ProcessWebPageById( opt.id, opt.firstweek, opt.endweek, opt.year, opt.dateformat )
 	except ValueError as e:
 		print "Data reading or conversion failure. (Reason: %s)" % e.message
 		print "If this is date conversion related consider using the --date-format option."
