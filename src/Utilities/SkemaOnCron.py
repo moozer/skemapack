@@ -62,13 +62,6 @@ def SendFile( Recipients, Filename ):
     msg['To'] = Recipients
     msg.preamble = 'This is the preamble...'
     
-    # handle the file
-    fp = open(Filename, 'rb')
-    IcsDataFile = MIMEText(fp.read(), _subtype='plain')
-    fp.close()
-    IcsDataFile.add_header('Content-Disposition', 'attachment', filename="Skema.ics")
-    msg.attach(IcsDataFile)
-
     # the message
     TextToSend = '''Hi
     
@@ -79,6 +72,13 @@ Have a nice day.
     Message = MIMEText(TextToSend, "plain")
     msg.attach(Message)
     
+    # handle the file
+    fp = open(Filename, 'rb')
+    IcsDataFile = MIMEText(fp.read(), _subtype='plain')
+    fp.close()
+    IcsDataFile.add_header('Content-Disposition', 'attachment', filename="Skema.ics")
+    msg.attach(IcsDataFile)
+
     # Send the email via our own SMTP server.
     s = smtplib.SMTP( "localhost")
     s.sendmail(msg['From'], msg['To'], msg.as_string())
