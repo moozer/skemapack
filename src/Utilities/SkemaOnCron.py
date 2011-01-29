@@ -104,11 +104,11 @@ if __name__ == '__main__':
         else:
             print "Invalid parser. Please specify 'SDE' or 'Dalum'"
             exit(4)
-    except ValueError as e:
+    except ValueError, e:
         print "Error processing data from web. (ValueError: %s)"%e.message
         print "Check dateformat. Current is %s"%DefaultDateformat
         exit(2)
-    except Exception as e:
+    except Exception, e:
         print "Unknown exception while collecting appointments: %s" % type(e)
         exit(3)
     print "%i appointments extracted"%len(Apps)
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     print "Comparing %s and %s"%(TempOutputFilename, opt.outfile)
     try:
         CmpRes = filecmp.cmp( TempOutputFilename, opt.outfile )
-    except OSError as e:
+    except OSError, e:
         print "Comparison failed or other system call failed - assuming missing or corrupt current data file."
         CmpRes = False
 
