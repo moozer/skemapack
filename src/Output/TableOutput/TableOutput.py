@@ -109,11 +109,11 @@ class TableOutput(object):
         TTable = ""
         FirstEntry = True
         ColumnSums = {}
-
+        WeekNo = range(StartWeek, EndWeek+1)
         for entry in self._ItObject:
             # first entry to be used for header titles (course, teacher etc)
             if FirstEntry:
-                WeekNo = range(StartWeek, EndWeek+1)    
+                    
                 if self._IncludeHeader:
                     TTable += self._GenerateHeader(WeekNo, entry, self._IncludeRowSums)
                     
