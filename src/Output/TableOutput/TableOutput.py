@@ -13,7 +13,7 @@ class TableOutput(object):
     # TODO: Tableoutput should not use textile, maybe... TBD
 
     def __init__(self, ItObject, IncludeHeader=True, 
-                 IncludeColumnSums = False, IncludeRowSums = False ):
+                 IncludeColumnSums = False, IncludeRowSums = False, IncludePreperation=True ):
         '''
         Constructor
         '''
@@ -24,6 +24,7 @@ class TableOutput(object):
         self._IncludeHeader = IncludeHeader
         self._IncludeColumnSums = IncludeColumnSums
         self._IncludeRowSums = IncludeRowSums
+        self._IncludePreperation = IncludePreperation
         self._WeekNo = []
 
     def _GenerateHeader(self, WeekNo, entry, IncludeRowSums):
@@ -177,7 +178,11 @@ class TableOutput(object):
         
         # append column sums.
         if self._IncludeColumnSums:
-            TTable += self._GenerateColumnSumsHours(ColumnSums, WeekNo)            
+            TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo)      
+            
+        # append column sums measured in hours + prep.
+        if self._IncludePreperation:
+            TTable += self._GenerateColumnSumsHours(ColumnSums, WeekNo)             
             
         self._WeekNo = WeekNo
         self._TextileTable = TTable
