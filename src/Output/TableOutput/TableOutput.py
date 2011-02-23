@@ -65,6 +65,59 @@ class TableOutput(object):
             
             TTable += "|\n"
         return TTable
+    
+    def _GenerateColumnSumsHours(self, ColumnSums, WeekNo ):
+        ''' Generates the bottom line with the sums in hours + prep
+        @param WeekNo: The list of weeks to include 
+        @param ColumnSums: The dictionary which holds the sums.
+        @return: the table text for the header part.
+        ''' 
+        Hours = {}
+        Prep = {}
+        HourTotal = {}
+        for Week in WeekNo:
+            if str(Week) in ColumnSums:
+                Hours[str(Week)] = ColumnSums[str(Week)]*0.75
+                for prevWeek in range(Week-6, Week):
+                    Prep[str(prevWeek)] = ColumnSums[str(Week)]*0.175 + Prep.get(str(prevWeek),0)
+                    # (108 min - 45)/6
+                    
+        
+        TTable = ""
+        if self._IncludeColumnSums:
+            for e in self._HeaderElements: #@UnusedVariable
+                TTable += "|"
+            
+            for Week in WeekNo:
+                TTable += "|"
+                if str(Week) in Hours:
+                    TTable += str(Hours[str(Week)])
+            
+            TTable += "|\n"
+            
+        if self._IncludeColumnSums:
+            for e in self._HeaderElements: #@UnusedVariable
+                TTable += "|"
+            
+            for Week in WeekNo:
+                TTable += "|"
+                if str(Week) in Prep:
+                    TTable += str(Prep.get(str(Week),""))
+            
+            TTable += "|\n"
+            
+        if self._IncludeColumnSums:
+            for e in self._HeaderElements: #@UnusedVariable
+                TTable += "|"
+            
+            for Week in WeekNo:
+                TTable += "|"
+                if str(Week) in Prep:
+                    TTable += str(Prep.get(str(Week),0)+Hours.get(str(Week),0))
+            
+            TTable += "|\n"
+                
+        return TTable
 
 
     def _GenerateTableEntries(self, ColumnSums, WeekNo, entry, IncludeRowSums):
@@ -109,7 +162,7 @@ class TableOutput(object):
         TTable = ""
         FirstEntry = True
         ColumnSums = {}
-        WeekNo = range(StartWeek, EndWeek+1)
+        WeekNo = range(StartWeek-6, EndWeek+1)
         for entry in self._ItObject:
             # first entry to be used for header titles (course, teacher etc)
             if FirstEntry:
@@ -124,7 +177,7 @@ class TableOutput(object):
         
         # append column sums.
         if self._IncludeColumnSums:
-            TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo)            
+            TTable += self._GenerateColumnSumsHours(ColumnSums, WeekNo)            
             
         self._WeekNo = WeekNo
         self._TextileTable = TTable
