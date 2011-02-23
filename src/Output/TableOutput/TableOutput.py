@@ -13,7 +13,7 @@ class TableOutput(object):
     # TODO: Tableoutput should not use textile, maybe... TBD
 
     def __init__(self, ItObject, IncludeHeader=True, 
-                 IncludeColumnSums = False, IncludeRowSums = False, IncludePreperation=True ):
+                 IncludeColumnSums = False, IncludeRowSums = False, IncludePreperation=False ):
         '''
         Constructor
         '''
@@ -163,7 +163,10 @@ class TableOutput(object):
         TTable = ""
         FirstEntry = True
         ColumnSums = {}
-        WeekNo = range(StartWeek-6, EndWeek+1)
+        if self._IncludePreperation:
+            WeekNo = range(StartWeek-6, EndWeek+1)
+        else:
+            WeekNo = range(StartWeek, EndWeek+1)
         for entry in self._ItObject:
             # first entry to be used for header titles (course, teacher etc)
             if FirstEntry:
