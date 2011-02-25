@@ -103,7 +103,7 @@ class TableOutput(object):
             for Week in WeekNo:
                 TTable += "|"
                 if str(Week) in Prep:
-                    TTable += str(Prep.get(str(Week),""))
+                    TTable += "{0: .0f}".format(Prep.get(str(Week),""))
             
             TTable += "|\n"
             
@@ -114,7 +114,7 @@ class TableOutput(object):
             for Week in WeekNo:
                 TTable += "|"
                 if str(Week) in Prep:
-                    TTable += str(Prep.get(str(Week),0)+Hours.get(str(Week),0))
+                    TTable += "{0: .0f}".format((Prep.get(str(Week),0)+Hours.get(str(Week),0)))
             
             TTable += "|\n"
                 
