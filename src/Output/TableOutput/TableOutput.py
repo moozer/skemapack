@@ -96,7 +96,7 @@ class TableOutput(object):
             
             TTable += "|\n"
             
-        if self._IncludeColumnSums:
+        if self._IncludePreperation:
             for e in self._HeaderElements: #@UnusedVariable
                 TTable += "|"
             
@@ -107,7 +107,7 @@ class TableOutput(object):
             
             TTable += "|\n"
             
-        if self._IncludeColumnSums:
+        if self._IncludePreperation:
             for e in self._HeaderElements: #@UnusedVariable
                 TTable += "|"
             

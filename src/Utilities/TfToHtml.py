@@ -64,7 +64,7 @@ def main():
             tfi.EnableImportByTeacher(Teacher)
             
             print "Processing data and generating HTML for teacher %s"%Teacher
-            TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True )
+            TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True, IncludePreperation=True )
             HTML = TO.GetHtmlTable(opt.startweek, opt.endweek)
             
             print "Saving HTML"
