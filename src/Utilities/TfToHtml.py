@@ -36,6 +36,8 @@ def ParseCmdLineOptions():
                       help="Location of resulting html file", metavar="OUTFILE")
     parser.add_option("--teachers", dest="teachers", default = None,
                       help="A comma separated list of teacher initials", metavar="TEACHERS")
+    parser.add_option("--classes", dest="classes", default = None,
+                      help="A comma separated list of class name", metavar="CLASSES")
     parser.add_option("-s", "--startweek", dest="startweek", type="int", default = 1,
                       help="The start week number (default: 1)", metavar="STARTWEEK")
     parser.add_option("-e", "--endweek", dest="endweek", type="int", default = 52,
@@ -50,8 +52,8 @@ def main():
     opt = ParseCmdLineOptions()
     
     # Checking params
-    if not opt.teachers:
-        print "No teacher to search for. Please supply a list using --teacher"
+    if not opt.teachers and not opt.classes:
+        print "No teacher or classes to search for. Please supply a list using --teachers or --classes"
         exit(2)
 
     f = open(opt.outfile, "w")
@@ -60,17 +62,31 @@ def main():
     print "Loading CSV file:%s"%opt.infile
     tfi = TfCsvImport( opt.infile )
     try:
-        for Teacher in opt.teachers.split(','):
-            tfi.EnableImportByTeacher(Teacher)
-            
-            print "Processing data and generating HTML for teacher %s"%Teacher
-            TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True, IncludePreperation=True )
-            HTML = TO.GetHtmlTable(opt.startweek, opt.endweek)
-            
-            print "Saving HTML"
-            f.write( "<h2>Schedule for %s</h2><br />"%Teacher)
-            f.write( HTML )
-            f.write( "<br />")
+        if opt.teachers:
+            for Teacher in opt.teachers.split(','):
+                tfi.EnableImportByTeacher(Teacher)
+                
+                print "Processing data and generating HTML for teacher %s"%Teacher
+                TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True )
+                HTML = TO.GetHtmlTable(opt.startweek, opt.endweek)
+                
+                print "Saving HTML"
+                f.write( "<h2>Schedule for %s</h2><br />"%Teacher)
+                f.write( HTML )
+                f.write( "<br />")
+
+        if opt.classes:                
+            for Class in opt.classes.split(','):
+                tfi.EnableImportByClass(Class)
+                
+                print "Processing data and generating HTML for Class %s"%Class
+                TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True )
+                HTML = TO.GetHtmlTable(opt.startweek, opt.endweek)
+                
+                print "Saving HTML"
+                f.write( "<h2>Schedule for %s</h2><br />"%Class)
+                f.write( HTML )
+                f.write( "<br />")
     except ValueError as e:
         print "Failed to load or process csv file (Reason: %s)"%(opt.infile, e.message)
         exit(1)
