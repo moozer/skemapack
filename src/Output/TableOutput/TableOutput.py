@@ -48,23 +48,28 @@ class TableOutput(object):
         return TTable
 
 
-    def _GenerateColumnSumsLine(self, ColumnSums, WeekNo ):
+    def _GenerateColumnSumsLine(self, ColumnSums, WeekNo, IncludeRowSums ):
         ''' Generates the bottom line with the sums
         @param WeekNo: The list of weeks to include 
         @param ColumnSums: The dictionary which holds the sums.
+        @param IncludeRowSums: If true, an extra cell with the global sum is included
         @return: the table text for the header part.
         ''' 
         TTable = ""
-        if self._IncludeColumnSums:
-            for e in self._HeaderElements: #@UnusedVariable
-                TTable += "|"
+        Sum = 0
+        #if self._IncludeColumnSums:
+        for e in self._HeaderElements: #@UnusedVariable
+            TTable += "|"
+        
+        for Week in WeekNo:
+            TTable += "|"
+            if str(Week) in ColumnSums:
+                Sum += ColumnSums[str(Week)]
+                TTable += str(ColumnSums[str(Week)])
+        if IncludeRowSums:
+            TTable += "|"+str(Sum)
             
-            for Week in WeekNo:
-                TTable += "|"
-                if str(Week) in ColumnSums:
-                    TTable += str(ColumnSums[str(Week)])
-            
-            TTable += "|\n"
+        TTable += "|\n"
         return TTable
     
     def _GenerateColumnSumsHours(self, ColumnSums, WeekNo ):
@@ -181,7 +186,7 @@ class TableOutput(object):
         
         # append column sums.
         if self._IncludeColumnSums:
-            TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo)      
+            TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo, self._IncludeRowSums)      
             
         # append column sums measured in hours + prep.
         if self._IncludePreperation:

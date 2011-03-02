@@ -30,6 +30,11 @@ ObjectAsTextileRowSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|4
 |. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10||||||||||28|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4|||28|
 '''
+ObjectAsTextileRowAndColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|. Sum|
+|. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10||||||||||28|
+|. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4|||28|
+|||||4|6|8||10|4|4|4|4|4|4|4|||56|
+'''
 
 WeeksInObject = range(38,53)
 
@@ -63,6 +68,12 @@ class Test(unittest.TestCase):
         Result = TO.GetTextileTable()        
         self.assertEqual( Result, ObjectAsTextileRowSum )
 
+    def testGetTextileWithRAndCSums(self):
+        ''' TableOutput : test building the textile table with Row and column sums'''
+        TO = TableOutput( IterableObject, IncludeRowSums=True, IncludeColumnSums=True )
+        Result = TO.GetTextileTable()        
+        self.assertEqual( Result, ObjectAsTextileRowAndColumnSum )
+        
 # TODO: auto extraction of weeks would be nice
 #    def testExtractWeeksFromData(self):
 #        ''' TableOutput : test using weeks from ItObject '''
