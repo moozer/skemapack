@@ -30,6 +30,10 @@ Teacher2FirstClass = {'Lessons by week': {36: 4, 37: 4, 38: 4, 39: 4, 40: 4, 41:
 TeacherData = { 'Teacher2': {'FirstCourse': Teacher2FirstClass},
                'Teacher 7': {'FirstCourse': Teacher1FirstClass} }
 
+Class1Name = "1. Sem B Netværk"
+Class1FirstClass = {'Course': 'Subject A1', 'Lessons by week': {35: 9}, 'Teacher': 'Teacher 9', 'Class': '1. Sem B Netv\xc3\xa6rk'}
+
+
 def RepeatTest( ParamList ):
     def RepeatT( TestToRun ):
         def Inner( *args, **kwargs ):
@@ -127,20 +131,26 @@ class Test(unittest.TestCase):
         tfi.EnableImportByTeacher(Teacher1Initials)        
             
         i = 0
-        for entry in tfi:
+        for entry in tfi: #@UnusedVariable
             i += 1
         
         self.assertEqual( i, TfNumEntriesTeacher1 )
         
     def testGetNextEntryIterator(self):
-        ''' TfImporter : Check use of TfCsvImporter as interator '''
+        ''' TfImporter : Check use of TfCsvImporter as iterator '''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByTeacher('Teacher 7' )
         
         count = 0
-        for entry in tfi.GetNextEntryIterator():
+        for entry in tfi.GetNextEntryIterator(): #@UnusedVariable
             count = count +1
         self.assertEqual( count, 9, 'Wrong number of classes returned')
+        
+    def testGetNextEntryWithClass(self):
+        ''' TfImporter : test the retrieval of the first entry (Class 1)'''
+        tfi = TfCsvImport(TfInputCsvFile )
+        tfi.EnableImportByClass(Class1Name)        
+        self.assertEqual( tfi.next(), Class1FirstClass )
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testPrintWebPage']
