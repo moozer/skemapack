@@ -66,9 +66,20 @@ class TfCsvImport():
         '''
         self._InitSearchParams()
         self._TeacherToSearchFor = TeacherInitials
+        self._ClassToSearchFor = None
         self._TfReader = csv.reader(open(self._InputFile, "r"), delimiter=self._CsvDelimiter, quotechar='\"')
         self._IsSearchEnabled = True
-        
+   
+    def EnableImportByClass( self, ClassName ):
+        '''
+        Reset the search for lecture based on a specific class
+        '''
+        self._InitSearchParams()
+        self._ClassToSearchFor = ClassName
+        self._TeacherToSearchFor = None
+        self._TfReader = csv.reader(open(self._InputFile, "r"), delimiter=self._CsvDelimiter, quotechar='\"')
+        self._IsSearchEnabled = True
+             
     def next( self ):
         ''' 
         based on the current search method, the next entry found is returned
@@ -103,7 +114,7 @@ class TfCsvImport():
 
             # if we have a match, return the line        
             if self._state in ['INCLASS']:
-                if self._CurrentTeacher == self._TeacherToSearchFor:
+                if (self._CurrentTeacher == self._TeacherToSearchFor or self._CurrentClass == self._ClassToSearchFor):
                     return {'Teacher':  self._CurrentTeacher, 
                             'Class':    self._CurrentClass,
                             'Course':   self._CurrentCourse,
