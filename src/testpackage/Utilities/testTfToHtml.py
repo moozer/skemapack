@@ -46,11 +46,10 @@ class Test(unittest.TestCase):
                     % (TfToHtmlFilename, TfFile, TfExtraFile, Outputfilename )
         ret = os.system( CmdString )
         self.assertEqual( ret, 0 )
-        #ret = os.system( 'diff %s %s  > /dev/null' % (IcsResultFile, Outputfilename ))
-        ret = os.system( 'diff %s %s' % (HtmlResultFile, Outputfilename ))
+        ret = os.system( 'diff %s %s  > /dev/null' % (HtmlResultFile, Outputfilename ))
+        #ret = os.system( 'diff %s %s ' % (HtmlResultFile, Outputfilename ))
         self.assertEqual( ret, 0 )
 
-#--infile "TfToHtmlWithExtra/TF_skema.csv" -x "TfToHtmlWithExtra/TF_extra_1.csv" --outfile "testResult.html" -s 1 -e 52 --teachers "Teacher 7"
 
 
 if __name__ == "__main__":
