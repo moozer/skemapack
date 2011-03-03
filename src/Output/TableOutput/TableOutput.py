@@ -53,7 +53,7 @@ class TableOutput(object):
 
 
     def _GenerateColumnSumsLine(self, ColumnSums, WeekNo, IncludeRowSums ):
-        ''' Generates the bottom line with the sums
+        ''' Generates the bottom line with the sums of lessons
         @param WeekNo: The list of weeks to include 
         @param ColumnSums: The dictionary which holds the sums.
         @param IncludeRowSums: If true, an extra cell with the global sum is included
@@ -61,8 +61,9 @@ class TableOutput(object):
         ''' 
         TTable = ""
         Sum = 0
-        #if self._IncludeColumnSums:
-        for e in self._HeaderElements: #@UnusedVariable
+
+        TTable += "| Sum "
+        for i in range( 2, len(self._HeaderElements)+1):
             TTable += "|"
         
         for Week in WeekNo:
@@ -71,11 +72,12 @@ class TableOutput(object):
                 Sum += ColumnSums[str(Week)]
                 TTable += str(ColumnSums[str(Week)])
         if IncludeRowSums:
-            TTable += "|"+str(Sum)
+            TTable += "|"+"{0: .1f}".format(Sum)
             
         TTable += "|\n"
         return TTable
     
+
     def _GenerateColumnSumsHours(self, ColumnSums, WeekNo ):
         ''' Generates the bottom line with the sums in hours + prep
         @param WeekNo: The list of weeks to include 
@@ -95,37 +97,64 @@ class TableOutput(object):
         
         TTable = ""
         if self._IncludeColumnSums:
-            for e in self._HeaderElements: #@UnusedVariable
+            TTable += "| Lessons (hours) "
+            for i in range( 2, len(self._HeaderElements)+1):
                 TTable += "|"
+            #for e in self._HeaderElements: #@UnusedVariable
+            #    TTable += "|"
             
+            RowSum = 0
             for Week in WeekNo:
                 TTable += "|"
                 if str(Week) in Hours:
+                    RowSum += Hours[str(Week)]
                     TTable += str(Hours[str(Week)])
             
-            TTable += "|\n"
-            
-        if self._IncludePreperation:
-            for e in self._HeaderElements: #@UnusedVariable
-                TTable += "|"
-            
-            for Week in WeekNo:
-                TTable += "|"
-                if str(Week) in Prep:
-                    TTable += "{0: .0f}".format(Prep.get(str(Week),""))
+            # add the sum cell if applicable
+            if self._IncludeRowSums:
+                TTable += "|" + str(RowSum)
             
             TTable += "|\n"
             
         if self._IncludePreperation:
-            for e in self._HeaderElements: #@UnusedVariable
+            TTable += "| Preparation "
+            for i in range( 2, len(self._HeaderElements)+1):
                 TTable += "|"
+            #for e in self._HeaderElements: #@UnusedVariable
+            #    TTable += "|"
             
+            RowSum = 0
             for Week in WeekNo:
                 TTable += "|"
                 if str(Week) in Prep:
-                    TTable += "{0: .0f}".format((Prep.get(str(Week),0)+Hours.get(str(Week),0)))
+                    RowSum += Prep.get(str(Week),"")
+                    TTable += "{0: .1f}".format(Prep.get(str(Week),""))
+
+            # add the sum cell if applicable
+            if self._IncludeRowSums:
+                TTable += "|" + str(RowSum)
+            
             
             TTable += "|\n"
+            
+        # update column sums for later use
+        for Week in WeekNo:
+            if str(Week) in Prep:
+                ColumnSums[str(Week)] = Prep.get(str(Week),0)+Hours.get(str(Week),0)
+            elif Hours.get(str(Week),0) > 0:
+                ColumnSums[str(Week)] = Hours.get(str(Week),0)
+        #=======================================================================
+        # if self._IncludePreperation:
+        #    for e in self._HeaderElements: #@UnusedVariable
+        #        TTable += "|"
+        #    
+        #    for Week in WeekNo:
+        #        TTable += "|"
+        #        if str(Week) in Prep:
+        #            TTable += "{0: .0f}".format((Prep.get(str(Week),0)+Hours.get(str(Week),0)))
+        #    
+        #    TTable += "|\n"
+        #=======================================================================
                 
         return TTable
 
@@ -182,10 +211,6 @@ class TableOutput(object):
             if e in entry:
                 TTable += "|. " + entry[e]
 
-        # check if the entry holds actual course data.
-        #if not self._WeeklistKey in entry:
-        #    raise ValueError("yes, this is a bit extreme, but it works.")
-
         # the weeks
         for Week in WeekNo:
             TTable += "|"
@@ -229,16 +254,20 @@ class TableOutput(object):
         # append column sums.
         if self._IncludeColumnSums:
             TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo, self._IncludeRowSums)      
-            
+                    
         # append column sums measured in hours + prep.
         if self._IncludePreperation:
             TTable += self._GenerateColumnSumsHours(ColumnSums, WeekNo)             
-            
+        
         # append extra stuff
         if self._ItObjectExtra:
             for entry in self._ItObjectExtra:
                 TTable += self._GenerateExtraTableEntries(ColumnSums, WeekNo, entry, self._IncludeRowSums)
-        
+
+        # append column sums.
+        if self._IncludeColumnSums:
+            TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo, self._IncludeRowSums)      
+
         self._WeekNo = WeekNo
         self._TextileTable = TTable
         return TTable
