@@ -36,6 +36,16 @@ ObjectAsTextileRowAndColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|4
 |||||4|6|8||10|4|4|4|4|4|4|4|||56|
 '''
 
+IterableObjectExtra1 = [
+    {'Lessons by week': {41: 4, 42: 4, 43: 4}, 'Course': 'Vacation', 'Teacher': 'Teacher 7', 'Class': ''},
+                ]
+
+ObjectAsTextileExtra1 = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|
+|. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10||||||||||
+|. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4|||
+|. |. Teacher 7|. Vacation||||4|4|4||||||||||
+'''
+
 WeeksInObject = range(38,53)
 
 class Test(unittest.TestCase):
@@ -87,6 +97,12 @@ class Test(unittest.TestCase):
         TO = TableOutput( IterableObject )
         HTML = TO.GetHtmlTable()
         self.assertEqual( HTML, ObjectAsHtml )
+        
+    def testGetTextileWithExtra(self):
+        ''' TableOutput : test building the textile table '''
+        TO = TableOutput( IterableObject, ItObjectExtra=IterableObjectExtra1 )
+        Result = TO.GetTextileTable()
+        self.assertEqual( Result, ObjectAsTextileExtra1 )
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

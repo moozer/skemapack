@@ -13,11 +13,15 @@ class TableOutput(object):
     # TODO: Tableoutput should not use textile, maybe... TBD
 
     def __init__(self, ItObject, IncludeHeader=True, 
-                 IncludeColumnSums = False, IncludeRowSums = False, IncludePreperation=False ):
+                 IncludeColumnSums = False, IncludeRowSums = False, IncludePreperation=False,
+                 ItObjectExtra = None ):
         '''
         Constructor
+        @param param: ItObject An proper iterable object with values in lessons
+        @param param: ItObjectExtra An proper iterable object with values in hours
         '''
         self._ItObject = ItObject
+        self._ItObjectExtra = ItObjectExtra
         self._HeaderElements = ['Class','Teacher', 'Course']
         self._WeeklistKey = 'Lessons by week'
         self._TextileTable = ""
@@ -86,7 +90,7 @@ class TableOutput(object):
                 Hours[str(Week)] = ColumnSums[str(Week)]*0.75
                 for prevWeek in range(Week-6, Week):
                     Prep[str(prevWeek)] = ColumnSums[str(Week)]*0.175 + Prep.get(str(prevWeek),0)
-                    # (108 min - 45)/6
+                    # TODO: fix hardcoded values (108 min - 45)/6
                     
         
         TTable = ""
@@ -163,6 +167,43 @@ class TableOutput(object):
         TTable += "|\n"
         return TTable
 
+    def _GenerateExtraTableEntries(self, ColumnSums, WeekNo, entry, IncludeRowSums):
+        ''' Generates the lines with the course info
+        @param WeekNo: The list of weeks to include 
+        @param ColumnSums: The dictionary which holds the sums (to be updated)
+        @param entry: the course entry
+        @return: the table text for the header part.
+        ''' 
+        TTable = ""
+        RowSum = 0
+        
+        # Course name, teacher name, etc.
+        for e in self._HeaderElements:
+            if e in entry:
+                TTable += "|. " + entry[e]
+
+        # check if the entry holds actual course data.
+        #if not self._WeeklistKey in entry:
+        #    raise ValueError("yes, this is a bit extreme, but it works.")
+
+        # the weeks
+        for Week in WeekNo:
+            TTable += "|"
+            if Week in entry[self._WeeklistKey].keys():
+                TTable += str(entry[self._WeeklistKey][Week])
+                RowSum += entry[self._WeeklistKey][Week]
+                if str(Week) in ColumnSums:
+                    ColumnSums[str(Week)] += entry[self._WeeklistKey][Week]
+                else:
+                    ColumnSums[str(Week)] = entry[self._WeeklistKey][Week]
+        
+        # add the sum cell if applicable
+        if IncludeRowSums:
+            TTable += "|" + str(RowSum)
+        
+        TTable += "|\n"
+        return TTable
+
     def GetTextileTable(self, StartWeek=38, EndWeek=52 ):
         ''' Loops through the data and builds a textile table '''
         TTable = ""
@@ -193,6 +234,11 @@ class TableOutput(object):
         if self._IncludePreperation:
             TTable += self._GenerateColumnSumsHours(ColumnSums, WeekNo)             
             
+        # append extra stuff
+        if self._ItObjectExtra:
+            for entry in self._ItObjectExtra:
+                TTable += self._GenerateExtraTableEntries(ColumnSums, WeekNo, entry, self._IncludeRowSums)
+        
         self._WeekNo = WeekNo
         self._TextileTable = TTable
         return TTable
