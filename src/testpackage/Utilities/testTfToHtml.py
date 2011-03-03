@@ -1,0 +1,58 @@
+'''
+Created on Mar 3, 2011
+
+@author: morten
+'''
+import unittest, os
+
+TfToHtmlFilename= "../../../Utilities/TfToHtml.py"
+TempDataDir="tempdata"
+TfFile = "TfToHtmlWithExtra/TF_skema.csv"
+TfExtraFile = "TfToHtmlWithExtra/TF_extra_1.csv"
+Outputfilename = "testResult.html"
+HtmlResultFile = "TfToHtmlWithExtra/testResult.html"
+
+class Test(unittest.TestCase):
+    ''' Testing HtmlToIcs from an external shell like perspective '''
+    def setUp(self):
+        ''' makes a copy of the test data to avoid overwriting something '''
+        self._StartDir = os.getcwd()
+        try: # if it fails, then we are in the correct directory.
+            os.chdir("testpackage/Utilities")
+        except:
+            pass
+        
+        if os.system('sh CloneTestData.sh'):
+            raise IOError( "CloneTestData.sh not found in %s" % os.getcwd())
+
+        # every work from temp data dir.
+        os.chdir(TempDataDir)
+        pass
+
+    def tearDown(self):
+        ''' Removes temporary data '''
+        os.chdir(self._StartDir )
+        try: # if it fails, then we are in the correct directory.
+            os.chdir("testpackage/Utilities")
+        except:
+            pass
+        os.system('sh RemoveTestData.sh')
+        os.chdir(self._StartDir )
+        pass
+
+    def testHtmlToIcsWithDatestring(self):
+        ''' TfToHtml : compares known skema HTML input with known HTML output '''
+        CmdString = 'python %s --infile "%s" -x "%s" --outfile "%s" -s 1 -e 52 --teachers "Teacher 7" > /dev/null' \
+                    % (TfToHtmlFilename, TfFile, TfExtraFile, Outputfilename )
+        ret = os.system( CmdString )
+        self.assertEqual( ret, 0 )
+        #ret = os.system( 'diff %s %s  > /dev/null' % (IcsResultFile, Outputfilename ))
+        ret = os.system( 'diff %s %s' % (HtmlResultFile, Outputfilename ))
+        self.assertEqual( ret, 0 )
+
+#--infile "TfToHtmlWithExtra/TF_skema.csv" -x "TfToHtmlWithExtra/TF_extra_1.csv" --outfile "testResult.html" -s 1 -e 52 --teachers "Teacher 7"
+
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()
