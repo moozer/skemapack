@@ -58,7 +58,7 @@ class TfExtraCsvImport:
             ColumnCount += 1
  
             try:           
-                WeekColumns[int( entry ) ] = ColumnCount
+                WeekColumns[int( entry ) ] = ColumnCount-1
             except: 
                 pass
             

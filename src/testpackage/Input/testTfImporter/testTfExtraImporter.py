@@ -8,8 +8,12 @@ from Input.TfImporter.TfExtraCsvImport import TfExtraCsvImport
 
 Teacher1Initials = 'Teacher 7'
 TfExtraInputCsvFile = 'testdata/TF_extra_1.csv'
-Teacher1FirstEntry = {'Course': 'Vacation', 'Lessons by week': {14: 35, 5: 35, 6: 35}, 'Teacher': 'Teacher 7', 'Class': 'Teacher 7'}
+Teacher1FirstEntry = {'Course': 'Vacation', 'Lessons by week': {3: 4, 5: 35, 6: 35, 7: 35}, 'Teacher': 'Teacher 7', 'Class': 'Teacher 7'}
 TfNumEntriesTeacher1 = 1
+
+#set 2. one week only and decimal values
+TfExtraInputCsvFile2 = 'testdata/TF_extra_2.csv'
+TfExtraInputCsvFile2Entries = []
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -62,6 +66,18 @@ class Test(unittest.TestCase):
         
         self.assertEqual( i, TfNumEntriesTeacher1 )
        
+    #===========================================================================
+    # def testDeciamlAsWeekValue(self):
+    #    ''' TfExtraCvsImporter : test using tfimporter as iterator '''
+    #    tfi = TfExtraCsvImport(TfExtraInputCsvFile2 )
+    #    tfi.EnableImportByTeacher(Teacher1Initials)        
+    #        
+    #    i = 0
+    #    for entry in tfi: #@UnusedVariable
+    #        i += 1
+    #        self.assertEqual( TfExtraInputCsvFile2Entries[i], entry )
+    #===========================================================================
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
