@@ -24,8 +24,9 @@ ObjectAsTextileNoHeader = '''|. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|
 ObjectAsTextileColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10||||||||||
 |. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4|||
-|||||4|6|8||10|4|4|4|4|4|4|4|||
+| Sum ||||4|6|8||10|4|4|4|4|4|4|4|||
 '''
+
 ObjectAsTextileRowSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|. Sum|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10||||||||||28|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4|||28|
@@ -33,7 +34,7 @@ ObjectAsTextileRowSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|4
 ObjectAsTextileRowAndColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|. Sum|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject H1||4|6|8||10||||||||||28|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4|||28|
-|||||4|6|8||10|4|4|4|4|4|4|4|||56|
+| Sum ||||4|6|8||10|4|4|4|4|4|4|4||| 56.0|
 '''
 
 IterableObjectExtra1 = [
@@ -45,7 +46,6 @@ ObjectAsTextileExtra1 = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|4
 |. 1. Sem A Elektronik|. Teacher 7|. Subject L1|||||||4|4|4|4|4|4|4|||
 |. |. Teacher 7|. Vacation||||4|4|4||||||||||
 '''
-
 WeeksInObject = range(38,53)
 
 class Test(unittest.TestCase):

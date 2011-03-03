@@ -265,7 +265,7 @@ class TableOutput(object):
                 TTable += self._GenerateExtraTableEntries(ColumnSums, WeekNo, entry, self._IncludeRowSums)
 
         # append column sums.
-        if self._IncludeColumnSums:
+        if self._IncludeColumnSums and self._IncludePreperation:
             TTable += self._GenerateColumnSumsLine(ColumnSums, WeekNo, self._IncludeRowSums)      
 
         self._WeekNo = WeekNo
