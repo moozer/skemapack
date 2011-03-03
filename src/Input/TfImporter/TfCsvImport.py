@@ -207,6 +207,6 @@ class TfCsvImport():
         
         if len( Lessons.keys() ) > 0:
             return Lessons
-        else:
-            return {}
-            return None
+ 
+        return {}
+        

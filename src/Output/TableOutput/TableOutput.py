@@ -169,9 +169,10 @@ class TableOutput(object):
         FirstEntry = True
         ColumnSums = {}
         if self._IncludePreperation:
-            WeekNo = range(StartWeek-6, EndWeek+1)
+            WeekNo = range(StartWeek-6, EndWeek+1) # TODO: 6 is the number of weeks for preparations
         else:
             WeekNo = range(StartWeek, EndWeek+1)
+            
         for entry in self._ItObject:
             # first entry to be used for header titles (course, teacher etc)
             if FirstEntry:
