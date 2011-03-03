@@ -24,9 +24,14 @@ class TfExtraCsvImport:
         self._CsvDelimiter = '\t'
         self._InitSearchParams()
         
+    def __iter__(self):
+        ''' system stuff for iterators '''
+        return self
+
     def _InitSearchParams(self):
         ''' inits the variables needed in the search '''
         self._WeekNoByColumn = {}
+        self._TfReader = {}
         
     def _RetrieveLessonsByWeek(self, row):
         ''' returns the lessons by week for the current course '''
