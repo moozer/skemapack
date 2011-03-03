@@ -39,8 +39,8 @@ class TfExtraCsvImport:
         for Week in self._WeekNoByColumn.keys():
             Column = self._WeekNoByColumn[Week]
             try:
-                if int( row[Column] ) > 0:
-                    Lessons[Week] = int( row[Column] )       
+                if float( row[Column] ) > 0:
+                    Lessons[Week] = float( row[Column] )       
             except:
                 pass
             # else we don't include it
