@@ -99,7 +99,7 @@ class Test(unittest.TestCase):
         self.assertEqual( HTML, ObjectAsHtml )
         
     def testGetTextileWithExtra(self):
-        ''' TableOutput : test building the textile table '''
+        ''' TableOutput : test building the textile table with extra iterator '''
         TO = TableOutput( IterableObject, ItObjectExtra=IterableObjectExtra1 )
         Result = TO.GetTextileTable()
         self.assertEqual( Result, ObjectAsTextileExtra1 )
