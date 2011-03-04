@@ -37,6 +37,18 @@ ObjectAsTextileRowAndColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|4
 | Sum ||||4|6|8||10|4|4|4|4|4|4|4||| 56.0|
 '''
 
+IterableObjectEasy = [
+    {'Lessons by week': {1: 1000}, 'Course': 'Subject H1', 'Teacher': 'Teacher 7', 'Class': '1. Sem A Elektronik'},
+                ]
+
+ObjectAsTextilePreparation = '''|. Class|. Teacher|. Course|-4|-3|-2|-1|0|1|2|3|. Sum|
+|. 1. Sem A Elektronik|. Teacher 7|. Subject H1||||||1000|||1000|
+| Sum ||||||||1000||| 1000.0|
+| Lessons (hours) ||||||||750.0|||750.0|
+| Preparation ||| 175.0| 175.0| 175.0| 175.0| 175.0| 175.0|||1050.0|
+| Sum |||175.0|175.0|175.0|175.0|175.0|925.0||| 1800.0|
+'''
+
 IterableObjectExtra1 = [
     {'Lessons by week': {41: 4, 42: 4, 43: 4}, 'Course': 'Vacation', 'Teacher': 'Teacher 7', 'Class': ''},
                 ]
@@ -83,7 +95,14 @@ class Test(unittest.TestCase):
         TO = TableOutput( IterableObject, IncludeRowSums=True, IncludeColumnSums=True )
         Result = TO.GetTextileTable()        
         self.assertEqual( Result, ObjectAsTextileRowAndColumnSum )
-        
+
+    def testGetTextileWithPreparation(self):
+        ''' TableOutput : test building the textile table with Row and column sums'''
+        TO = TableOutput( IterableObjectEasy, IncludeRowSums=True, IncludeColumnSums=True, 
+                          IncludePreperation=True )
+        Result = TO.GetTextileTable( StartWeek=1, EndWeek=3 )        
+        self.assertEqual( Result, ObjectAsTextilePreparation )
+                
 # TODO: auto extraction of weeks would be nice
 #    def testExtractWeeksFromData(self):
 #        ''' TableOutput : test using weeks from ItObject '''

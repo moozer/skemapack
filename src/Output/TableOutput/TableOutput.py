@@ -90,7 +90,7 @@ class TableOutput(object):
         for Week in WeekNo:
             if str(Week) in ColumnSums:
                 Hours[str(Week)] = ColumnSums[str(Week)]*0.75
-                for prevWeek in range(Week-6, Week):
+                for prevWeek in range(Week-5, Week+1):
                     Prep[str(prevWeek)] = ColumnSums[str(Week)]*0.175 + Prep.get(str(prevWeek),0)
                     # TODO: fix hardcoded values (108 min - 45)/6
                     
@@ -118,7 +118,7 @@ class TableOutput(object):
             
         if self._IncludePreperation:
             TTable += "| Preparation "
-            for i in range( 2, len(self._HeaderElements)+1):
+            for i in range( 2, len(self._HeaderElements)+1): #@UnusedVariable
                 TTable += "|"
             #for e in self._HeaderElements: #@UnusedVariable
             #    TTable += "|"
@@ -235,7 +235,7 @@ class TableOutput(object):
         FirstEntry = True
         ColumnSums = {}
         if self._IncludePreperation:
-            WeekNo = range(StartWeek-6, EndWeek+1) # TODO: 6 is the number of weeks for preparations
+            WeekNo = range(StartWeek-5, EndWeek+1) # TODO: 6 is the number of weeks for preparations
         else:
             WeekNo = range(StartWeek, EndWeek+1)
             
