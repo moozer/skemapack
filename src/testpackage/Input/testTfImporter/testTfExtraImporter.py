@@ -5,17 +5,20 @@ Created on Mar 3, 2011
 '''
 import unittest, os
 from Input.TfImporter.TfExtraCsvImport import TfExtraCsvImport
+from Datatypes.CourseData import CourseData
 
 Teacher1Initials = 'Teacher 7'
 TfExtraInputCsvFile = 'testdata/TF_extra_1.csv'
-Teacher1FirstEntry = {'Course': 'Vacation', 'Lessons by week': {3: 4, 5: 35, 6: 35, 7: 35}, 'Teacher': 'Teacher 7', 'Class': 'Teacher 7'}
+#Teacher1FirstEntry = {'Course': 'Vacation', 'Lessons by week': {3: 4, 5: 35, 6: 35, 7: 35}, 'Teacher': 'Teacher 7', 'Class': 'Teacher 7'}
+Teacher1FirstEntry = CourseData(Course = 'Vacation', LessonsList = {3: 4, 5: 35, 6: 35, 7: 35}, 
+                                Teacher = 'Teacher 7', Class = 'Teacher 7' )
 TfNumEntriesTeacher1 = 1
 
 #set 2. one week only and decimal values
 TfExtraInputCsvFile2 = 'testdata/TF_extra_2.csv'
 TfExtraInputCsvFile2Entries = [
-   {'Course': 'Vacation', 'Lessons by week': {13: 4.0}, 'Teacher': 'Teacher 7', 'Class': 'Teacher 7'},
-   {'Course': 'Something else', 'Lessons by week': {13: 1.5}, 'Teacher': 'Teacher 7', 'Class': 'Teacher 7'}
+   CourseData(Course = 'Vacation', LessonsList = {13: 4.0}, Teacher = 'Teacher 7', Class ='Teacher 7'),
+   CourseData(Course = 'Something else', LessonsList = {13: 1.5}, Teacher = 'Teacher 7', Class = 'Teacher 7')
 ]
 
 class Test(unittest.TestCase):

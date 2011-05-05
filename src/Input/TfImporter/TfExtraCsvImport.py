@@ -5,10 +5,12 @@ Created on Mar 3, 2011
 '''
 
 import os, csv
+from Datatypes.CourseData import CourseData 
 
 class TfExtraCsvImport:
     '''
-    classdocs
+    This class handles the part of importing data from an additional file
+    besides the TF files.
     '''
 
 
@@ -112,10 +114,10 @@ class TfExtraCsvImport:
             LessonsByWeek = self._RetrieveLessonsByWeek(row)
             
             if (Teacher == self._TeacherToSearchFor or Class == self._ClassToSearchFor):
-                return {'Teacher':  Teacher, 
-                        'Class':    Class,
-                        'Course':   Project,
-                        'Lessons by week':   LessonsByWeek}
+                return CourseData( Teacher = Teacher, 
+                                   Class = Class,
+                                   Course = Project,
+                                   LessonsList = LessonsByWeek )
 
         # end iteration on file end.
         raise StopIteration

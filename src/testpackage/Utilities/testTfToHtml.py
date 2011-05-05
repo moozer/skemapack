@@ -46,8 +46,8 @@ class Test(unittest.TestCase):
                     % (TfToHtmlFilename, TfFile, TfExtraFile, Outputfilename )
         ret = os.system( CmdString )
         self.assertEqual( ret, 0 )
-        ret = os.system( 'diff %s %s  > /dev/null' % (HtmlResultFile, Outputfilename ))
-        #ret = os.system( 'diff %s %s ' % (HtmlResultFile, Outputfilename ))
+        #ret = os.system( 'diff %s %s  > /dev/null' % (HtmlResultFile, Outputfilename ))
+        ret = os.system( 'diff %s %s ' % (HtmlResultFile, Outputfilename ))
         self.assertEqual( ret, 0 )
 
 

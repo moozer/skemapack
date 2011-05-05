@@ -6,6 +6,7 @@ Created on Nov 7, 2010
 '''
 import unittest
 from Output.TableOutput.TableOutput import TableOutput
+from Datatypes.CourseData import CourseData
 
 # test data
 IterableObject = [
@@ -50,7 +51,7 @@ ObjectAsTextilePreparation = '''|. Class|. Teacher|. Course|-4|-3|-2|-1|0|1|2|3|
 '''
 
 IterableObjectExtra1 = [
-    {'Lessons by week': {41: 4, 42: 4, 43: 4}, 'Course': 'Vacation', 'Teacher': 'Teacher 7', 'Class': ''},
+    CourseData( LessonsList = {41: 4, 42: 4, 43: 4}, Course = 'Vacation', Teacher = 'Teacher 7', Class = '' )
                 ]
 
 ObjectAsTextileExtra1 = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|

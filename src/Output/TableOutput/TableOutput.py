@@ -200,16 +200,16 @@ class TableOutput(object):
         ''' Generates the lines with the course info
         @param WeekNo: The list of weeks to include 
         @param ColumnSums: The dictionary which holds the sums (to be updated)
-        @param entry: the course entry
+        @param entry: the course entry as a CourseData datatype
         @return: the table text for the header part.
         ''' 
         TTable = ""
         RowSum = 0
         
         # Course name, teacher name, etc.
-        for e in self._HeaderElements:
-            if e in entry:
-                TTable += "|. " + entry[e]
+        TTable += "|. " + entry.getClass()
+        TTable += "|. " + entry.getTeacher()
+        TTable += "|. " + entry.getCourse()
 
         # the weeks
         for Week in WeekNo:
