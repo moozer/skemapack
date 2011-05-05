@@ -38,12 +38,13 @@ class TableOutput(object):
         @return: the table text for the header part.
         ''' 
         TTable = ""
+
+        # Course name, teacher name, etc.
         for e in self._HeaderElements:
-            if e in entry:
-                TTable += "|. " + e
+            TTable += "|. " + e
         
-        if self._WeeklistKey in entry:
-            TTable += ''.join(['|' + str(Week) for Week in WeekNo])
+        # add all week columns
+        TTable += ''.join(['|' + str(Week) for Week in WeekNo])
 
         if IncludeRowSums:
             TTable += "|. " + "Sum"
@@ -170,24 +171,20 @@ class TableOutput(object):
         RowSum = 0
         
         # Course name, teacher name, etc.
-        for e in self._HeaderElements:
-            if e in entry:
-                TTable += "|. " + entry[e]
-
-        # check if the entry holds actual course data.
-        if not self._WeeklistKey in entry:
-            raise ValueError("yes, this is a bit extreme, but it works.")
+        TTable += "|. " + entry.getClass()
+        TTable += "|. " + entry.getTeacher()
+        TTable += "|. " + entry.getCourse()
 
         # the weeks
         for Week in WeekNo:
             TTable += "|"
-            if Week in entry[self._WeeklistKey].keys():
-                TTable += str(entry[self._WeeklistKey][Week])
-                RowSum += entry[self._WeeklistKey][Week]
+            if Week in entry.getListOfWeeks():
+                TTable += str(entry.getLessons( Week ) )
+                RowSum += entry.getLessons( Week )
                 if str(Week) in ColumnSums:
-                    ColumnSums[str(Week)] += entry[self._WeeklistKey][Week]
+                    ColumnSums[str(Week)] += entry.getLessons( Week )
                 else:
-                    ColumnSums[str(Week)] = entry[self._WeeklistKey][Week]
+                    ColumnSums[str(Week)] = entry.getLessons( Week )
         
         # add the sum cell if applicable
         if IncludeRowSums:
