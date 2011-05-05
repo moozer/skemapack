@@ -6,6 +6,7 @@ Created on Nov 6, 2010
 @author: morten
 '''
 import csv, os
+from Datatypes.CourseData import CourseData
 
 class TfCsvImport():
     '''
@@ -115,10 +116,10 @@ class TfCsvImport():
             # if we have a match, return the line        
             if self._state in ['INCLASS']:
                 if (self._CurrentTeacher == self._TeacherToSearchFor or self._CurrentClass == self._ClassToSearchFor):
-                    return {'Teacher':  self._CurrentTeacher, 
-                            'Class':    self._CurrentClass,
-                            'Course':   self._CurrentCourse,
-                            'Lessons by week':   self._RetrieveLessonsByWeek(row)}
+                    return CourseData(  Teacher =  self._CurrentTeacher, 
+                                        Class =    self._CurrentClass,
+                                        Course =   self._CurrentCourse,
+                                        LessonsList = self._RetrieveLessonsByWeek(row) )
 
         # end iteration on file end.
         raise StopIteration
