@@ -43,3 +43,6 @@ class CourseData(object):
     
     def getListOfWeeks(self):
         return self._LessonsList.keys()
+    
+    def getLessons(self, WeekNo):
+        return self._LessonsList[WeekNo]

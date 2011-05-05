@@ -11,6 +11,8 @@ Class1 = 'ClassName'
 Course1 = 'CourseName'
 LessonsByWeek1 = {10: 1, 11: 2, 12: 3, 13: 4}
 WeekList1 = [10, 11, 12, 13]
+Week1 = 10
+LessonsInWeek1= 1
 
 CD1 = CourseData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
 CD1_2 = CourseData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
@@ -38,6 +40,9 @@ class TestCourseData(unittest.TestCase):
         
     def testGetWeekNo(self):
         self.assertTrue( WeekList1 == CD1.getListOfWeeks() )
+
+    def testGetWeekValue(self):
+        self.assertTrue( CD1.getLessons(Week1) == LessonsInWeek1 )
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
