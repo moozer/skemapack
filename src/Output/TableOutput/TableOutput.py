@@ -214,13 +214,13 @@ class TableOutput(object):
         # the weeks
         for Week in WeekNo:
             TTable += "|"
-            if Week in entry[self._WeeklistKey].keys():
-                TTable += str(entry[self._WeeklistKey][Week])
-                RowSum += entry[self._WeeklistKey][Week]
+            if Week in entry.getListOfWeeks():
+                TTable += str(entry.getLessons( Week ))
+                RowSum += entry.getLessons( Week )
                 if str(Week) in ColumnSums:
-                    ColumnSums[str(Week)] += entry[self._WeeklistKey][Week]
+                    ColumnSums[str(Week)] += entry.getLessons( Week )
                 else:
-                    ColumnSums[str(Week)] = entry[self._WeeklistKey][Week]
+                    ColumnSums[str(Week)] = entry.getLessons( Week )
         
         # add the sum cell if applicable
         if IncludeRowSums:
