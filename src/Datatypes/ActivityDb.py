@@ -49,6 +49,7 @@ class ActivityDb():
 
         return retval
    
+    # --- Teacher table
     def GetTeacherList(self):
         ''' returns the complete list of metadata '''
         c = self._conn.cursor()
@@ -68,7 +69,18 @@ class ActivityDb():
         try:
             return c.fetchone()[0]
         except TypeError:
-            raise ValueError( "Teacher initials %s not found in database" % TeacherIni)
+            raise ValueError( "Teacher initials '%s' not found in database" % TeacherIni)
+
+    # Class stuff
+    def GetClassId(self, ClassName ):
+        ''' return the teacher id based on initials '''
+        c = self._conn.cursor()
+        c.execute("select id from classes where name=? or alias_in_tf=?", (ClassName, ClassName))
+        
+        try:
+            return c.fetchone()[0]
+        except TypeError:
+            raise ValueError( "Class name '%s' not found in database" % ClassName)
 
     # --------- insertions ------
     def AddActivity(self, ActData ):
@@ -77,5 +89,20 @@ class ActivityDb():
         '''
         
         TeacherId = self.GetTeacherId( ActData.getTeacher() )
+        ClassId = self.GetClassId( ActData.getClass() )
+
+        c = self._conn.cursor()
+        c.execute("insert into activities (name, teacher_id, class_id ) values (?,?,?)", 
+                  (ActData.getCourse(), TeacherId, ClassId ))
+        
+        # Save (commit) the changes and close cursor
+        self._conn.commit()
+        c.close()
+        
+    def GetActivities(self):
+        c = self._conn.cursor()
+        c.execute("select * from activities")
+        return c
+        
         
         

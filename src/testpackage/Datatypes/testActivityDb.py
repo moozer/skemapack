@@ -8,12 +8,15 @@ import unittest, os
 from Datatypes.ActivityDb import ActivityDb
 from Datatypes.ActivityData import ActivityData
 
-AD1 = ActivityData( Teacher = 'MON', Class = 'ClassName', Course = 'CourseName', 
+AD1 = ActivityData( Teacher = 'MON', Class = '2. semester network', Course = 'CourseName', 
                     LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
 
 Teachers = { 'MON': 'Morten', 'PFL': 'Poul'}
 TeacherIni = 'MON'
 TeacherId = 1
+
+AD_aux = ActivityData( Teacher = 'MON', Class = 'ClassName', Course = 'CourseName', 
+                    LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -54,14 +57,22 @@ class Test(unittest.TestCase):
     def testGetBadTeacherId(self):
         self.assertRaises( ValueError, self._db.GetTeacherId, "NonExistantTeacherInitials" )
         
-    
     def testInsertActivityBadTeacherIni(self):
-        AD1.setTeacher( "BadTeacherName ")
-        self.assertRaises( ValueError, self._db.AddActivity, AD1 )
+        AD_aux.setTeacher( "BadTeacherName ")
+        self.assertRaises( ValueError, self._db.AddActivity, AD_aux )
+        AD_aux.setTeacher( AD1.getTeacher())
         
 #    def testInsertAndRetrieve(self):
 #        self._db.AddActivity( AD1 )
-#        self.asserEqual( self._db.getActivitiesCount(), 1)
+#        self._db.AddActivity( AD1 )
+#        self._db.AddActivity( AD1 )
+#        self._db.AddActivity( AD1 )
+#        self._db.AddActivity( AD1 )
+#        self._db.AddActivity( AD1 )
+#        
+#        for row in self._db.GetActivities():
+#            print row
+#        #self.assertEqual( self._db.getActivitiesCount(), 1)
         
 
 
