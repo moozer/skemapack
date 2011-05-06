@@ -5,7 +5,7 @@ Testing basic tf import
 '''
 import unittest, os
 from Input.TfImporter.TfCsvImport import TfCsvImport
-from Datatypes.CourseData import CourseData
+from Datatypes.ActivityData import ActivityData
 
 # Test data
 TfInputCsvFile = "testdata/TF_skema.csv"
@@ -15,32 +15,32 @@ TfInputCsvMetaData = dict( TfInputCsvDefaultMetaData.items()
                            + {'Weeknumbers by column': TfInputCsvWeekNoByColumns}.items()  )
 
 Teacher1Initials = 'Teacher 7'
-Teacher1Classes = [ CourseData( LessonsList = {40: 6, 41: 8, 43: 10, 39: 4}, 
+Teacher1Classes = [ ActivityData( LessonsList = {40: 6, 41: 8, 43: 10, 39: 4}, 
                     Course = 'Subject H1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
-                    CourseData( LessonsList = {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4},
+                    ActivityData( LessonsList = {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4},
                     Course = 'Subject L1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
-                    CourseData( LessonsList = {1: 8, 2: 8, 3: 8, 50: 4}, 
+                    ActivityData( LessonsList = {1: 8, 2: 8, 3: 8, 50: 4}, 
                     Course = 'Subject O1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
-                    CourseData( LessonsList = {40: 6, 41: 8, 39: 4}, 
+                    ActivityData( LessonsList = {40: 6, 41: 8, 39: 4}, 
                     Course = 'Subject D1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk'),
-                    CourseData( LessonsList = {40: 8, 41: 8, 43: 8, 39: 4}, 
+                    ActivityData( LessonsList = {40: 8, 41: 8, 43: 8, 39: 4}, 
                     Course = 'Subject G1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk'),
-                    CourseData( LessonsList = {36: 4, 37: 6, 38: 8, 39: 10}, 
+                    ActivityData( LessonsList = {36: 4, 37: 6, 38: 8, 39: 10}, 
                     Course = 'Subject H1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk'),
-                    CourseData( LessonsList = {1: 8, 2: 8, 3: 8, 44: 6, 45: 6, 46: 6, 47: 6, 48: 8, 49: 8, 50: 8}, 
+                    ActivityData( LessonsList = {1: 8, 2: 8, 3: 8, 44: 6, 45: 6, 46: 6, 47: 6, 48: 8, 49: 8, 50: 8}, 
                     Course = 'Subject T1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk')
                     ]
 Teacher1FirstClass = Teacher1Classes[0]
 TfNumEntriesTeacher1 = 9
 Teacher2Initials = 'Teacher2'
-Teacher2FirstClass = CourseData( LessonsList = {36: 4, 37: 4, 38: 4, 39: 4, 40: 4, 41: 4, 43: 4}, 
+Teacher2FirstClass = ActivityData( LessonsList = {36: 4, 37: 4, 38: 4, 39: 4, 40: 4, 41: 4, 43: 4}, 
                                  Course = 'Subject B1', Teacher = 'Teacher2', Class = '1. Sem A Elektronik' )
 
 TeacherData = { 'Teacher2': {'FirstCourse': Teacher2FirstClass},
                'Teacher 7': {'FirstCourse': Teacher1FirstClass} }
 
 Class1Name = "1. Sem B Netværk"
-Class1FirstClass = CourseData ( Course = 'Subject A1', LessonsList = {35: 9}, 
+Class1FirstClass = ActivityData ( Course = 'Subject A1', LessonsList = {35: 9}, 
                                 Teacher = 'Teacher 9', Class = '1. Sem B Netv\xc3\xa6rk' )
 
 

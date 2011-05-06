@@ -6,13 +6,13 @@ Created on Nov 7, 2010
 '''
 import unittest
 from Output.TableOutput.TableOutput import TableOutput
-from Datatypes.CourseData import CourseData
+from Datatypes.ActivityData import ActivityData
 
 # test data
 IterableObject = [
-    CourseData( LessonsList = {40: 6, 41: 8, 43: 10, 39: 4}, 
+    ActivityData( LessonsList = {40: 6, 41: 8, 43: 10, 39: 4}, 
                 Course = 'Subject H1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
-    CourseData( LessonsList = {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4}, 
+    ActivityData( LessonsList = {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4}, 
                 Course = 'Subject L1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
                 ]
 ObjectAsTextile = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|
@@ -41,7 +41,7 @@ ObjectAsTextileRowAndColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|4
 '''
 
 IterableObjectEasy = [
-    CourseData( LessonsList = {1: 1000}, Course = 'Subject H1', 
+    ActivityData( LessonsList = {1: 1000}, Course = 'Subject H1', 
                 Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
                 ]
 
@@ -54,7 +54,7 @@ ObjectAsTextilePreparation = '''|. Class|. Teacher|. Course|-4|-3|-2|-1|0|1|2|3|
 '''
 
 IterableObjectExtra1 = [
-    CourseData( LessonsList = {41: 4, 42: 4, 43: 4}, Course = 'Vacation', Teacher = 'Teacher 7', Class = '' )
+    ActivityData( LessonsList = {41: 4, 42: 4, 43: 4}, Course = 'Vacation', Teacher = 'Teacher 7', Class = '' )
                 ]
 
 ObjectAsTextileExtra1 = '''|. Class|. Teacher|. Course|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|

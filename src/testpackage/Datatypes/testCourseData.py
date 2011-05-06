@@ -4,7 +4,7 @@ Created on May 5, 2011
 @author: morten
 '''
 import unittest
-from Datatypes.CourseData import CourseData
+from Datatypes.ActivityData import ActivityData
 
 Teacher1 = 'TeacherName'
 Class1 = 'ClassName'
@@ -14,21 +14,21 @@ WeekList1 = [10, 11, 12, 13]
 Week1 = 10
 LessonsInWeek1= 1
 
-CD1 = CourseData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
-CD1_2 = CourseData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
+CD1 = ActivityData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
+CD1_2 = ActivityData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
 
 Teacher2 = 'TeacherName2'
 Class2 = 'ClassName2'
 Course2 = 'CourseName2'
 LessonsByWeek2 = {20: 11, 21: 22, 22: 12, 23: 34}
-CD2 = CourseData( Teacher = Teacher2, Class = Class2, Course = Course2, LessonsList = LessonsByWeek2 )
+CD2 = ActivityData( Teacher = Teacher2, Class = Class2, Course = Course2, LessonsList = LessonsByWeek2 )
 
-class TestCourseData(unittest.TestCase):
+class TestActivityData(unittest.TestCase):
 
 
-    def testCourseDataConstructor(self):
-        ''' TestCourseData.testCourseDataConstructor : basic contructor values '''
-        CD = CourseData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
+    def testActivityDataConstructor(self):
+        ''' TestActivityData.testCourseDataConstructor : basic contructor values '''
+        CD = ActivityData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
         self.assertEqual( CD.getTeacher(), Teacher1 )
         self.assertEqual( CD.getClass(), Class1 )
         self.assertEqual( CD.getCourse(), Course1 )

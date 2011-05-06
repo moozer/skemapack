@@ -5,7 +5,7 @@ Created on Mar 3, 2011
 '''
 
 import os, csv
-from Datatypes.CourseData import CourseData 
+from Datatypes.CourseData import ActivityData 
 
 class TfExtraCsvImport:
     '''
@@ -114,7 +114,7 @@ class TfExtraCsvImport:
             LessonsByWeek = self._RetrieveLessonsByWeek(row)
             
             if (Teacher == self._TeacherToSearchFor or Class == self._ClassToSearchFor):
-                return CourseData( Teacher = Teacher, 
+                return ActivityData( Teacher = Teacher, 
                                    Class = Class,
                                    Course = Project,
                                    LessonsList = LessonsByWeek )

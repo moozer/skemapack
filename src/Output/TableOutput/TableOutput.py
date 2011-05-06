@@ -197,7 +197,7 @@ class TableOutput(object):
         ''' Generates the lines with the course info
         @param WeekNo: The list of weeks to include 
         @param ColumnSums: The dictionary which holds the sums (to be updated)
-        @param entry: the course entry as a CourseData datatype
+        @param entry: the course entry as a ActivityData datatype
         @return: the table text for the header part.
         ''' 
         TTable = ""

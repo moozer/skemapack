@@ -4,7 +4,7 @@ Created on May 5, 2011
 @author: morten
 '''
 
-class CourseData(object):
+class ActivityData(object):
     '''
     Data container for course data.
     '''
