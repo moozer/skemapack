@@ -5,7 +5,7 @@ Created on Mar 3, 2011
 '''
 
 import os, csv
-from Datatypes.CourseData import ActivityData 
+from Datatypes.ActivityData import ActivityData 
 
 class TfExtraCsvImport:
     '''
