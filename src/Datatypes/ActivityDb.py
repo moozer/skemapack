@@ -21,19 +21,9 @@ class ActivityDb():
 
         self._BaseDbFile = "Datatypes/BaseDb.sql" # sql file used for initialization of db
         self._InitDb(self._BaseDbFile)
-
-                
-    def getMetadata(self):
-        c = self._conn.cursor()
-        c.execute('select key, value from metadata')
-        
-        retval = {}
-        for row in c:
-            retval[row[0]] = row[1]
-
-        return retval
         
     def _InitDb( self, Filename ):
+        ''' initializes database with data from sql file '''
         c = self._conn.cursor()
 
         # Create table
@@ -45,4 +35,47 @@ class ActivityDb():
         # Save (commit) the changes and close cursor
         self._conn.commit()
         c.close()
+
+    # ---- getters and setters ----------
+
+    def GetMetadata(self):
+        ''' returns the complete list of metadata '''
+        c = self._conn.cursor()
+        c.execute('select key, value from metadata')
+        
+        retval = {}
+        for row in c:
+            retval[row[0]] = row[1]
+
+        return retval
    
+    def GetTeacherList(self):
+        ''' returns the complete list of metadata '''
+        c = self._conn.cursor()
+        c.execute('select initials, name from teachers')
+        
+        retval = {}
+        for row in c:
+            retval[row[0]] = row[1]
+
+        return retval
+
+    def GetTeacherId(self, TeacherIni ):
+        ''' return the teacher id based on initials '''
+        c = self._conn.cursor()
+        c.execute("select id from teachers where initials=?", (TeacherIni,))
+        
+        try:
+            return c.fetchone()[0]
+        except TypeError:
+            raise ValueError( "Teacher initials %s not found in database" % TeacherIni)
+
+    # --------- insertions ------
+    def AddActivity(self, ActData ):
+        ''' adds an activity to table using ids from other tables. 
+        @param ActData Data in the form of an ActivityData instance
+        '''
+        
+        TeacherId = self.GetTeacherId( ActData.getTeacher() )
+        
+        

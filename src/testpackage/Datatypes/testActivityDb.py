@@ -6,7 +6,14 @@ Created on May 6, 2011
 
 import unittest, os
 from Datatypes.ActivityDb import ActivityDb
+from Datatypes.ActivityData import ActivityData
 
+AD1 = ActivityData( Teacher = 'MON', Class = 'ClassName', Course = 'CourseName', 
+                    LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
+
+Teachers = { 'MON': 'Morten', 'PFL': 'Poul'}
+TeacherIni = 'MON'
+TeacherId = 1
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -23,15 +30,40 @@ class Test(unittest.TestCase):
             os.chdir(".")
         except:
             pass
+
+        self._db = ActivityDb(':memory:')
+
         
     def tearDown(self):
         os.chdir(self._StartDir )
         pass
 
     def testConstructor(self):
-        db = ActivityDb(':memory:')
-        self.assertTrue( len( db.getMetadata() ) > 0 )
+        self.assertTrue( len( self._db.GetMetadata() ) > 0 )
         
+    def testGetTeacherList(self):
+        TeacherListFromDb = self._db.GetTeacherList()
+        self.assertTrue( len( TeacherListFromDb ) > 0)
+
+        for ini in Teachers.keys():
+            self.assertEqual( TeacherListFromDb[ini], Teachers[ini])
+
+    def testGetTeacherId(self):
+        self.assertEqual( self._db.GetTeacherId( TeacherIni ), TeacherId )
+        
+    def testGetBadTeacherId(self):
+        self.assertRaises( ValueError, self._db.GetTeacherId, "NonExistantTeacherInitials" )
+        
+    
+    def testInsertActivityBadTeacherIni(self):
+        AD1.setTeacher( "BadTeacherName ")
+        self.assertRaises( ValueError, self._db.AddActivity, AD1 )
+        
+#    def testInsertAndRetrieve(self):
+#        self._db.AddActivity( AD1 )
+#        self.asserEqual( self._db.getActivitiesCount(), 1)
+        
+
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
