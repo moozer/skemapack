@@ -3,7 +3,7 @@ Created on Nov 14, 2010
 
 @author: morten
 '''
-import unittest, datetime
+import unittest, datetime, os
 from Input.HtmlScraper.DalumSkemaScraper import DalumSkemaScraper
 
 # TODO: testDalumSkemaScraper is not included when running unittest on testpackage
@@ -12,7 +12,7 @@ from Input.HtmlScraper.DalumSkemaScraper import DalumSkemaScraper
 DalumDataFile = "Dalum/Merete_2010_35.htm"
 DalumId = 1427
 DalumWeek = 35
-DalumData = open(DalumDataFile, 'r').read()
+# initialized later DalumData = open(DalumDataFile, 'r').read()
 DalumDataAppCount_Week34 = 19
 DalumDataAppCount_Week35 = 21
 DalumDataDates_Week35 = {   'Monday': datetime.datetime(2010, 8, 30, 0, 0),
@@ -47,7 +47,28 @@ DalumDataAppointment_Week35 = [
 DalumUrl = "http://80.208.123.243/uge%2035/"
 
 class Test(unittest.TestCase):
+    def setUp(self):
+        self._StartDir = os.getcwd()
+        this_dir = os.path.dirname( __file__ )
+        while 1 == 1:
+            this_dir, tail = os.path.split( this_dir )
+            if tail == 'src': # always go to src as default dir.
+                this_dir = os.path.join( this_dir, tail )
+                break
+        os.chdir( this_dir )
 
+        try: # if it fails, then we are in the correct directory.
+            os.chdir("testpackage/Input/testHtmlScraper")
+        except:
+            pass
+        
+        self._DalumData = open(DalumDataFile, 'r').read()
+        pass
+    
+    def tearDown(self):
+        os.chdir(self._StartDir )
+        pass
+ 
     def testConstructor(self):
         ''' DalumSkemaScraper : Test construction of dalum scraper '''
         s = DalumSkemaScraper( DalumId )
@@ -57,14 +78,14 @@ class Test(unittest.TestCase):
     def testSetSource(self):
         ''' DalumSkemaScraper : Test get/set html'''
         s = DalumSkemaScraper( DalumId )
-        s.SetHtml( DalumData )
+        s.SetHtml( self._DalumData )
         self.assertEqual( s.IsSourceWeb(), False)
-        self.assertEqual( s.GetHtml(),DalumData )
+        self.assertEqual( s.GetHtml(),self._DalumData )
 
     def testExtractAppointmentsFromHtml(self):
         ''' DalumSkemaScraper : Extract the appointments from the tests data file '''
         s = DalumSkemaScraper( DalumId )
-        s.SetHtml( DalumData )
+        s.SetHtml( self._DalumData )
         s.ExtractAppointments()
         self.assertEqual( s.GetDates(), DalumDataDates_Week35 )
         self.assertEqual( s.ExtractAppointments(), DalumDataAppCount_Week35 )
@@ -87,6 +108,7 @@ class Test(unittest.TestCase):
         s = DalumSkemaScraper( DalumId, [BadWeekNo]  )
         self.assertEqual( s.ExtractAppointments( NonFatal = True ), 0 )                
                 
+    @unittest.skip( "Lack access to last years data.")
     def testGetFromWeb(self):
         ''' DalumSkemaScraper : test correct retrieval of html from internet '''
         s = DalumSkemaScraper( DalumId, [DalumWeek]  )
@@ -95,6 +117,7 @@ class Test(unittest.TestCase):
         self.assertEqual( s.ExtractAppointments(), DalumDataAppCount_Week35 )
         self.assertEqual( s.GetAppointments(), DalumDataAppointment_Week35)
         
+    @unittest.skip( "Lack access to last years data.")
     def testGetMultiWeekFromWeb(self):
         ''' DalumSkemaScraper : test correct multiweek retrieval of html from internet '''
         s = DalumSkemaScraper( DalumId, [DalumWeek-1, DalumWeek]  )

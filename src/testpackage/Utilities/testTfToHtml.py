@@ -15,8 +15,15 @@ HtmlResultFile = "TfToHtmlWithExtra/testResult.html"
 class Test(unittest.TestCase):
     ''' Testing HtmlToIcs from an external shell like perspective '''
     def setUp(self):
-        ''' makes a copy of the test data to avoid overwriting something '''
         self._StartDir = os.getcwd()
+        this_dir = os.path.dirname( __file__ )
+        while 1 == 1:
+            this_dir, tail = os.path.split( this_dir )
+            if tail == 'src': # always go to src as default dir.
+                this_dir = os.path.join( this_dir, tail )
+                break
+        os.chdir( this_dir )
+        
         try: # if it fails, then we are in the correct directory.
             os.chdir("testpackage/Utilities")
         except:
