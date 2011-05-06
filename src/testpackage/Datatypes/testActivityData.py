@@ -23,6 +23,9 @@ Course2 = 'CourseName2'
 LessonsByWeek2 = {20: 11, 21: 22, 22: 12, 23: 34}
 CD2 = ActivityData( Teacher = Teacher2, Class = Class2, Course = Course2, LessonsList = LessonsByWeek2 )
 
+CD_aux = ActivityData( Teacher = Teacher2, Class = Class2, Course = Course2, LessonsList = LessonsByWeek2 )
+TeacherTestNAme = "TestName"
+
 class TestActivityData(unittest.TestCase):
 
 
@@ -43,6 +46,10 @@ class TestActivityData(unittest.TestCase):
 
     def testGetWeekValue(self):
         self.assertTrue( CD1.getLessons(Week1) == LessonsInWeek1 )
+        
+    def testSetTeacher(self):
+        CD_aux.setTeacher(TeacherTestNAme)
+        self.assertEqual( TeacherTestNAme, CD_aux.getTeacher( ))
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

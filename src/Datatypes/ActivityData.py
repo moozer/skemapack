@@ -32,6 +32,9 @@ class ActivityData(object):
     def getTeacher(self):
         return self._Teacher
 
+    def setTeacher(self, Teacher):
+        self._Teacher = Teacher
+
     def getClass(self):
         return self._Class
     
