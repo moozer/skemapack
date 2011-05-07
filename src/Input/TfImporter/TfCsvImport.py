@@ -106,8 +106,7 @@ class TfCsvImport():
             try:
                 row = [unicode(col, 'utf-8') for col in row]
             except:
-                print row
-                raise
+                raise ValueError( "Failed to convert csv data to unicode on line %d: %s" % (self._TfReader.line_num, str(row)) )
             
             self._lineno += 1
             if self._state in [u'FILEHEADER',  u'NEXTCLASS']:
