@@ -25,8 +25,8 @@ class TfCsvImport():
  
         # needed for parsing 
         # constants
-        self._NewClassKeywords = ["ANTAL STUDERENDE:"]
-        self._EndClassKeywords = ["I ALT", "I  ALT"]
+        self._NewClassKeywords = [u"ANTAL STUDERENDE:"]
+        self._EndClassKeywords = [u"I ALT", u"I  ALT"]
         self._CsvDelimiter = '\t'
         self._LinenoWithWeekinfo = 2
         
@@ -38,7 +38,7 @@ class TfCsvImport():
  
     def _InitSearchParams(self):
         ''' inits the variables needed in the search '''
-        self._state = 'FILEHEADER'
+        self._state = u'FILEHEADER'
         self._lineno = 0
         self._classStartLine = 0
         self._classEndLine = 0
@@ -103,33 +103,37 @@ class TfCsvImport():
         # TODO: needs error handling
         for row in self._TfReader:
 
-            row = [unicode(col) for col in row]
-
+            try:
+                row = [unicode(col, 'utf-8') for col in row]
+            except:
+                print row
+                raise
+            
             self._lineno += 1
-            if self._state in ['FILEHEADER',  'NEXTCLASS']:
+            if self._state in [u'FILEHEADER',  u'NEXTCLASS']:
                 self._DoStateFileHeader( row )
             
-            if self._state == 'CLASSHEADER':
+            if self._state == u'CLASSHEADER':
                 if self._lineno ==  self._classStartLine+1:
                     self._CurrentClass = row[0]
                 if self._lineno - 2 > self._classStartLine :
-                    self._state = 'INCLASS'
+                    self._state = u'INCLASS'
             
-            if self._state == 'INCLASS':
+            if self._state == u'INCLASS':
                 if row[0] in self._EndClassKeywords :
-                    self._state = 'CLASSFOOTER'
+                    self._state = u'CLASSFOOTER'
                     self._classEndLine = self._lineno
                 else: 
                     if len(row) > 5 :
                         self._CurrentTeacher = row[5]
                         self._CurrentCourse = row[0]
             
-            if self._state == 'CLASSFOOTER':
+            if self._state == u'CLASSFOOTER':
                 if  self._lineno  > self._classEndLine:
-                    self._state = 'NEXTCLASS'
+                    self._state = u'NEXTCLASS'
 
             # if we have a match, return the line        
-            if self._state in ['INCLASS']:
+            if self._state in [u'INCLASS']:
                 if self._CurrentTeacher == '':
                     continue
                 if self._CurrentClass == '':
@@ -159,35 +163,33 @@ class TfCsvImport():
             row = [unicode(col) for col in row]
 
             self._lineno += 1
-            if self._state in ['FILEHEADER',  'NEXTCLASS']:
+            if self._state in [u'FILEHEADER',  u'NEXTCLASS']:
                 self._DoStateFileHeader( row )
             
-            if self._state == 'CLASSHEADER':
+            if self._state == u'CLASSHEADER':
                 if self._lineno ==  self._classStartLine+1:
                     self._CurrentClass = row[0]
                 if self._lineno - 2 > self._classStartLine :
-                    self._state = 'INCLASS'
+                    self._state = u'INCLASS'
             
-            if self._state == 'INCLASS':
+            if self._state == u'INCLASS':
                 if row[0] in self._EndClassKeywords :
-                    self._state = 'CLASSFOOTER'
+                    self._state = u'CLASSFOOTER'
                     self._classEndLine = self._lineno
                 else: 
                     if len(row) > 5 :
                         self._CurrentTeacher = row[5]
                         self._CurrentCourse = row[0]
             
-            if self._state == 'CLASSFOOTER':
+            if self._state == u'CLASSFOOTER':
                 if  self._lineno  > self._classEndLine:
-                    self._state = 'NEXTCLASS'
+                    self._state = u'NEXTCLASS'
 
             # if we have a match, return the line        
-            if self._state in ['INCLASS']:
+            if self._state in [u'INCLASS']:
                 if self._CurrentTeacher == self._TeacherToSearchFor:
-                    yield {'Teacher':  self._CurrentTeacher, 
-                            'Class':    self._CurrentClass,
-                            'Course':   self._CurrentCourse,
-                            'Lessons by week':   self._RetrieveLessonsByWeek(row)}
+                    yield ActivityData( self._CurrentTeacher, self._CurrentClass,
+                                        self._CurrentCourse, self._RetrieveLessonsByWeek(row) )
         raise StopIteration
     
     def _DoStateFileHeader(self, row ):
@@ -212,10 +214,10 @@ class TfCsvImport():
                 return
                 
             if row[0] in self._NewClassKeywords :
-                self._state = 'CLASSHEADER'
+                self._state = u'CLASSHEADER'
                 self._classStartLine = self._lineno
-            if  row[5] == "LÆRER":
-                self._state = 'CLASSHEADER'
+            if  row[5] == u'LÆRER':
+                self._state = u'CLASSHEADER'
                 self._classStartLine = self._lineno - 1
 
     def _RetrieveLessonsByWeek(self, row):
