@@ -22,6 +22,16 @@ CREATE TABLE teachers (
     );
 INSERT INTO teachers VALUES(1,'MON','Morten');
 INSERT INTO teachers VALUES(2,'PFL','Poul');
+INSERT INTO teachers VALUES(3,'PDA','Per');
+INSERT INTO teachers VALUES(4,'PSS','Peder');
+INSERT INTO teachers VALUES(5,'SUN','Susanne');
+INSERT INTO teachers VALUES(6,'VL','Viggo');
+INSERT INTO teachers VALUES(7,'HHAL','Helge');
+INSERT INTO teachers VALUES(8,'BSZ','Bettina');
+INSERT INTO teachers VALUES(9,'JLU','Jan');
+INSERT INTO teachers VALUES(10,'IMR','Ib');
+INSERT INTO teachers VALUES(11,'KESM','Kent');
+
 COMMIT;
 
 -- table containing class names
@@ -31,10 +41,15 @@ CREATE TABLE classes (
     alias_in_tf TEXT,
     official_denomination TEXT -- The offical name of the class in the schools systems.
     );
-INSERT INTO classes VALUES(1, "1. semester network", "1. sem netværk", "asdf1234");
-INSERT INTO classes VALUES(2, "2. semester network", "2. sem netværk", "asdf1235");
-INSERT INTO classes VALUES(3, "3. semester network", "3. sem netværk", "asdf1236");
-INSERT INTO classes VALUES(4, "4. semester network", "4. sem netværk", "asdf1237");
+INSERT INTO classes VALUES(1, "1. semester network", "1. Sem B Netværk", "asdf1234");
+INSERT INTO classes VALUES(2, "2. semester network", "2. semester Network", "asdf1235");
+INSERT INTO classes VALUES(3, "3. semester network", "3. Sem B Netværk", "asdf1236");
+INSERT INTO classes VALUES(4, "4. semester network", "4. Communication", "asdf1237");
+INSERT INTO classes VALUES(5, "1. semester electronics", "1. Sem A Elektronik", "asdf1234");
+INSERT INTO classes VALUES(6, "2. semester electronics", "2. Sem Electronics", "asdf1235");
+INSERT INTO classes VALUES(7, "3. semester electronics", "3. Electronics", "asdf1236");
+INSERT INTO classes VALUES(8, "4. semester electronics", "4. Elektronik og Data", "asdf1237");
+INSERT INTO classes VALUES(9, "4. semester electronics", "4. Networks", "asdf1237");
 
 -- table containing semester definitions
 CREATE TABLE semesters (
