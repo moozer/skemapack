@@ -45,8 +45,13 @@ if __name__ == '__main__':
     tfi.EnableImportAll()
 
     i = 0    
-    for Activity in tfi:
-        i = i+1
-        db.AddActivity(Activity)
+    try:        
+        for Activity in tfi:
+            i = i+1
+            db.AddActivity(Activity)
+    except ValueError, e:
+        print "Error importing data from CSV"
+        print e
+        print "Consider updating base db file with relevant table entries"
         
     print "Done inserting data in DB %d entries inserted" % i
