@@ -43,6 +43,7 @@ Class1Name = "1. Sem B Netværk"
 Class1FirstClass = ActivityData ( Course = 'Subject A1', LessonsList = {35: 9}, 
                                 Teacher = 'Teacher 9', Class = '1. Sem B Netv\xc3\xa6rk' )
 
+FirstActivityInFile = ActivityData( "Teacher1", "1. Sem A Elektronik", "Subject A1", {35: 9})
 
 def RepeatTest( ParamList ):
     def RepeatT( TestToRun ):
@@ -168,6 +169,14 @@ class Test(unittest.TestCase):
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByClass(Class1Name)        
         self.assertEqual( tfi.next(), Class1FirstClass )
+
+    def testGetNextEntryEverything(self):
+        ''' TfImporter : test the retrieval of the first entry (Class 1)'''
+        tfi = TfCsvImport(TfInputCsvFile )
+        tfi.EnableImportAll()        
+        ADFromDb = tfi.next()
+        self.assertEqual( ADFromDb, FirstActivityInFile )
+        
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testPrintWebPage']

@@ -68,6 +68,7 @@ class TfCsvImport():
         self._InitSearchParams()
         self._TeacherToSearchFor = TeacherInitials
         self._ClassToSearchFor = None
+        self._AcceptAllActivities = False
         self._TfReader = csv.reader(open(self._InputFile, "r"), delimiter=self._CsvDelimiter, quotechar='\"')
         self._IsSearchEnabled = True
    
@@ -78,9 +79,21 @@ class TfCsvImport():
         self._InitSearchParams()
         self._ClassToSearchFor = ClassName
         self._TeacherToSearchFor = None
+        self._AcceptAllActivities = False
         self._TfReader = csv.reader(open(self._InputFile, "r"), delimiter=self._CsvDelimiter, quotechar='\"')
         self._IsSearchEnabled = True
              
+    def EnableImportAll( self ):
+        '''
+        Reset the search and accept all activities
+        '''
+        self._InitSearchParams()
+        self._ClassToSearchFor = None
+        self._TeacherToSearchFor = None
+        self._AcceptAllActivities = True
+        self._TfReader = csv.reader(open(self._InputFile, "r"), delimiter=self._CsvDelimiter, quotechar='\"')
+        self._IsSearchEnabled = True
+
     def next( self ):
         ''' 
         based on the current search method, the next entry found is returned
@@ -115,7 +128,9 @@ class TfCsvImport():
 
             # if we have a match, return the line        
             if self._state in ['INCLASS']:
-                if (self._CurrentTeacher == self._TeacherToSearchFor or self._CurrentClass == self._ClassToSearchFor):
+                if (    self._CurrentTeacher == self._TeacherToSearchFor 
+                    or  self._CurrentClass == self._ClassToSearchFor
+                    or  self._AcceptAllActivities):
                     return ActivityData(  Teacher =  self._CurrentTeacher, 
                                         Class =    self._CurrentClass,
                                         Course =   self._CurrentCourse,
