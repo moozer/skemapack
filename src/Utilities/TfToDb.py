@@ -49,9 +49,10 @@ if __name__ == '__main__':
         for Activity in tfi:
             i = i+1
             db.AddActivity(Activity)
+            print "Processing activity %d" % i
     except ValueError, e:
         print "Error importing data from CSV"
-        print e
+        print unicode(e)
         print "Consider updating base db file with relevant table entries"
         
     print "Done inserting data in DB %d entries inserted" % i
