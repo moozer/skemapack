@@ -12,7 +12,7 @@ class ActivityDb():
     classdocs
     '''
 
-    def __init__(self, DbFile):
+    def __init__(self, DbFile, BaseDbFile = u"Datatypes/BaseDb.sql"):
         '''
         Constructor
         @param DbFile The file to use. Try ':memory:'
@@ -21,7 +21,7 @@ class ActivityDb():
         self._conn = sqlite3.connect(DbFile)
         self._conn.row_factory = sqlite3.Row #we want to access rows by columnname
 
-        self._BaseDbFile = "Datatypes/BaseDb.sql" # sql file used for initialization of db
+        self._BaseDbFile = BaseDbFile # sql file used for initialization of db
         self._InitDb(self._BaseDbFile)
         
     def _InitDb( self, Filename ):
@@ -112,6 +112,7 @@ class ActivityDb():
         return ActivityId
         
     def GetActivities(self):
+        ''' returns an iterable object of ActivityData '''
         return self._ActivityList(self._conn)
         
     def _ActivityList( self,conn ):
