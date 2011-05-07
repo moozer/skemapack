@@ -8,8 +8,7 @@ class ActivityData(object):
     '''
     Data container for course data.
     '''
-
-
+    
     def __init__(self, Teacher, Class, Course, LessonsList ):
         '''
         Constructor
@@ -31,6 +30,9 @@ class ActivityData(object):
     def __ne__(self, OtherAD):
         return not self.__eq__(OtherAD)
     
+    def __str__(self):
+        return self._Teacher + " " + self._Class + " " + self._Course + " " + str( self._LessonsList )
+        
     # basic getters
     def getTeacher(self):
         return self._Teacher
