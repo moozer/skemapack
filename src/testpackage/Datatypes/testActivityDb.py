@@ -62,18 +62,12 @@ class Test(unittest.TestCase):
         self.assertRaises( ValueError, self._db.AddActivity, AD_aux )
         AD_aux.setTeacher( AD1.getTeacher())
         
-#    def testInsertAndRetrieve(self):
-#        self._db.AddActivity( AD1 )
-#        self._db.AddActivity( AD1 )
-#        self._db.AddActivity( AD1 )
-#        self._db.AddActivity( AD1 )
-#        self._db.AddActivity( AD1 )
-#        self._db.AddActivity( AD1 )
-#        
-#        for row in self._db.GetActivities():
-#            print row
-#        #self.assertEqual( self._db.getActivitiesCount(), 1)
-        
+    def testInsertAndRetrieve(self):
+        self._db.AddActivity( AD1 )
+
+        for ADFromDb in self._db.GetActivities():
+            self.assertEqual( ADFromDb, AD1 )
+                    
 
 
 if __name__ == "__main__":

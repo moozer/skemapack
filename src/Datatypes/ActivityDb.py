@@ -4,7 +4,8 @@ Created on May 6, 2011
 @author: morten
 '''
 
-import sqlite3, os
+import sqlite3
+from Datatypes.ActivityData import ActivityData
 
 class ActivityDb():
     '''
@@ -18,6 +19,7 @@ class ActivityDb():
         '''
         self._DbFile = DbFile
         self._conn = sqlite3.connect(DbFile)
+        self._conn.row_factory = sqlite3.Row #we want to access rows by columnname
 
         self._BaseDbFile = "Datatypes/BaseDb.sql" # sql file used for initialization of db
         self._InitDb(self._BaseDbFile)
@@ -94,15 +96,55 @@ class ActivityDb():
         c = self._conn.cursor()
         c.execute("insert into activities (name, teacher_id, class_id ) values (?,?,?)", 
                   (ActData.getCourse(), TeacherId, ClassId ))
-        
+
+        c.execute( "select last_insert_rowid();" )
+        ActivityId = c.fetchone()[0]
+
+        Lessons = ActData.getLessonsList()
+        for Week in Lessons.keys():
+            values = (ActivityId, Lessons[Week], Week )
+            c.execute( "insert into lessons (activity_id, number_of_lessons, week) values( ?,?,? ) ", values)
+                    
         # Save (commit) the changes and close cursor
         self._conn.commit()
         c.close()
         
+        return ActivityId
+        
     def GetActivities(self):
+        return self._ActivityList(self._conn)
+        
+    def _ActivityList( self,conn ):
+        ''' Makes the actual db call.
+            functions as an iterator returning ActivityData objects '''
+        c = conn.cursor()
+        queryActivities = '''
+            select     activities.id as id, activities.name as name, 
+                       teachers.initials as teacher, classes.name as class 
+            from       activities, teachers, classes
+            where      activities.teacher_id = teachers.id
+            and        activities.class_id = classes.id
+            '''
+        c.execute(queryActivities)
+        
+        for row in c:
+            LessonsList = self.GetLessonByActivityId( row['id'] )
+            yield ActivityData( Teacher = row['teacher'], Class = row['class'], 
+                                Course = row['name'], LessonsList = LessonsList )
+    
+        raise StopIteration
+
+
+    def GetLessonByActivityId(self, ActId ):
         c = self._conn.cursor()
-        c.execute("select * from activities")
-        return c
+        queryLessons = 'select week, number_of_lessons from lessons where activity_id = ?'
         
+        c.execute(queryLessons, (ActId,))
+
+        LessonList = {}
+        for row in c:
+            LessonList[row['week']] = row['number_of_lessons']
         
-        
+        return LessonList
+            
+            

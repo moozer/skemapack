@@ -60,4 +60,12 @@ CREATE TABLE activities (
     --FOREIGN KEY(semester_id) REFERENCES semesters(id)
     );
 
-    
+-- Lessons table
+-- contains the list of which lessons per week
+CREATE TABLE lessons (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    activity_id INTEGER,
+    week date, -- this is the date of the monday of the corresponding week
+    number_of_lessons INTEGER,
+    FOREIGN KEY (activity_id) REFERENCES activities( id )
+)    
