@@ -22,13 +22,13 @@ Teacher1Classes = [ ActivityData( LessonsList = {40: 6, 41: 8, 43: 10, 39: 4},
                     ActivityData( LessonsList = {1: 8, 2: 8, 3: 8, 50: 4}, 
                     Course = 'Subject O1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
                     ActivityData( LessonsList = {40: 6, 41: 8, 39: 4}, 
-                    Course = 'Subject D1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk'),
+                    Course = 'Subject D1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk'),
                     ActivityData( LessonsList = {40: 8, 41: 8, 43: 8, 39: 4}, 
-                    Course = 'Subject G1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk'),
+                    Course = 'Subject G1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk'),
                     ActivityData( LessonsList = {36: 4, 37: 6, 38: 8, 39: 10}, 
-                    Course = 'Subject H1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk'),
+                    Course = 'Subject H1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk'),
                     ActivityData( LessonsList = {1: 8, 2: 8, 3: 8, 44: 6, 45: 6, 46: 6, 47: 6, 48: 8, 49: 8, 50: 8}, 
-                    Course = 'Subject T1', Teacher = 'Teacher 7', Class = '1. Sem B Netv\xc3\xa6rk')
+                    Course = 'Subject T1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk')
                     ]
 Teacher1FirstClass = Teacher1Classes[0]
 TfNumEntriesTeacher1 = 9
@@ -41,7 +41,7 @@ TeacherData = { 'Teacher2': {'FirstCourse': Teacher2FirstClass},
 
 Class1Name = "1. Sem B Netværk"
 Class1FirstClass = ActivityData ( Course = 'Subject A1', LessonsList = {35: 9}, 
-                                Teacher = 'Teacher 9', Class = '1. Sem B Netv\xc3\xa6rk' )
+                                Teacher = 'Teacher 9', Class = '1. Sem B Netværk' )
 
 FirstActivityInFile = ActivityData( "Teacher1", "1. Sem A Elektronik", "Subject A1", {35: 9})
 
@@ -176,6 +176,7 @@ class Test(unittest.TestCase):
         tfi.EnableImportAll()        
         ADFromDb = tfi.next()
         self.assertEqual( ADFromDb, FirstActivityInFile )
+
         
         
 if __name__ == "__main__":

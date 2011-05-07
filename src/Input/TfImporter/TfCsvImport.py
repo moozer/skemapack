@@ -103,6 +103,8 @@ class TfCsvImport():
         # TODO: needs error handling
         for row in self._TfReader:
 
+            row = [unicode(col) for col in row]
+
             self._lineno += 1
             if self._state in ['FILEHEADER',  'NEXTCLASS']:
                 self._DoStateFileHeader( row )
@@ -128,6 +130,11 @@ class TfCsvImport():
 
             # if we have a match, return the line        
             if self._state in ['INCLASS']:
+                if self._CurrentTeacher == '':
+                    continue
+                if self._CurrentClass == '':
+                    continue
+                
                 if (    self._CurrentTeacher == self._TeacherToSearchFor 
                     or  self._CurrentClass == self._ClassToSearchFor
                     or  self._AcceptAllActivities):
@@ -148,6 +155,8 @@ class TfCsvImport():
         
         # TODO: needs error handling
         for row in self._TfReader:
+
+            row = [unicode(col) for col in row]
 
             self._lineno += 1
             if self._state in ['FILEHEADER',  'NEXTCLASS']:
