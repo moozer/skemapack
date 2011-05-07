@@ -41,6 +41,9 @@ class TestActivityData(unittest.TestCase):
     def testEqual(self):
         self.assertTrue( CD1 == CD1_2 )
         
+    def testNotEqual(self):
+        self.assertTrue( CD1 != CD2 )
+        
     def testGetWeekNo(self):
         self.assertTrue( WeekList1 == CD1.getListOfWeeks() )
 

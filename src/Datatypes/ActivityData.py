@@ -20,14 +20,17 @@ class ActivityData(object):
         self._LessonsList = LessonsList
     
     # operators
-    def __eq__(self, OtherCD ):
+    def __eq__(self, OtherAD ):
         ''' Equal operator. '''
-        if( self._Teacher != OtherCD.getTeacher() ): return False
-        if( self._Class != OtherCD.getClass() ): return False
-        if( self._Course != OtherCD.getCourse() ): return False
-        if( self._LessonsList != OtherCD.getLessonsList() ): return False
+        if( self._Teacher != OtherAD.getTeacher() ): return False
+        if( self._Class != OtherAD.getClass() ): return False
+        if( self._Course != OtherAD.getCourse() ): return False
+        if( self._LessonsList != OtherAD.getLessonsList() ): return False
         return True
 
+    def __ne__(self, OtherAD):
+        return not self.__eq__(OtherAD)
+    
     # basic getters
     def getTeacher(self):
         return self._Teacher
