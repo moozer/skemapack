@@ -6,16 +6,17 @@ Created on Mar 3, 2011
 import unittest, os
 from Input.TfImporter.TfExtraCsvImport import TfExtraCsvImport
 from Datatypes.ActivityData import ActivityData
+from testpackage.Utilities.SupportStuff import *
 
 Teacher1Initials = 'Teacher 7'
-TfExtraInputCsvFile = 'testdata/TF_extra_1.csv'
+TfExtraInputCsvFile = 'TfImporter/TF_extra_1.csv'
 #Teacher1FirstEntry = {'Course': 'Vacation', 'Lessons by week': {3: 4, 5: 35, 6: 35, 7: 35}, 'Teacher': 'Teacher 7', 'Class': 'Teacher 7'}
 Teacher1FirstEntry = ActivityData(Course = 'Vacation', LessonsList = {3: 4, 5: 35, 6: 35, 7: 35}, 
                                 Teacher = 'Teacher 7', Class = 'Teacher 7' )
 TfNumEntriesTeacher1 = 1
 
 #set 2. one week only and decimal values
-TfExtraInputCsvFile2 = 'testdata/TF_extra_2.csv'
+TfExtraInputCsvFile2 = 'TfImporter/TF_extra_2.csv'
 TfExtraInputCsvFile2Entries = [
    ActivityData(Course = 'Vacation', LessonsList = {13: 4.0}, Teacher = 'Teacher 7', Class ='Teacher 7'),
    ActivityData(Course = 'Something else', LessonsList = {13: 1.5}, Teacher = 'Teacher 7', Class = 'Teacher 7')
@@ -23,22 +24,14 @@ TfExtraInputCsvFile2Entries = [
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self._StartDir = os.getcwd()
-        this_dir = os.path.dirname( __file__ )
-        while 1 == 1:
-            this_dir, tail = os.path.split( this_dir )
-            if tail == 'src': # always go to src as default dir.
-                this_dir = os.path.join( this_dir, tail )
-                break
-        os.chdir( this_dir )
-
-        try: # if it fails, then we are in the correct directory.
-            os.chdir("testpackage/Input/testTfImporter")
-        except:
-            pass
+        CloneTestData() 
+        self._StartDir = ChDirToSrc()
+        os.chdir(TempDataDir)
         pass
-    
+
     def tearDown(self):
+        ''' Removes temporary data '''
+        RemoveTestData()        
         os.chdir(self._StartDir )
         pass
    

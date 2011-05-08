@@ -67,7 +67,8 @@ class Test(unittest.TestCase):
 
         for ADFromDb in self._db.GetActivities():
             self.assertEqual( ADFromDb, AD1 )
-                    
+       
+                 
 
 
 if __name__ == "__main__":

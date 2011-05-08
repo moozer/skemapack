@@ -23,8 +23,7 @@ class Test(unittest.TestCase):
     ''' Testing HtmlToIcs from an external shell like perspective '''
 
     def setUp(self):
-        CloneTestData()
-        
+        CloneTestData() 
         self._StartDir = ChDirToSrc()
         os.chdir(TempDataDir)
         pass

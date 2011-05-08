@@ -4,8 +4,8 @@ Created on May 7, 2011
 @author: morten
 '''
 import unittest, os
+from testpackage.Utilities.SupportStuff import *
 
-TempDataDir="tempdata"
 TfFile = "TfToHtmlWithExtra/TF_skema.csv"
 TfExtraFile = "TfToHtmlWithExtra/TF_extra_1.csv"
 Outputfilename = "tftodbtest.sqlite"
@@ -17,35 +17,14 @@ PythonBinaryToUse = "python2.7"
 class Test(unittest.TestCase):
     ''' Testing HtmlToIcs from an external shell like perspective '''
     def setUp(self):
-        self._StartDir = os.getcwd()
-        this_dir = os.path.dirname( __file__ )
-        while 1 == 1:
-            this_dir, tail = os.path.split( this_dir )
-            if tail == 'src': # always go to src as default dir.
-                this_dir = os.path.join( this_dir, tail )
-                break
-        os.chdir( this_dir )
-        
-        try: # if it fails, then we are in the correct directory.
-            os.chdir("testpackage/Utilities")
-        except:
-            pass
-        
-        if os.system('sh CloneTestData.sh'):
-            raise IOError( "CloneTestData.sh not found in %s" % os.getcwd())
-
-        # every work from temp data dir.
-        os.chdir(TempDataDir)
+        CloneTestData() 
+        self._StartDir = ChDirToSrc()
+        os.chdir(TempDataDir)       
         pass
 
     def tearDown(self):
         ''' Removes temporary data '''
-        os.chdir(self._StartDir )
-        try: # if it fails, then we are in the correct directory.
-            os.chdir("testpackage/Utilities")
-        except:
-            pass
-        os.system('sh RemoveTestData.sh')
+        RemoveTestData()        
         os.chdir(self._StartDir )
         pass
 
