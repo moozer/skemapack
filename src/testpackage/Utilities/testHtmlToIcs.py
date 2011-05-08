@@ -5,9 +5,9 @@ Created on Nov 11, 2010
 '''
 import unittest
 import os
+from SupportStuff import *
 
 HtmlToIcsFilename= "../../../Utilities/HtmlToIcs.py"
-TempDataDir="tempdata"
 HtmlFileToProcess = "HtmlFromSkema/laererSkema.aspx_29-52.html"
 IcsResultFile = "HtmlFromSkema/laererSkema.aspx_29-52.ics"
 Outputfilename = "testResult.ics"
@@ -21,36 +21,17 @@ SkemaId = 5421
 
 class Test(unittest.TestCase):
     ''' Testing HtmlToIcs from an external shell like perspective '''
-    def setUp(self):
-        self._StartDir = os.getcwd()
-        this_dir = os.path.dirname( __file__ )
-        while 1 == 1:
-            this_dir, tail = os.path.split( this_dir )
-            if tail == 'src': # always go to src as default dir.
-                this_dir = os.path.join( this_dir, tail )
-                break
-        os.chdir( this_dir )
-        
-        try: # if it fails, then we are in the correct directory.
-            os.chdir("testpackage/Utilities")
-        except:
-            pass
-        
-        if os.system('sh CloneTestData.sh'):
-            raise IOError( "CloneTestData.sh not found in %s" % os.getcwd())
 
-        # every work from temp data dir.
+    def setUp(self):
+        CloneTestData()
+        
+        self._StartDir = ChDirToSrc()
         os.chdir(TempDataDir)
         pass
 
     def tearDown(self):
         ''' Removes temporary data '''
-        os.chdir(self._StartDir )
-        try: # if it fails, then we are in the correct directory.
-            os.chdir("testpackage/Utilities")
-        except:
-            pass
-        os.system('sh RemoveTestData.sh')
+        RemoveTestData()        
         os.chdir(self._StartDir )
         pass
 
