@@ -25,7 +25,7 @@ def RemoveTestData():
 def ChDirToSrc():
     ''' Chdir to the src directory. This is to give a known base line '''
     InitialDir = os.getcwd()
-    this_dir = os.path.dirname(InitialDir)
+    this_dir = InitialDir
     while 1 == 1:
         this_dir, tail = os.path.split(this_dir)
         if tail == 'src': # always go to src as default dir.

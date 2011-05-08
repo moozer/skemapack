@@ -7,6 +7,8 @@ Created on May 6, 2011
 import unittest, os
 from Datatypes.ActivityDb import ActivityDb
 from Datatypes.ActivityData import ActivityData
+from testpackage.Utilities.SupportStuff import *
+from testpackage.Utilities.TestdataSupport.DbToHtml import *
 
 AD1 = ActivityData( Teacher = 'MON', Class = '2. semester network', Course = 'CourseName', 
                     LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
@@ -18,26 +20,19 @@ TeacherId = 1
 AD_aux = ActivityData( Teacher = 'MON', Class = 'ClassName', Course = 'CourseName', 
                     LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
 
+
 class Test(unittest.TestCase):
     def setUp(self):
-        self._StartDir = os.getcwd()
-        this_dir = os.path.dirname( __file__ )
-        while 1 == 1:
-            this_dir, tail = os.path.split( this_dir )
-            if tail == 'src': # always go to src as default dir.
-                this_dir = os.path.join( this_dir, tail )
-                break
-        os.chdir( this_dir )
-        
-        try: # if it fails, then we are in the correct directory.
-            os.chdir(".")
-        except:
-            pass
+        CloneTestData() 
+        self._StartDir = ChDirToSrc()
+        self._db = ActivityDb( ':memory:') 
 
-        self._db = ActivityDb(':memory:')
+        os.chdir(TempDataDir)
+        pass
 
-        
     def tearDown(self):
+        ''' Removes temporary data '''
+        RemoveTestData()        
         os.chdir(self._StartDir )
         pass
 
@@ -68,6 +63,11 @@ class Test(unittest.TestCase):
         for ADFromDb in self._db.GetActivities():
             self.assertEqual( ADFromDb, AD1 )
        
+    def testConstructorUsingExistingDb(self):
+        try:
+            self._db = ActivityDb( TestDbFilename )
+        except:
+            self.assertEqual( 1,0, "Failed to instantiate using db filename %s" % TestDbFilename)
                  
 
 

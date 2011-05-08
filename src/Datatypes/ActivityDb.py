@@ -22,7 +22,13 @@ class ActivityDb():
         self._conn.row_factory = sqlite3.Row #we want to access rows by columnname
 
         self._BaseDbFile = BaseDbFile # sql file used for initialization of db
-        self._InitDb(self._BaseDbFile)
+
+        # if db has emtadata, then it is accepted.
+        try:
+            self.GetMetadata()
+        except sqlite3.OperationalError:
+            self._InitDb(self._BaseDbFile)
+    
         
     def _InitDb( self, Filename ):
         ''' initializes database with data from sql file '''
