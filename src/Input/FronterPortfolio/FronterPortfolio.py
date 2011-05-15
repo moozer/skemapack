@@ -36,7 +36,7 @@ class FronterPortfolio(object):
         
         return StudentNames
 
-    def getHandins(self):
+    def getHandinTitle(self):
         Handins = []
         soup = BeautifulSoup(self._html)
         maindivs = soup.findAll( 'div', {'id': 'enclosure_div'})
@@ -50,4 +50,35 @@ class FronterPortfolio(object):
         
         return Handins
 
+    def getHandinsByStudent(self):
+        ''' currently all students '''
+        soup = BeautifulSoup(self._html)
+        maindivs = soup.findAll( 'div', {'id': 'enclosure_div'})
+        
+        HandinTitles = self.getHandinTitle()
+        
+        for maindiv in maindivs:
+            entries = maindiv.findAll('tr', {'class':"tronhover"})
+            for entry in entries:
+                tds = entry.findAll('td')
+                Handins = []
 
+                for td in tds:
+                    try:
+                        Handins.append( td.a['title'] )
+                    except:
+                        Handins.append(  "<none>" )
+            
+                # making return dictionary    
+                if len(Handins) != len(HandinTitles):
+                    raise ValueError("Data error, title and data size mismatch")
+
+                ret = {}
+                for i in range( 0, len(Handins )):
+                    ret[HandinTitles[i]] = Handins[i]
+                
+                yield ret
+
+        raise StopIteration
+
+        

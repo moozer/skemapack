@@ -23,20 +23,41 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
    
+    @unittest.skip("for speed")
     def testReadFromFile(self):
         fp = FronterPortfolio( PortfolioFilename )
         self.assertEqual( fp.getFilename(), PortfolioFilename )
 
+    @unittest.skip("for speed")
     def testGetStudentnames(self):
         fp = FronterPortfolio( PortfolioFilename )
         res =  fp.getStudentNames() 
         self.assertEqual( PortfolioStudents, res )
         
-    def testGetHandins(self):
+    @unittest.skip("for speed")
+    def testGetHandinTitles(self):
         fp = FronterPortfolio( PortfolioFilename )
-        res =  fp.getHandins() 
+        res =  fp.getHandinTitle() 
         self.assertEqual( PortfolioHandins, res )
         
+    def testGetHandinsByStudent(self):
+        fp = FronterPortfolio( PortfolioFilename )
+        res =  fp.getHandinsByStudent() 
+        
+        i = 0
+        Result = []
+        for StudentHandins in res:
+            Result.append( StudentHandins )
+            i = i+1
+            if i == 3:
+                break
+        
+        self.assertEqual( PortfolioHandinsFirstStudent, Result[0] )
+        self.assertEqual( PortfolioHandinsSecondStudent, Result[1] )
+        self.assertEqual( PortfolioHandinsThirdStudent, Result[2] )
+            
+        
+    
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testReadFromFile']
