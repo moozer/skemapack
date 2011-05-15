@@ -31,6 +31,12 @@ class Test(unittest.TestCase):
         fp = FronterPortfolio( PortfolioFilename )
         res =  fp.getStudentNames() 
         self.assertEqual( PortfolioStudents, res )
+        
+    def testGetHandins(self):
+        fp = FronterPortfolio( PortfolioFilename )
+        res =  fp.getHandins() 
+        self.assertEqual( PortfolioHandins, res )
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testReadFromFile']

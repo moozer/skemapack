@@ -36,3 +36,18 @@ class FronterPortfolio(object):
         
         return StudentNames
 
+    def getHandins(self):
+        Handins = []
+        soup = BeautifulSoup(self._html)
+        maindivs = soup.findAll( 'div', {'id': 'enclosure_div'})
+        for maindiv in maindivs:
+            entries = maindiv.findAll('th', {'class':"label2"})
+            for entry in entries:
+                tds = entry.findAll('a')
+                for td in tds:
+                    if td != None:
+                        Handins.append( td['title'] )
+        
+        return Handins
+
+
