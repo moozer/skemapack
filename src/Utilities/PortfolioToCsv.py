@@ -38,7 +38,7 @@ if __name__ == '__main__':
     
     i = 0
     for StudentHandins in fp.getHandinsByStudent():
-        print "%d Student %s" % StudentList[i]
+        print "%d Student %s" % (i, StudentList[i] )
         outfile.write( StudentList[i])
         for HandinName in sorted( StudentHandins.iterkeys() ):
             outfile.write( "\t%s"% StudentHandins[HandinName])

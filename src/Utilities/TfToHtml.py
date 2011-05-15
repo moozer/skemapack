@@ -8,6 +8,7 @@ Created on Nov 17, 2010
 
 from optparse import OptionParser
 from Input.TfImporter.TfCsvImport import TfCsvImport
+from Input.TfImporter.TfExtraCsvImport import TfExtraCsvImport
 from Output.TableOutput.TableOutput import TableOutput
 
 Header = '''<html>
@@ -38,6 +39,8 @@ def ParseCmdLineOptions():
                       help="A comma separated list of teacher initials", metavar="TEACHERS")
     parser.add_option("--classes", dest="classes", default = None,
                       help="A comma separated list of class name", metavar="CLASSES")
+    parser.add_option("-x", "--extrafile", dest="extrafile", default = None,
+                      help="Extra csv data to include", metavar="EXTRAFILE")
     parser.add_option("-s", "--startweek", dest="startweek", type="int", default = 1,
                       help="The start week number (default: 1)", metavar="STARTWEEK")
     parser.add_option("-e", "--endweek", dest="endweek", type="int", default = 52,
@@ -61,13 +64,21 @@ def main():
     
     print "Loading CSV file:%s"%opt.infile
     tfi = TfCsvImport( opt.infile )
+    if opt.extrafile:
+        tfix = TfExtraCsvImport( opt.extrafile )
+    else:
+        tfix = None
+        
     try:
         if opt.teachers:
             for Teacher in opt.teachers.split(','):
                 tfi.EnableImportByTeacher(Teacher)
+                tfix.EnableImportByTeacher(Teacher)
                 
                 print "Processing data and generating HTML for teacher %s"%Teacher
-                TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True )
+                TO = TableOutput( tfi, ItObjectExtra=tfix,
+                                  IncludeHeader=True, IncludeRowSums=True, 
+                                  IncludeColumnSums=True, IncludePreperation=True )
                 HTML = TO.GetHtmlTable(opt.startweek, opt.endweek)
                 
                 print "Saving HTML"
@@ -78,6 +89,7 @@ def main():
         if opt.classes:                
             for Class in opt.classes.split(','):
                 tfi.EnableImportByClass(Class)
+                tfix.EnableImportByClass(Class)
                 
                 print "Processing data and generating HTML for Class %s"%Class
                 TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True )
