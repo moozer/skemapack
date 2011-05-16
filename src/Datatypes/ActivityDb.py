@@ -150,7 +150,20 @@ class ActivityDb():
                     and        activities.class_id = classes.id
                     '''
                 yield queryActivities
-        else:
+        if Classes!=[]:
+            for thisClass in Classes:
+                queryActivities = '''
+                    select     activities.id as id, activities.name as name, 
+                               teachers.initials as teacher, classes.name as class 
+                    from       activities, teachers, classes
+                    '''
+                queryActivities += "where      classes.name='%s'"%thisClass
+                queryActivities += '''
+                    and        activities.teacher_id = teachers.id
+                    and        activities.class_id = classes.id
+                    '''
+                yield queryActivities
+        if Teachers!=[] and Classes!=[]:
             queryActivities = '''
             select     activities.id as id, activities.name as name, 
                        teachers.initials as teacher, classes.name as class 

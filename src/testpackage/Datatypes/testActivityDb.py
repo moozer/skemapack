@@ -91,7 +91,6 @@ class Test(unittest.TestCase):
         listOfAD = []
         for ADFromDb in self._db.GetActivities( Classes=["2. semester network"] ):
             listOfAD.append(ADFromDb)
-            print ADFromDb.getTeacher()
         self.assertEqual( listOfAD, [AD1,AD3] )
        
     def testConstructorUsingExistingDb(self):
