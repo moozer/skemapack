@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 '''
 Created on May 15, 2011
 
@@ -39,7 +41,7 @@ if __name__ == '__main__':
     i = 0
     for StudentHandins in fp.getHandinsByStudent():
         print "%d Student %s" % (i, StudentList[i] )
-        outfile.write( StudentList[i])
+        outfile.write( StudentList[i].encode('utf-8'))
         for HandinName in sorted( StudentHandins.iterkeys() ):
             outfile.write( "\t%s"% StudentHandins[HandinName])
         outfile.write( "\n")

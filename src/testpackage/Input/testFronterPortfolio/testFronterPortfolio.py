@@ -23,18 +23,15 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
    
-    @unittest.skip("for speed")
     def testReadFromFile(self):
         fp = FronterPortfolio( PortfolioFilename )
         self.assertEqual( fp.getFilename(), PortfolioFilename )
 
-    @unittest.skip("for speed")
     def testGetStudentnames(self):
         fp = FronterPortfolio( PortfolioFilename )
         res =  fp.getStudentNames() 
         self.assertEqual( PortfolioStudents, res )
         
-    @unittest.skip("for speed")
     def testGetHandinTitles(self):
         fp = FronterPortfolio( PortfolioFilename )
         res =  fp.getHandinTitle() 
@@ -51,7 +48,7 @@ class Test(unittest.TestCase):
             i = i+1
             if i == 3:
                 break
-        
+
         self.assertEqual( PortfolioHandinsFirstStudent, Result[0] )
         self.assertEqual( PortfolioHandinsSecondStudent, Result[1] )
         self.assertEqual( PortfolioHandinsThirdStudent, Result[2] )

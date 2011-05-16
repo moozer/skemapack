@@ -1,0 +1,1224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<title>Portfolio</title>
+
+<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+<META HTTP-EQUIV="Content-Language" CONTENT="en" />
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW, NOARCHIVE"/>
+<link rel="stylesheet" type="text/css" href="http://images.fronter.com/vol92_images//default/content.php?ie=0" /><link rel="shortcut icon" href="http://fronter.com/eal/imessanger/images/fronter_icon.ico" type="image/x-icon" /><link rel="stylesheet" type="text/css" href="http://fronter.com/eal/links/code/customdialog.css" /><link rel="stylesheet" type="text/css" href="http://images.fronter.com/vol92_images/wcfe3/cust.css" /><script type="text/javascript" src="http://fronter.com/eal/links/code/customdialog.js" ></script><style type="text/css">
+.debugOn { background-color: #66cc66; }
+.debugOff { background-color: #cccccc; }
+		</style>
+				<script language="JavaScript1.2" type="text/javascript">
+			var fronterStyleSheet = {
+				TEMPLATE_PATH: 'http://images.fronter.com/vol92_images/wcfe3'
+			};
+			
+			if (document.all) {
+				try {
+					document.styleSheets[0].addRule(".dhtmlbutton","text-decoration:none; background-color: transparent; border: 1px solid #FFFFFF; padding:1px; cursor:pointer;");
+				} catch (e) {
+				}
+			}
+
+			function upeffect(cur){
+			if (document.all)
+			cur.className='overbutton'
+			}
+
+			function downeffect(cur){
+			if (document.all)
+			cur.className='downbutton'
+			}
+
+
+			function normaleffect(cur){
+			if (document.all)
+			cur.className='dhtmlbutton'
+			}
+
+			function menusGo_cust(element_nr) {
+									fxcz (element_nr, voe[element_nr], ez_isBar[element_nr]);
+							}
+
+			function ezmenu_callback_func(url){
+
+				// webdav edit chosen
+				if( url.indexOf("webdav/index.phtml")!=-1) {
+					document.getElementById("webdavHelper").src=url;
+					return false;
+				}
+
+				//the delete item is chosen
+				if (url.indexOf("do_action=multi_delete")!=-1){
+					if (!confirm("Do you really want to Delete this item?")) return false;
+				}
+
+				if (url.indexOf("delete_iup")!=-1){
+					if (!confirm("Do you really want to Delete this item?")) return false;
+				}
+
+				// Commenting items in portfolio
+				if (url.indexOf("php_action=portfolio_new_comment")!=-1){
+					// First extract GET variables
+					var vars = new Array();
+					parts = url.split('?');
+					qs = parts[1];
+					qs = qs.split('&');
+					for ( var i in qs){
+						try {
+							tmp = qs[i].split('=');
+							vars[tmp[0]] = tmp[1];
+						}
+						catch(e){ }
+					}
+					document.actionform.php_action.value = 'new_comment';
+					document.actionform.edit_element_id.value = vars['edit_element_id'];
+					document.actionform.treeid.value = vars['treeid'];
+					document.actionform.submit();
+					return false;
+				}
+				//return true as default
+				return true;
+			}
+			var ez_Menu = new Array();
+			var ez_fontInfo = new Array();
+			var ez_tfontInfo = new Array();
+			var ez_colInfo = new Array();
+			var ez_borSize = new Array();
+			var ez_txtPad = new Array();
+			var ez_arrow = new Array();
+			var ez_barSpc = new Array();
+			var ez_root = new Array();
+			var ez_isBar = new Array();
+			var ez_xover = new Array();
+			var ez_yover = new Array();
+			var ez_bg = new Array();
+			var ez_pname = new Array();
+			var ez_codePath = "../links/code/";
+		</script>
+		
+<style type="text/css">
+@import "http://fronter.com/eal/libs/min.php/ltrCSS";
+</style>
+
+<style type="text/css">
+A {
+  text-decoration : none;
+}
+A:ACTIVE {
+  font-weight : bold;
+}
+
+.trhover, .trhover td { background: #c7c7c7 !important; }
+.tronhover td { border: 1px solid #fff;}
+.trsticky td, td.tdsticky { border: 1px solid #000 !important;}
+
+
+#grade_popup, #weight_popup {
+	display:none;
+	position:absolute;
+	width:280px;
+	border:1px solid #000000;
+	padding:5px;
+	background-color:#ffffff;
+	z-index:10006;
+}
+
+#grade_popup table, #weight_popup table { width: 100%; }
+#grade_popup th, #weight_popup th { padding: 5px; }
+
+.changeable .grade_popup_link, .changeable .weight_popup_link { cursor: pointer; }
+
+input.error {
+	background: #fbd4d4 !important;
+	border: 1px solid #ff0000 !important;
+}
+
+</style>
+
+<script src="/eal/libs/min.php/jQueryCoreNew" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery.noConflict();
+</script>
+<script src="../javascript/fronter.js" type="text/javascript" charset="utf-8"></script>
+<script src="index_overview.js" type="text/javascript" charset="utf-8"></script>
+<script>
+<!--
+	function set_port_expand_fieldset(field_nr, expand) {
+	document.getElementById("expand_fieldset"+field_nr).value=expand;
+	document.actionform.submit();
+}
+
+function viewall_clicked(state) {
+	if (cancel_edit()) {
+		try {
+			document.actionform.port_detail.value=(state ? "1" : "");
+			document.actionform.submit();
+		} catch(e){
+			return;
+		}
+	}
+}
+
+function cancel_clicked() {
+	if (cancel_edit()) {
+		document.actionform.port_edit.value = '';
+		document.actionform.submit();
+	}
+}
+
+function edit_deliverd(state) {
+	if (cancel_edit()) {
+		location.href = "/eal/portfolio/index_overview.phtml?port_delivered="+(state ? "1" : "");
+	}
+}
+
+function set_show_type(value,cookie) {
+	document.cookie = cookie+"="+value;
+	location.href="/eal/portfolio/index_overview.phtml?post_keeper_id=2a95de7e4e0c3b4de9b05abc89c29498";
+}
+
+function jump_to_activity(status) {
+	if (status==1) {
+		document.location.hash='handin';
+	}
+}
+
+function portfolio_save() {
+	document.actionform.portfolio_do_action.value='save_data';
+	document.actionform.submit();
+	return false;
+}
+
+function check_delete_all(checked) {
+	total=actionform.elements.length;
+	for (var i=0; i<total; i++) {
+		if (checked==true) {
+			actionform.elements[i].checked=true;
+		} else {
+			actionform.elements[i].checked=false;
+		}
+	}
+}
+
+function set_dirty() {
+	document.actionform.dirty.value=1;
+}
+
+function cancel_edit() {
+	if (document.actionform.dirty.value==1) {
+		return confirm('Do you really want to cancel');
+	} else {
+		return true;
+	}
+}
+function confirm_delete(){
+	if ( confirm('Do you really want to Delete this item?') ){
+		document.actionform.portfolio_do_action.value='delete_progress';
+		document.actionform.submit();
+	}
+}
+
+function lock_portfolio() {
+	if (confirm('Are you sure you want to transfer this to your final assessment portfolio?')) {
+		document.actionform.portfolio_do_action.value='lock_portfolio';
+		document.actionform.submit();
+	}
+	return false;
+}
+
+function unlock_portfolio() {
+	if (confirm('Are you sure you want to remove this from the final assessment portfolio?')) {
+		document.actionform.portfolio_do_action.value='unlock_portfolio';
+		document.actionform.submit();
+	}
+	return false;
+}
+
+function copy_portfolio_to_archive(){
+	if (confirm('Do you want to copy these elements to My portfolio?')) {
+		document.actionform.do_action.value='multiple_copy_content';
+		document.actionform.submit();
+	}
+}
+
+function copy_portfolio_to_myportfolio(){
+	if (confirm('Do you want to copy these elements to the portfolio?')) {
+		document.actionform.do_action.value='multiple_copy_content';
+		document.actionform.submit();
+	}
+}
+
+function workportfolio_multi_copy(){
+	if (confirm('Do you want to copy these elements to the portfolio?')) {
+		document.actionform.do_action.value='multiple_copy_content';
+		document.actionform.submit();
+	}
+}
+
+function tagall2 (formobj,checkname){
+  antall = formobj.elements.length;
+  for(var i =0;i <antall;i++) {
+		if (typeof(formobj.elements[i].name) != 'undefined') {
+			str = formobj.elements[i].name;
+			if (str.substr(0,str.indexOf("["))==checkname)
+				if (formobj.elements[i].disabled != true)
+					formobj.elements[i].checked=!formobj.elements[i].checked;
+		}
+  }
+}
+
+function TagAllGoals(){
+	nr_of_checked=0;
+	nr_of_all_checkboxes=0;
+	formobj = document.learning_req_form;
+	antall = formobj.treeitem.length;
+	if (!antall){
+		formobj.treeitem.checked=!formobj.treeitem.checked;
+		return;
+	}
+
+	for(var i =0;i < antall;i++) {
+		if (typeof(formobj.treeitem[i].name) != 'undefined') {
+			str = formobj.treeitem[i].name;
+				if (formobj.treeitem[i].disabled != true)
+					formobj.treeitem[i].checked=!formobj.treeitem[i].checked;
+		}
+	}
+}
+
+function TagAllGoalsForce(state){
+	nr_of_checked=0;
+	nr_of_all_checkboxes=0;
+	formobj = document.learning_req_form;
+	antall = formobj.treeitem.length;
+	if (!antall){
+		formobj.treeitem.checked=state;
+		return;
+	}
+
+	for(var i =0;i < antall;i++) {
+		if (typeof(formobj.treeitem[i].name) != 'undefined') {
+			str = formobj.treeitem[i].name;
+				formobj.treeitem[i].checked = state;
+		}
+	}
+}
+
+function delete_reqs(){
+	nr_of_checked=0;
+	nr_of_all_checkboxes=0;
+	formobj = document.learning_req_form;
+	if (!formobj.treeitem){
+		alert('No learning goals are available for export');
+		return false;
+	}
+
+	getstr = '';
+	num = formobj.treeitem.length;
+	if (!num){
+		// Only one box
+		if (formobj.treeitem.checked) getstr = formobj.treeitem.value;
+	}else{
+		for(var i =0;i < num;i++) {
+			if (typeof(formobj.treeitem[i].name) != 'undefined') {
+				str = formobj.treeitem[i].name;
+					if (formobj.treeitem[i].disabled != true)
+						if (formobj.treeitem[i].checked) getstr = getstr + formobj.treeitem[i].value + ',';
+			}
+		}
+	}
+
+	if (getstr == ''){
+		alert('No learning goals are selected');
+		return false;
+	}
+
+	document.location.href = '../portfolio/learning_req.phtml?portfolio_do_action=delete_reqs&goals=' + getstr;
+}
+
+function export_reqs(){
+	nr_of_checked=0;
+	nr_of_all_checkboxes=0;
+	formobj = document.learning_req_form;
+
+	if (!formobj.treeitem){
+		alert('No learning goals are available for export');
+		return false;
+	}
+
+	getstr = '';
+	num = formobj.treeitem.length;
+	if (!num){
+		// Only one box
+		if (formobj.treeitem.checked) getstr = formobj.treeitem.value;
+	}else{
+		for(var i =0;i < num;i++) {
+			if (typeof(formobj.treeitem[i].name) != 'undefined') {
+				str = formobj.treeitem[i].name;
+					if (formobj.treeitem[i].disabled != true)
+						if (formobj.treeitem[i].checked) getstr = getstr + formobj.treeitem[i].value + ',';
+			}
+		}
+	}
+
+	if (getstr == ''){
+		alert('No learning goals are selected');
+		return false;
+	}
+
+	//document.location.href='../portfolio/learning_req_export.phtml?goals=' + getstr;
+	frames['lreq_download_iframe'].location.href = '../portfolio/learning_req_export.phtml?goals=' + getstr;
+}
+
+function copy_reqs_to_room(e){
+	var treeitems = jQuery('form[name=learning_req_form] input[name=treeitem]');
+	if (!treeitems){
+		alert('No learning goals are selected');
+		return;
+	}else{
+		if(treeitems.filter(':checked:not(:disabled)').length < 1){
+			alert('No learning goals are selected');
+			return;
+		}
+	}
+
+	var left = e.clientX + document.body.scrollLeft - 20;
+	if (left < 0) left = 0;
+	var top = (jQuery(e.target).offset().top || (e.clientY + document.body.scrollTop)) + 22;
+	jQuery('#learningreq_copyreqs').hide().css({'left': left+'px', 'top' : top+'px' }).fadeIn('slow');	
+
+}
+
+function learningreqs_copyreqs_save(){
+	jQuery('#learningreq_copyreqs').fadeOut();
+
+	var goals = jQuery.map(
+		jQuery('form[name=learning_req_form] input[name=treeitem]:checked:not(:disabled)'), function(ea) {  
+			return jQuery(ea).val(); 
+	}).join(',');
+
+	var params = {
+		'roomid' : jQuery('#targetroomid').val(),
+		'copy_underlaying_reqs' : (jQuery('#copy_underlaying_reqs').attr('checked') ? '1' : '0'),
+		'goals' : goals
+	};
+	
+	jQuery.get(
+		'../portfolio/xmlhttpd_doaction.phtml?action=copy_lreqs_to_room', 
+		params, 
+		learningreqs_copyreqs_save_result);
+}
+
+function learningreqs_copyreqs_save_result(response){
+	alert(response);
+	TagAllGoalsForce(false);
+}
+
+
+function import_reqs(e){
+	var left = e.clientX + document.body.scrollLeft - 10;
+	if (left < 0) left = 0;
+	var top = (jQuery(e.target).offset().top || (e.clientY + document.body.scrollTop)) + 22;
+	jQuery('#learningreq_importreqs').hide().css({'left': left+'px', 'top' : top+'px' }).fadeIn('slow');	
+}
+
+// Disabled (renamed the function from tagall()). We'll use the tagall() funciton from the archive instead
+function tagall_ (formobj,checkname){
+  antall = formobj.elements.length;
+  for(var i =0;i <antall;i++) {
+		if (typeof(formobj.elements[i].name) != 'undefined') {
+			str = formobj.elements[i].name;
+			if (str.substr(0,str.indexOf("["))==checkname)
+				if (formobj.elements[i].disabled != true)
+					formobj.elements[i].checked=!formobj.elements[i].checked;
+		}
+  }
+}
+
+
+function CheckKeyCallOnEnter(e, func){
+	var t = (e.target)? e.target : e.srcElement;
+
+	if (t.type == "text" && e.keyCode == 13){
+		window[func]();
+		return false;
+	}
+}
+
+function overview_set_test_score(e, elementid, testreplyid, personname, testname, comment, grade, score, linkid){
+	if(readonly()) { return false;} 
+			personname = decodeFromTransport_for_utf8(personname);
+		comment = decodeFromTransport_for_utf8(comment);
+		grade = decodeFromTransport(grade);
+	jQuery('#overview_test_elementid').val(elementid);
+	jQuery('#overview_testreplyid').val(testreplyid);
+	jQuery('#overview_testname').val(testname);
+	jQuery('#overview_linkid').val(linkid);
+	jQuery('#testcomment').val(comment);
+
+	var default_gs = (jQuery('#int_grading_system').val() || 1);
+	var gs = (jQuery('#link_'+linkid).attr('name').split('_')[3] || default_gs);
+	var gradesArray = [];
+	try {
+		eval('gradesArray = ' + (jQuery('#rm_grades_info_'+gs).val() || ""));
+	} catch(exc) {}
+
+	grade_tmp = jQuery('#testgrade');
+	if(grade_tmp.is('select')) {
+		grade_tmp.empty();
+		grade_tmp.append('<option class="none" value="none">---</option>');
+		var selected = false;
+		//needs to append the options before findount which one to select
+		//or else ie goes nuts
+		jQuery.each(gradesArray, function (id, name) {
+				grade_tmp.append('<option value="'+id+'">'+name+'</option>');
+		});
+		grade_tmp.find('option').each(function(i,ea) {
+			if(jQuery(ea).text().toLowerCase() == grade.toLowerCase()) {
+				selected = true;
+				jQuery(ea).attr('selected','selected');
+			} else {
+				jQuery(ea).attr('selected','');
+			}
+		});
+		if(!selected) {
+			grade_tmp.find('.none').attr('selected', 'selected');
+		}
+	} else {
+		grade_tmp.val(grade);
+	}
+	jQuery('#overview_test_score').val(score);
+	jQuery('#setscore_test_item').text(testname);
+	jQuery('#setscore_test_student').text(personname);
+
+	var left = e.clientX + document.body.scrollLeft - 175;
+	if (left < 0) left = 0;
+	var top = (jQuery('#'+elementid).offset().top || (e.clientY + document.body.scrollTop)) + 22;
+	jQuery('#overview_set_test_score_div').hide().css({'left': left+'px', 'top' : top+'px' }).fadeIn('slow');	
+	
+	jQuery('#testcomment').focus();
+}
+
+function overview_save_test_score(){
+	grade = jQuery('#testgrade');
+	//if(grade.find('option:selected').hasClass('none')) {
+	//		alert(grade_error);
+	//		return false;
+	//}
+	if(grade.is('select')) {
+		grade = grade.find('option:selected').text();
+	} else {
+		grade = grade.val();
+	}
+
+	jQuery('#overview_set_test_score_div').fadeOut();
+
+	var params = {
+		'action' : 'save_test_score',
+		'comment' : jQuery('#testcomment').val(),
+		'grade' : grade,
+		'replyid' : jQuery('#overview_testreplyid').val()
+	};
+
+	jQuery.post('../portfolio/xmlhttpd_doaction.phtml', params, overview_save_test_score_result);
+	
+	calculateFinalGrade(jQuery('#overview_test_elementid').val().split('_')[1], jQuery('#int_prjid').val(), (jQuery('#int_grading_system').val() || 1));
+}
+
+function overview_save_test_score_result(response){
+	grade = jQuery('#testgrade');
+	if(grade.is('select')) {
+		grade = grade.find('option:selected').text();
+	} else {
+		grade = grade.val();
+	}
+	elementid   = jQuery('#overview_test_elementid').val();
+	score       = jQuery('#overview_test_score').val();
+	testreplyid = jQuery('#overview_testreplyid').val();
+	linkid      = jQuery('#overview_linkid').val();
+	testname    = jQuery('#overview_testname').val().replace(/'/g, "\\\'");
+	personname  = encodeToTransport(jQuery('#setscore_test_student').text());
+	comment     = encodeToTransport(jQuery('#testcomment').val());
+  
+	var grade_txt = grade;
+	if (grade_txt == '') grade_txt = 'Score';
+	
+	if (grade_txt == '---'){
+		grade_txt = '<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_evaluated.gif" border=0 alt="" />';;
+	}
+
+	grade = encodeToTransport(grade);
+	
+			personname = escape(personname);
+		
+	var temp = '<a href="#" onClick="overview_set_test_score(event, \''+elementid + '\', ' + testreplyid + ', \'' + personname + '\', \'' + testname + '\', \'' + comment.replace(/'/g, "\\\'") + '\', \'' + grade + '\', \'' + score + '\', \'' + linkid + '\'); return false;"><u>' + grade_txt + '</u></a>' + score;
+	jQuery('#'+elementid).html(temp);
+}
+
+function overview_set_score(e, elementid, linkid, personname, foldername, comment, grade, evaluation, userid, treeid){
+	if(readonly()) { return false;} 
+	var popup = jQuery('#overview_set_score_div');
+			personname = decodeFromTransport_for_utf8(personname);
+		comment = decodeFromTransport_for_utf8(comment);
+		grade = decodeFromTransport(grade);
+	jQuery('#overview_elementid').val(elementid);
+	jQuery('#overview_linkid').val(linkid);
+	jQuery('#overview_comment').val(comment);
+
+	var default_gs = (jQuery('#int_grading_system').val() || 1);
+	var gs = (jQuery('#tree_'+treeid).attr('name').split('_')[3] || default_gs);
+	var gradesArray = [];
+	try {
+		eval('gradesArray = ' + (jQuery('#rm_grades_info_'+gs).val() || ""));
+	} catch(exception) {}
+
+	grade_tmp = jQuery('#overview_grade');
+	if(grade_tmp.is('select')) {
+		grade_tmp.empty();
+		grade_tmp.append('<option class="none" value="none">---</option>');
+		var selected = false;
+		//needs to append the options before findount which one to select
+		//or else ie goes nuts
+		jQuery.each(gradesArray, function (id, name) {
+				grade_tmp.append('<option value="'+id+'">'+name+'</option>');
+		});
+		grade_tmp.find('option').each(function(i,ea) {
+			if(jQuery(ea).text().toLowerCase() == grade.toLowerCase()) {
+				selected = true;
+				jQuery(ea).attr('selected','selected');
+			} else {
+				jQuery(ea).attr('selected','');
+			}
+		});
+		if(!selected) {
+			grade_tmp.find('.none').attr('selected', 'selected');
+		}
+	} else {
+		grade_tmp.val(grade);
+	}
+	jQuery('#overview_userid').val(userid);
+	jQuery('#overview_treeid').val(treeid);
+	jQuery('#overview_foldername').val(foldername);
+	
+	if(!(evaluation == '1' || evaluation == '-1' || evaluation == '0' || evaluation == '-2' || evaluation == '3')) { evaluation = 0; }
+	popup.find('input[type=radio][name=evaluation]').attr('checked','');
+	popup.find('input[type=radio][value='+evaluation+']').attr('checked','checked');
+
+	jQuery('#setscore_item').text(foldername);
+
+	personname = personname.replace(/\\\'/g, "'");
+	jQuery('#setscore_student').text(personname);
+
+	var left = e.clientX + document.body.scrollLeft - 225;
+	if (left < 30) left = 30;
+	var top = (jQuery('#'+elementid).offset().top || (e.clientY + document.body.scrollTop)) + 22;
+	popup.hide().css({'left': left+'px', 'top' : top+'px' }).fadeIn('slow');		
+	
+	jQuery('#overview_comment').focus();
+}
+
+function overview_save_score(){
+	var popup  = jQuery('#overview_set_score_div');
+	userid     = jQuery('#overview_userid').val();
+	grade      = jQuery('#overview_grade');
+	//if(grade.find('option:selected').hasClass('none')) {
+	//	alert(grade_error);
+	//	return false;
+	//}
+	if(grade.is('select')) {
+		grade = grade.find('option:selected').text();
+	} else {
+		grade = grade.val();
+	}
+
+	evaluation = popup.find('input[type=radio][name=evaluation]:checked').val();
+	if(!(evaluation == '1' || evaluation == '-1' || evaluation == '0' || evaluation == '-2' || evaluation == '3')) { evaluation = -3; }
+	//if (!comment.value){ alert('Comment missing'); return false; }
+	if (evaluation == -3){ alert('Please choose an evaluation'); return false; }
+
+	popup.fadeOut();
+
+	var params = {
+		'action' : 'save_handin_score',
+		'comment' : jQuery('#overview_comment').val(),
+		'linkid' : jQuery('#overview_linkid').val(),
+		'treeid' : jQuery('#overview_treeid').val(),
+		'foldername' : jQuery('#overview_foldername').val(),
+		'grade' : grade,
+		'evaluation' : evaluation,
+		'userid' : userid
+	};
+	
+	jQuery.post('../portfolio/xmlhttpd_doaction.phtml', params, overview_save_score_result);
+	calculateFinalGrade(userid, jQuery('#int_prjid').val(), (jQuery('#int_grading_system').val() || 1));
+}
+
+
+function overview_save_score_result(response){
+	grade = jQuery('#overview_grade');
+	if(grade.is('select')) {
+		grade = grade.find('option:selected').text();
+	} else {
+		grade = grade.val();
+	}
+	elementid  = jQuery('#overview_elementid').val();
+	linkid     = jQuery('#overview_linkid').val();
+	userid     = jQuery('#overview_userid').val();
+	treeid     = jQuery('#overview_treeid').val();
+	foldername = jQuery('#overview_foldername').val().replace(/'/g, "\\\'");
+	personname = encodeToTransport(jQuery('#setscore_student').text());
+	comment    = encodeToTransport(jQuery('#overview_comment').val());
+
+	if (linkid == ''){
+		// We've inserted a new placeholder document on behalf of the student - use its id in LinksTbl2
+		linkid = response;
+	}
+
+	evaluation = jQuery('#overview_set_score_div').find('input[type=radio]:checked').val();
+	if(!(evaluation == '1' || evaluation == '-1' || evaluation == '0' || evaluation == '-2' || evaluation == '3')) { evaluation = 0; }
+	var evaluImgMap = {
+		'1'  : 'approved',
+		'-1' : 'not_approved',
+		'0'  : 'not_evaluated',
+		'-2' : 'not_delivered',
+		'3'  : 'progressing'
+	}; // note! , on last element, will cause ie to freak out
+	var img = evaluImgMap[evaluation];
+	var grade_txt = grade;
+
+	if(jQuery('select[name=reportmode]').val() != 1 && img != "") {
+		grade_txt = '<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/' + img + '.gif" border=0 alt="" />';
+	}
+	
+	if (grade_txt == '---'){
+		grade_txt = '<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="" />';;
+	}
+
+	if(grade_txt == '') {
+		grade_txt = 'Score';
+	}
+	grade = encodeToTransport(grade);
+
+			personname = escape(personname);
+		
+	temp = '<a href="javascript:void(0);" onClick="overview_set_score(event, \'' + elementid + '\', \'' + linkid + '\', \'' + personname + '\', \'' + foldername + '\', \'' + comment.replace(/'/g, "\\\'") +'\', \'' + grade + '\', \'' + evaluation + '\', \'' + userid + '\', \'' + treeid + '\'); return false;"><u>' + grade_txt + '</u></a>';
+	jQuery('#'+elementid).html(temp);
+}
+
+function overview_create_new_folder(e){
+	jQuery('#overview_create_folder_div').hide().css(
+		{'right': '10px', 'top' : '27px'}
+	).fadeIn();
+	jQuery('#overview_title').focus();
+
+	jQuery('#overview_title').val('');
+	jQuery('#overview_description').val('');
+}
+
+function overview_save_folder(){
+	foldertitle = jQuery('#overview_title').val();
+	description = jQuery('#overview_description').val();
+
+	if (!foldertitle){ alert('Please enter the name of the new folder'); return false; }
+	//else if (!description){ alert('Description missing'); return false; }
+
+			var url = "../portfolio/xmlhttpd_doaction.phtml?action=save_folder&description=" + encodeURIComponent(description) + "&title=" + encodeURIComponent(foldertitle);
+		jQuery.get(url, {}, overview_save_folder_result);
+	jQuery('overview_create_folder_div').fadeOut();
+}
+
+function overview_save_folder_result(treeid){
+	if (treeid){
+		/* reload the view */
+		document.actionform.submit();
+	}else{
+		alert('Error');
+	}
+}
+
+function readonly() {
+	if(!jQuery) { return true; }
+	return jQuery('.changeable').length ? false : true;
+}
+
+// needed, used in index_overview.js
+var grade_error = 'Please enter the grade';
+
+
+
+	function ResizeDIV() {
+		var de = document.documentElement;
+		var w = window.innerWidth || self.innerWidth || (de && de.clientWidth) || document.body.clientWidth;
+		if (jQuery('.enable_autograding').length) {
+			w -= 100;
+		}
+		if (jQuery.browser.msie) {
+			jQuery('#enclosure_div').css('width', (w-197)+'px');
+		} else {
+			jQuery('#enclosure_div').css('width', (w-215)+'px');
+		}
+	}
+
+-->
+</script>
+</head>
+<body class="body changeable" onload="jump_to_activity(); ResizeDIV();" onResize="ResizeDIV();"><DIV id="overDiv" style="POSITION: absolute"></DIV><form action="/eal/portfolio/index_overview.phtml" method="post" name="actionform"><input type="hidden" name="fronter_request_token" value="2d35512a8e0bf389cd187ba2f0c1d4cf" /><input type="hidden" name="portfolio_do_action" value=""><input type="hidden" name="dirty" value=""><input type="hidden" name="listgrp" value=""><input type="hidden" name="matchgrp" value=""><input type="hidden" name="anchor" value=""><input type="hidden" name="port_detail" value=""><input type="hidden" name="ref_url" value="/eal/portfolio/index_overview.phtml?post_keeper_id=2a95de7e4e0c3b4de9b05abc89c29498"><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td width="100%" colspan="3">
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left.gif" border="0" alt="" /></td>
+<td class="content-tab-label" style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle.gif);" nowrap=nowrap>
+<span id="subtab_Statistics_styler1" class="content-tab-label-text-unselected">&nbsp;<span style="visibility: hidden; margin=0px; height:0px; width:0px; overflow:hidden; position:absolute; z-index:2; border:0;">Tab:</span><a id="subtab_Statistics_styler2"  title="Statistics" class="black-link" href="index2.phtml"   >Statistics</a>&nbsp;</span></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right.gif" border="0" alt="" /></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left_selected.gif" border="0" alt="" /></td>
+<td class="content-tab-label" style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle_selected.gif);" nowrap=nowrap>
+<span  class="content-tab-label-text">&nbsp;<span style="visibility: hidden; margin=0px; height:0px; width:0px; overflow:hidden; position:absolute; z-index:2; border:0;">Selected tab:</span>Result matrix&nbsp;</span></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right_selected.gif" border="0" alt="" /></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left.gif" border="0" alt="" /></td>
+<td class="content-tab-label" style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle.gif);" nowrap=nowrap>
+<span  class="content-tab-label-text-unselected">&nbsp;<span style="visibility: hidden; margin=0px; height:0px; width:0px; overflow:hidden; position:absolute; z-index:2; border:0;">Tab:</span><a   title="Final assessment" class="black-link" href="index_req_portfolio2.phtml"   >Final assessment</a>&nbsp;</span></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right.gif" border="0" alt="" /></td>
+<!--fronter-meta printing="no"--><!--/fronter-meta--><td valign="bottom" class="right-align"  nowrap=nowrap><!--fronter-meta printing="no"--><span style="height:20px; padding-top:2px;"><a href="#" onClick="overview_create_new_folder(event);"><img align=absmiddle src="http://images.fronter.com/vol92_images/wcfe3/icons/leggtiloppgave.gif" border=0 alt="Create new assignment">&nbsp;<u>Create new assignment</u></a>&nbsp;&nbsp;</span><!--/fronter-meta--></td>
+<td></td>
+</tr>
+<tr>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left_edge.gif" border="0" alt="" /></td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle_underline.gif);"></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right_underline.gif" border="0" alt="" /></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left_underline_selected.gif" border="0" alt="" /></td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle_underline_selected.gif);"></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right_underline_selected.gif" border="0" alt="" /></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left_underline.gif" border="0" alt="" /></td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle_underline.gif);"></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right_underline.gif" border="0" alt="" /></td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/table_top_line.gif);" width="100%"></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/table_top_right_corner.gif" border="0" alt="" /></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="content-border" style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/table_middle_left_line.gif);"></td>
+<td width="100%">
+<table class="content-frame-content" cellpadding="2" cellspacing="1" border="0" width="100%">
+<tr><td><table cellpadding=0 cellspacing=4 id="portfolio_search_form_table"><tr><td><table cellpadding=0 cellspacing=4><tr><td class="label" nowrap>Date:</td><td colspan=2 width='100%'><table cellpadding=0 cellspacing=0><tr><td class="label" style="white-space:nowrap;">From: <input  type="text" id="datepicker3_startdate" name="startdate" size="10" value="2011-05-16">
+<a href="#" onclick="open_datepicker('startdate','actionform',document.actionform.startdate.value);  return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/dropdown.gif" border="0" align="bottom" alt="Choose" hspace="0" vspace="0"></a>
+<script language="JavaScript" type="text/javascript">
+<!--
+function open_datepicker(field,formname,fieldvalue){
+	datepicker_window=window.open('../calendar/datepicker.phtml?formname='+formname+'&receiver_field='+field+'&fromdate='+fieldvalue+'&callback=0', 'datepicker_window', 'dependent=yes,top=300,height=225,width=200,directories=no,menubar=no,toolbar=no,resizable=yes,scrollbars=no');
+	datepicker_window.focus();
+}
+//-->
+</script>
+&nbsp;&nbsp;</td><td class="label" style="white-space:nowrap;">To: <input  type="text" id="datepicker3_enddate" name="enddate" size="10" value="2011-05-17">
+<a href="#" onclick="open_datepicker('enddate','actionform',document.actionform.enddate.value);  return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/dropdown.gif" border="0" align="bottom" alt="Choose" hspace="0" vspace="0"></a>
+&nbsp;(yyyy-mm-dd)</td></tr></table></td><td width=100%></td></tr><tr><td class="label" style="white-space:nowrap;">Group/student:&nbsp;</td><td style="white-space:nowrap;">		<script language="JavaScript" type="text/javascript">
+var searchfieldcleared2=false;</script><input id="ddinputsearchfield2" type="text" name="ddsearch2" value=" ->" size="20" onclick="if (!searchfieldcleared2){ this.value='';searchfieldcleared2=true;}" onkeypress="return check_keypress(event)" onkeyup="if (!searchfieldcleared2){ this.value='';searchfieldcleared2=true;} return dd_search(this.id,'dropdown_user_group_id')">			&nbsp;
+			<select id="dropdown_user_group_id" name="search_user_group_id">
+				<option value="-3"></option>
+				<option value="-1"  selected="selected">All</option>
+<option value=-2>---------------------------------------------</option><option value="user_978913831">test20, test20</option><option value="user_940777378">test22, test22</option><option value="user_1040263712">Test4, Test4</option><option value="user_392592006">Test5, Test5</option><option value="user_61088607">Test6, Test6</option><option value="user_1007933317">Test9, Test9</option></select></td></tr><tr><td class="label">Freetext:</td><td><input type=text size=20 name="search_freetext" value=""></td></tr><tr><td height='5px'><input type=hidden name=goalid value="0"></td></tr><tr><td colspan="3" class="right-align"><!--fronter-meta printing='no'--><input type="submit" class="submit"  name="4813" value="&nbsp;&nbsp;&nbsp;&nbsp;View &nbsp;&nbsp;&nbsp;&nbsp;"  />
+<!--/fronter-meta--></td></tr></table></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td width="100%" colspan="3">
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left_selected.gif" border="0" alt="" /></td>
+<td width="100%" class="content-tab-full-width" style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle_selected.gif);"><table cellpadding="0" cellspacing="0" width="100%" border="0"><tr><td width='1%' class="content-tab-label" nowrap=nowrap><span  class="content-tab-label-text-unselected">&nbsp;Search results&nbsp;</span></td>
+<td width=0></td><!--fronter-meta printing="no"--><!--/fronter-meta--><td valign="bottom" class="right-align"  nowrap=nowrap><select class="content-tab-select" name="reportmode" onChange="document.actionform.submit();"><option value="1">Display grades</option><option value="2" SELECTED>Display evaluations</option><option value="3">Display numbers only</option></select><!--fronter-meta printing="no"--><!--/fronter-meta--></td>
+</tr></table></td><td width='5'><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right_selected.gif" border="0" alt="" /></td>
+</tr>
+<tr>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_left_edge_selected.gif" border="0" alt="" /></td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/tab_middle_underline_selected.gif);"></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/tab_right_edge_selected.gif" border="0" alt="" /></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="content-border" style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/table_middle_left_line.gif);"></td>
+<td width="100%">
+<table class="content-frame-content" cellpadding="2" cellspacing="1" border="0" width="100%">
+<tr><td><script type='text/javascript' src='../javascript/lib/jquery/jquery.alphanumeric.js'></script><script type='text/javascript'>
+				/* <![CDATA[ */
+				jQuery(document).ready(function() {
+					jQuery('#overview_comment').alphanumeric({ichars:"<>"});
+				});
+				/* ]]> */
+				</script><DIV id="overview_create_folder_div" style="display:none; position:absolute; width:248px; border:1px solid #000000; padding:5px; background-color:#ffffff; z-index:10001;"><table width='100%'><tr><th colspan=2 class=label2>Create new assignment</th></tr><tr><td height=5></td></tr>	<tr>
+							<td class="label">Title:</td>
+							<td><input type=text size=18 name="title" id="overview_title" onKeyDown="return CheckKeyCallOnEnter(event, 'overview_save_folder');"></td>
+						</tr>	<tr>
+							<td class="label" valign=top>Description:</td>
+							<td><textarea cols=18 rows=2 name="description" id="overview_description"></textarea></td>
+						</tr><tr><td></td><td><input type=button class=submit onClick="overview_save_folder();" value="Save"><input type=button class=submit value="Cancel" onClick="jQuery('#overview_create_folder_div').fadeOut();"></td></tr></table></DIV><div id="overview_set_score_div" style="display:none; position:absolute; width:280px; border:1px solid #000000; padding:5px; background-color:#ffffff; z-index:10001;"><input type=hidden name="overview_linkid" id="overview_linkid" value=""><input type=hidden name="overview_userid" id="overview_userid" value=""><input type=hidden name="overview_treeid" id="overview_treeid" value=""><input type=hidden name="overview_foldername" id="overview_foldername" value=""><input type=hidden name="overview_test_elementid" id="overview_elementid" value=""><table width='100%'><tr><th colspan=2 class=label2>Set score for assignment</th></tr><tr><td height=5></td></tr><tr><td class="label">Folder:</td><td id="setscore_item">&nbsp;</td></tr><tr><td class="label">Person:</td><td id="setscore_student">&nbsp;</td></tr>	<tr>
+							<td class="label" valign=top>Comment:</td>
+							<td><textarea cols=20 rows=3 name="comment" id="overview_comment"></textarea></td>
+						</tr>	<tr>
+							<td class="label">Grade:</td>
+							<td><input type='text' size='8' maxlength='20' name='grade' id='overview_grade' value='' onKeyDown="return CheckKeyCallOnEnter(event, 'overview_save_score');"></td>
+						</tr>	<tr>
+							<td class="label" valign=top>Evaluation:</td>
+							<td>
+								<input type=radio name="evaluation" id="overview_evaluation_passed" value="1"> Approved<br>
+								<input type=radio name="evaluation" id="overview_evaluation_progressing" value="3"> In progress<br>
+								<input type=radio name="evaluation" id="overview_evaluation_failed" value="-1"> Not approved<br>
+								<input type=radio name="evaluation" id="overview_evaluation_not_evaluated" value="0"> Not evaluated<br>
+								<input type=radio name="evaluation" id="overview_evaluation_not_delivered" value="-2"> Not delivered</td>
+						</tr><tr><td></td><td><input type=button class=submit onClick="overview_save_score();" value="Save"><input type=button class=submit value="Cancel" onClick="jQuery('#overview_set_score_div').fadeOut();"></td></tr></table></DIV><div id="overview_set_test_score_div" style="display:none; position:absolute; width:280px; border:1px solid #000000; padding:5px; background-color:#ffffff; z-index:10001;"><input type=hidden name="overview_testreplyid" id="overview_testreplyid" value=""><input type=hidden name="overview_testname" id="overview_testname" value=""><input type=hidden name="overview_linkid" id="overview_linkid" value=""><input type=hidden name="overview_test_elementid" id="overview_test_elementid" value=""><input type=hidden name="overview_test_score" id="overview_test_score" value=""><table width='100%'><tr><th colspan=2 class=label2>Set comments and score</th></tr><tr><td height=5></td></tr><tr><td class="label">Test:</td><td id="setscore_test_item">&nbsp;</td></tr><tr><td class="label">Person:</td><td id="setscore_test_student">&nbsp;</td></tr>	<tr>
+							<td class="label" valign=top>Comment:</td>
+							<td><textarea cols=20 rows=3 name="testcomment" id="testcomment"></textarea></td>
+						</tr>	<tr>
+							<td class="label">Grade:</td>
+							<td><input type='text' size='8' maxlength='20' name='testgrade' id='testgrade' value='' onKeyDown="return CheckKeyCallOnEnter(event, 'overview_save_test_score');"></td>
+						</tr><tr><td></td><td><input type=button class=submit onClick="overview_save_test_score();" value="Save"><input type=button class=submit value="Cancel" onClick="jQuery('#overview_set_test_score_div').fadeOut();"></td></tr></table></div><div id="grade_popup">
+	<table>
+		<thead>
+			<tr>
+				<th class="label2" colspan="2">Final grade</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="height: 5px;"></td>
+			</tr>
+			<tr>
+				<td class="label">Person:</td>
+				<td id="gp_name"></td>
+			</tr>
+			<tr>
+				<td class="label">Comment:</td>
+				<td><textarea cols=20 rows=3 name="comment" id="gp_comment"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">Calculated grade:</td>
+				<td id="gp_calculatedGrade">
+				</td>
+			</tr>
+			<tr>
+				<td class="label">Grade:</td>
+				<td>
+					<input type='text' size='8' maxlength='20' name='gp_grade' id='gp_grade' value='' >
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input type="button" class="submit" value="Save" id="gp_save">
+					<input type="button" class="submit" value="Cancel" id="gp_cancel">
+					<input type="button" class="submit" value="Reset" id="gp_reset">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div><div id="weight_popup">
+	<table>
+		<thead>
+			<tr>
+				<th class="label2" colspan="2">Set weight and grading system</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="height: 5px;"></td>
+			</tr>
+			<tr>
+				<td class="label">Title:</td>
+				<td id="wp_testname"></td>
+			</tr>
+			<tr>
+				<td class="label">Grading system:</td>
+				<td>
+					<span class="no_grading_systems_avail">Not available</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="label">Weighting:</td>
+				<td>
+					<input type="text" size="3" maxlength="3" id="wp_weight" name="wp_weight" value="">
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input type="button" class="submit" value="Save" id="wp_save">
+					<input type="button" class="submit" value="Cancel" id="wp_cancel">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div><table border=0 width='100%' cellpadding=0 cellspacing=0><tr><td valign=top style=""><table style="width: 150px;"><tr><th class="label2" style="padding: 0 5px; height: 40px;vertical-align: bottom;"><a href="../portfolio/index_overview.phtml?sortdir=1">Name&nbsp;&nbsp;<IMG SRC="http://images.fronter.com/vol92_images/wcfe3/arrows/order_down.gif" BORDER=0 alt="Order by this column descending"></a><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=1 height=16 alt="" /></th></tr><tr class="tronhover" id="trcol-1-978913831"><td class="tablelist-odd" style="height:20px; overflow:hidden; "><div style="margin:0px; width:150px; overflow:hidden; white-space:nowrap;"><span title="test20, test20">test20, test20</span></div></td><td width=0><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=0 height=16 align=absmiddle alt="" /></td></tr><tr class="tronhover" id="trcol-1-940777378"><td class="tablelist-even" style="height:20px; overflow:hidden; "><div style="margin:0px; width:150px; overflow:hidden; white-space:nowrap;"><span title="test22, test22">test22, test22</span></div></td><td width=0><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=0 height=16 align=absmiddle alt="" /></td></tr><tr class="tronhover" id="trcol-1-1040263712"><td class="tablelist-odd" style="height:20px; overflow:hidden; "><div style="margin:0px; width:150px; overflow:hidden; white-space:nowrap;"><span title="Test4, Test4">Test4, Test4</span></div></td><td width=0><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=0 height=16 align=absmiddle alt="" /></td></tr><tr class="tronhover" id="trcol-1-392592006"><td class="tablelist-even" style="height:20px; overflow:hidden; "><div style="margin:0px; width:150px; overflow:hidden; white-space:nowrap;"><span title="Test5, Test5">Test5, Test5</span></div></td><td width=0><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=0 height=16 align=absmiddle alt="" /></td></tr><tr class="tronhover" id="trcol-1-61088607"><td class="tablelist-odd" style="height:20px; overflow:hidden; "><div style="margin:0px; width:150px; overflow:hidden; white-space:nowrap;"><span title="Test6, Test6">Test6, Test6</span></div></td><td width=0><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=0 height=16 align=absmiddle alt="" /></td></tr><tr class="tronhover" id="trcol-1-1007933317"><td class="tablelist-even" style="height:20px; overflow:hidden; "><div style="margin:0px; width:150px; overflow:hidden; white-space:nowrap;"><span title="Test9, Test9">Test9, Test9</span></div></td><td width=0><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=0 height=16 align=absmiddle alt="" /></td></tr><tr><td><img src="http://images.fronter.com/vol92_images/wcfe3/treeview/ftv2blank.gif" width=150 height=1 alt="" /></td></tr></table></td><td valign=top style="width:100%;"><div style="margin:0px; width:100%; overflow:auto; overflow-y:hidden; overflow-x:auto; " id="enclosure_div"><table border=0 cellpadding=0 description="Search result"><tr><th class="label2" valign=top style="width: 80px;"><table cellpadding=0 cellspacing=0 style="width: 100%; padding: 0px; margin: 0px;"><tr><td valign=top nowrap=nowrap style="white-space:nowrap; text-align: center; border-bottom: 2px solid #FFFFFF;padding: 0 31px;"><img src="http://images.fronter.com/vol92_images/wcfe3/icons/deliveryfolder.gif"  border=0 alt="try" title="try"><input type="hidden" id="tree_41344" name="wp_treeid_41344_" value="">&nbsp;</td></tr><tr><td style="white-space:nowrap;">&nbsp;<a href="../portfolio/index_overview_folder.phtml?treeid=41344" title="try" alt="try">try</a></td></tr></table></th><th class="label2" valign=top style="width: 80px;"><table cellpadding=0 cellspacing=0 style="width: 100%; padding: 0px; margin: 0px;"><tr><td valign=top nowrap=nowrap style="white-space:nowrap; text-align: center; border-bottom: 2px solid #FFFFFF;padding: 0 31px;"><img src="http://images.fronter.com/vol92_images/wcfe3/icons/deliveryfolder.gif"  border=0 alt="ProNet Report hand-in" title="ProNet Report hand-in"><input type="hidden" id="tree_41281" name="wp_treeid_41281_" value="">&nbsp;</td></tr><tr><td style="white-space:nowrap;">&nbsp;<a href="../portfolio/index_overview_folder.phtml?treeid=41281" title="ProNet Report hand-in" alt="ProNet Report hand-in">ProNet Rep...</a></td></tr></table></th><th class="label2" valign=top style="width: 80px;"><table cellpadding=0 cellspacing=0 style="width: 100%; padding: 0px; margin: 0px;"><tr><td valign=top nowrap=nowrap style="white-space:nowrap; text-align: center; border-bottom: 2px solid #FFFFFF;padding: 0 31px;"><img src="http://images.fronter.com/vol92_images/wcfe3/icons/deliveryfolder.gif"  border=0 alt="SD mini project" title="SD mini project"><input type="hidden" id="tree_41313" name="wp_treeid_41313_" value="">&nbsp;</td></tr><tr><td style="white-space:nowrap;">&nbsp;<a href="../portfolio/index_overview_folder.phtml?treeid=41313" title="SD mini project" alt="SD mini project">SD mini pr...</a></td></tr></table></th><th class="label2" valign=top style="width: 80px;"><table cellpadding=0 cellspacing=0 style="width: 100%; padding: 0px; margin: 0px;"><tr><td valign=top nowrap=nowrap style="white-space:nowrap; text-align: center; border-bottom: 2px solid #FFFFFF;padding: 0 31px;"><img src="http://images.fronter.com/vol92_images/wcfe3/icons/deliveryfolder.gif"  border=0 alt="SD Presentations" title="SD Presentations"><input type="hidden" id="tree_41314" name="wp_treeid_41314_" value="">&nbsp;</td></tr><tr><td style="white-space:nowrap;">&nbsp;<a href="../portfolio/index_overview_folder.phtml?treeid=41314" title="SD Presentations" alt="SD Presentations">SD Present...</a></td></tr></table></th><th class="label2" valign=top style="width: 80px;"><table cellpadding=0 cellspacing=0 style="width: 100%; padding: 0px; margin: 0px;"><tr><td valign=top nowrap=nowrap style="white-space:nowrap; text-align: center; border-bottom: 2px solid #FFFFFF;padding: 0 31px;"><img src="http://images.fronter.com/vol92_images/wcfe3/icons/deliveryfolder.gif"  border=0 alt="SD RC car" title="SD RC car"><input type="hidden" id="tree_41315" name="wp_treeid_41315_" value="">&nbsp;</td></tr><tr><td style="white-space:nowrap;">&nbsp;<a href="../portfolio/index_overview_folder.phtml?treeid=41315" title="SD RC car" alt="SD RC car">SD RC car</a></td></tr></table></th><th class="label2" valign=top style="width: 80px;"><table cellpadding=0 cellspacing=0 style="width: 100%; padding: 0px; margin: 0px;"><tr><td valign=top nowrap=nowrap style="white-space:nowrap; text-align: center; border-bottom: 2px solid #FFFFFF;padding: 0 31px;"><img src="http://images.fronter.com/vol92_images/wcfe3/icons/deliveryfolder.gif"  border=0 alt="PP_w50" title="PP_w50"><input type="hidden" id="tree_41340" name="wp_treeid_41340_" value="">&nbsp;</td></tr><tr><td style="white-space:nowrap;">&nbsp;<a href="../portfolio/index_overview_folder.phtml?treeid=41340" title="PP_w50" alt="PP_w50">PP_w50</a></td></tr></table></th></tr><tr class="tronhover" id="trcol-2-978913831"><td class="tablelist-odd" id="matrix_978913831_tree41344" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_978913831_tree41344', '', 'test20,%20test20', 'try', '', '', '', 978913831, 41344);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_978913831_tree41281" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Approved" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_978913831_tree41281', '139145', 'test20,%20test20', 'ProNet Report hand-in', '', '', '1', 978913831, 41281);return false;">
+<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/approved.gif" border=0 alt="Approved" title="Approved"></a></td>
+<td class="tablelist-odd" id="matrix_978913831_tree41313" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_978913831_tree41313', '', 'test20,%20test20', 'SD mini project', '', '', '', 978913831, 41313);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_978913831_tree41314" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_978913831_tree41314', '', 'test20,%20test20', 'SD Presentations', '', '', '', 978913831, 41314);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_978913831_tree41315" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_978913831_tree41315', '', 'test20,%20test20', 'SD RC car', '', '', '', 978913831, 41315);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_978913831_tree41340" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_978913831_tree41340', '', 'test20,%20test20', 'PP_w50', '', '', '', 978913831, 41340);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+</tr>
+<tr class="tronhover" id="trcol-2-940777378"><td class="tablelist-even" id="matrix_940777378_tree41344" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_940777378_tree41344', '', 'test22,%20test22', 'try', '', '', '', 940777378, 41344);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_940777378_tree41281" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Not approved" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_940777378_tree41281', '139146', 'test22,%20test22', 'ProNet Report hand-in', '', '', '-1', 940777378, 41281);return false;">
+<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_approved.gif" border=0 alt="Not approved" title="Not approved"></a></td>
+<td class="tablelist-even" id="matrix_940777378_tree41313" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Approved" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_940777378_tree41313', '139150', 'test22,%20test22', 'SD mini project', '', '', '1', 940777378, 41313);return false;">
+<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/approved.gif" border=0 alt="Approved" title="Approved"></a></td>
+<td class="tablelist-even" id="matrix_940777378_tree41314" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Approved" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_940777378_tree41314', '139151', 'test22,%20test22', 'SD Presentations', '', '', '1', 940777378, 41314);return false;">
+<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/approved.gif" border=0 alt="Approved" title="Approved"></a></td>
+<td class="tablelist-even" id="matrix_940777378_tree41315" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Approved" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_940777378_tree41315', '139152', 'test22,%20test22', 'SD RC car', '', '', '1', 940777378, 41315);return false;">
+<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/approved.gif" border=0 alt="Approved" title="Approved"></a></td>
+<td class="tablelist-even" id="matrix_940777378_tree41340" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_940777378_tree41340', '', 'test22,%20test22', 'PP_w50', '', '', '', 940777378, 41340);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+</tr>
+<tr class="tronhover" id="trcol-2-1040263712"><td class="tablelist-odd" id="matrix_1040263712_tree41344" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1040263712_tree41344', '', 'Test4,%20Test4', 'try', '', '', '', 1040263712, 41344);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_1040263712_tree41281" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="In progress" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1040263712_tree41281', '139148', 'Test4,%20Test4', 'ProNet Report hand-in', '', '', '3', 1040263712, 41281);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/progressing.gif" border=0 alt="In progress" title="In progress"></a></td>
+<td class="tablelist-odd" id="matrix_1040263712_tree41313" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Approved" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1040263712_tree41313', '139153', 'Test4,%20Test4', 'SD mini project', '', '', '1', 1040263712, 41313);return false;">
+<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/approved.gif" border=0 alt="Approved" title="Approved"></a></td>
+<td class="tablelist-odd" id="matrix_1040263712_tree41314" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Approved" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1040263712_tree41314', '139154', 'Test4,%20Test4', 'SD Presentations', '', '', '1', 1040263712, 41314);return false;">
+<img height=16 src="http://images.fronter.com/vol92_images/wcfe3/other_images/approved.gif" border=0 alt="Approved" title="Approved"></a></td>
+<td class="tablelist-odd" id="matrix_1040263712_tree41315" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="In progress" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1040263712_tree41315', '139155', 'Test4,%20Test4', 'SD RC car', '', '', '3', 1040263712, 41315);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/progressing.gif" border=0 alt="In progress" title="In progress"></a></td>
+<td class="tablelist-odd" id="matrix_1040263712_tree41340" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1040263712_tree41340', '', 'Test4,%20Test4', 'PP_w50', '', '', '', 1040263712, 41340);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+</tr>
+<tr class="tronhover" id="trcol-2-392592006"><td class="tablelist-even" id="matrix_392592006_tree41344" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_392592006_tree41344', '', 'Test5,%20Test5', 'try', '', '', '', 392592006, 41344);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_392592006_tree41281" style="height:20px; overflow:hidden; white-space:nowrap;"><a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_392592006_tree41281', '139149', 'Test5,%20Test5', 'ProNet Report hand-in', '', '', '0', 392592006, 41281);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_evaluated.gif" border=0 alt="Not evaluated" title="Not evaluated"></a></td>
+<td class="tablelist-even" id="matrix_392592006_tree41313" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_392592006_tree41313', '', 'Test5,%20Test5', 'SD mini project', '', '', '', 392592006, 41313);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_392592006_tree41314" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_392592006_tree41314', '', 'Test5,%20Test5', 'SD Presentations', '', '', '', 392592006, 41314);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_392592006_tree41315" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_392592006_tree41315', '', 'Test5,%20Test5', 'SD RC car', '', '', '', 392592006, 41315);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_392592006_tree41340" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_392592006_tree41340', '', 'Test5,%20Test5', 'PP_w50', '', '', '', 392592006, 41340);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+</tr>
+<tr class="tronhover" id="trcol-2-61088607"><td class="tablelist-odd" id="matrix_61088607_tree41344" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_61088607_tree41344', '', 'Test6,%20Test6', 'try', '', '', '', 61088607, 41344);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_61088607_tree41281" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_61088607_tree41281', '', 'Test6,%20Test6', 'ProNet Report hand-in', '', '', '', 61088607, 41281);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_61088607_tree41313" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_61088607_tree41313', '', 'Test6,%20Test6', 'SD mini project', '', '', '', 61088607, 41313);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_61088607_tree41314" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_61088607_tree41314', '', 'Test6,%20Test6', 'SD Presentations', '', '', '', 61088607, 41314);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_61088607_tree41315" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_61088607_tree41315', '', 'Test6,%20Test6', 'SD RC car', '', '', '', 61088607, 41315);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-odd" id="matrix_61088607_tree41340" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_61088607_tree41340', '', 'Test6,%20Test6', 'PP_w50', '', '', '', 61088607, 41340);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+</tr>
+<tr class="tronhover" id="trcol-2-1007933317"><td class="tablelist-even" id="matrix_1007933317_tree41344" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1007933317_tree41344', '', 'Test9,%20Test9', 'try', '', '', '', 1007933317, 41344);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_1007933317_tree41281" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1007933317_tree41281', '', 'Test9,%20Test9', 'ProNet Report hand-in', '', '', '', 1007933317, 41281);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_1007933317_tree41313" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1007933317_tree41313', '', 'Test9,%20Test9', 'SD mini project', '', '', '', 1007933317, 41313);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_1007933317_tree41314" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1007933317_tree41314', '', 'Test9,%20Test9', 'SD Presentations', '', '', '', 1007933317, 41314);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_1007933317_tree41315" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1007933317_tree41315', '', 'Test9,%20Test9', 'SD RC car', '', '', '', 1007933317, 41315);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+<td class="tablelist-even" id="matrix_1007933317_tree41340" style="height:20px; overflow:hidden; white-space:nowrap;"> <a title="Not evaluated" style="text-decoration: underline;" href="javascript:void(0);" onClick="overview_set_score(event, 'matrix_1007933317_tree41340', '', 'Test9,%20Test9', 'PP_w50', '', '', '', 1007933317, 41340);return false;">
+<img src="http://images.fronter.com/vol92_images/wcfe3/other_images/not_delivered.gif" border=0 alt="Not delivered" title="Not delivered"></a></td>
+</tr>
+<tr><td>&nbsp;</td></tr></table></DIV></td></tr></table><p style='text-align:center; padding-bottom: 5px;'></p></td></tr></table>
+</td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/table_middle_right_line.gif);"></td>
+</tr>
+<tr>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/table_bottom_left_corner.gif" border="0" alt="" /></td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/table_bottom_line.gif);" width="100%"></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/table_bottom_right_corner.gif" border="0" alt="" /></td>
+</tr>
+</table>
+</td></tr></td></tr></table>
+</td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/table_middle_right_line.gif);"></td>
+</tr>
+<tr>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/table_bottom_left_corner.gif" border="0" alt="" /></td>
+<td style="background-image: url(http://images.fronter.com/vol92_images/wcfe3/content_border/table_bottom_line.gif);" width="100%"></td>
+<td><img src="http://images.fronter.com/vol92_images/wcfe3/content_border/table_bottom_right_corner.gif" border="0" alt="" /></td>
+</tr>
+</table>
+</form>
+</body>
+				<script language="JavaScript" type="text/javascript">
+
+			//Array to hold original dropdown list
+			var saved_options=new Array();
+			//hold the last search
+			var last_search_str=new Array();
+			//IE only. Holds the length of the dropdown after a search is finished
+			var dropdown_length=new Array();
+			//detect IE
+			var windowsIE=document.all;
+
+			var search_in_progress=false;
+
+			function dd_start_search(searchfieldid,dropdownid){
+
+				  //This is a search lock. We cannot do multiple searches at the same time
+				  search_in_progress=true;
+				  //Get the searchstring obj and dropdown obj
+				  //We must do it this way because we are useing setTimeout (see dd_search func)
+				  searchfield=document.getElementById(searchfieldid);
+				  dropdown_obj=document.getElementById(dropdownid);
+
+				  if (typeof saved_options[dropdownid] != "object") saved_options[dropdownid]=new Array();
+				  if (typeof last_search_str[dropdownid] == "undefined") last_search_str[dropdownid]="";
+
+				  //do the search case insensitive
+				  searchfor_str=searchfield.value.toUpperCase();
+
+				  //The first time we search we make a copy of the dropdownlist items
+				  if (saved_options[dropdownid].length==0){
+					for (var i=0; i<dropdown_obj.options.length; i++) {
+						saved_options[dropdownid][i]=new Array(dropdown_obj.options[i].text,dropdown_obj.options[i].value);
+					}
+				  }
+				  /*
+				  we must do special shit for IE, because option=new Option is terrible slow on IE.
+				  Therefore we just blank out the options instead of removeing them.
+				  */
+				  if (windowsIE){
+					//first init
+					if (typeof dropdown_length[dropdownid] == "undefined") dropdown_length[dropdownid]=dropdown_obj.options.length;
+				  }else{
+					dropdown_length[dropdownid]=dropdown_obj.options.length;
+				  }
+				  foundcount=0;
+
+				  /*
+				  We have two different search mechanism's
+				  If the user type more letters without deleteing, we can just search in the existing result
+				  But if the user changes a letter in the middle, or wipes out some letters, we must search
+				  in the dropdownlist saved copy
+				  */
+
+				  if (searchfor_str.indexOf(last_search_str[dropdownid])!=0){
+					 //the user has deleted some chars from the searchfield
+					 //search in the saved copy
+					 newoptions=0;
+
+					//remember the option the user has selected, so we can keep the selection
+					selectedvalue="";
+					 if (dropdown_obj.selectedIndex!=-1) selectedvalue=dropdown_obj.options[dropdown_obj.selectedIndex].value;
+					 for (var i=0; i<saved_options[dropdownid].length; i++) {
+
+						if (saved_options[dropdownid][i][0].toUpperCase().indexOf(searchfor_str)!=-1){
+							//we found a match
+							if (windowsIE){
+								//put the match into the list, starting at the top
+								dropdown_obj.options[newoptions].text=saved_options[dropdownid][i][0];
+								dropdown_obj.options[newoptions].value=saved_options[dropdownid][i][1];
+							}else{
+								//we add a new option at the top
+								dropdown_obj.options[newoptions]=new Option(saved_options[dropdownid][i][0],saved_options[dropdownid][i][1]);
+							}
+							if (dropdown_obj.options[newoptions].value==selectedvalue) dropdown_obj.selectedIndex=newoptions;
+							newoptions++;
+						}
+					 }
+					 //we remember the new lengt for IE, so we don't search the entire list next time
+					 if (windowsIE){
+						//clear the rest of the list. IE cannot drop the options, but we can clear them
+						for (var i=newoptions; i<dropdown_length[dropdownid]; i++){
+							dropdown_obj.options[i].text="";
+							dropdown_obj.options[i].value="";
+						}
+						dropdown_length[dropdownid]=newoptions;
+					 }else{
+						//trim away if the new result is less than the previous
+						dropdown_obj.options.length=newoptions;
+					 }
+				  }else{
+					  startlength=dropdown_obj.options.length;
+					  drops=0;
+
+					  for (var i=0; i<dropdown_length[dropdownid]; i++) {
+						if (dropdown_obj.options[i].text.toUpperCase().indexOf(searchfor_str)!=-1){
+							//found a match
+							if (windowsIE){
+								dropdown_obj.options[foundcount].text=dropdown_obj.options[i].text;
+								dropdown_obj.options[foundcount].value=dropdown_obj.options[i].value;
+							}
+							foundcount++;
+						}else{
+							if (!windowsIE){
+								//this will remove the option
+								dropdown_obj.options[i]=null;
+								//since we remove a option, the list is one less long
+								dropdown_length[dropdownid]=dropdown_obj.options.length;
+								if (startlength>dropdown_length[dropdownid]) i--;
+							}
+							drops++;
+						}
+					  }
+
+					  if (windowsIE){
+
+						//clear the rest of the list. IE cannot drop the options, but we can clear them
+						for (var i=foundcount; i<dropdown_length[dropdownid]; i++){
+							dropdown_obj.options[i].text="";
+							dropdown_obj.options[i].value="";
+						}
+
+					  }
+					  dropdown_length[dropdownid]=foundcount;
+					  //after a new search we reset the selected item
+					  dropdown_obj.selectedIndex=0;
+
+				  }
+				  //remember this search
+				  last_search_str[dropdownid]=searchfor_str;
+				  //release search lock
+				  search_in_progress=false;
+				  return false;
+			}
+			var keytimerid;
+			function dd_search(searchobj,dropdownobj){
+
+				/*
+				We use setTimeout so we don't start searching if the user tries to type a whole word
+				(if not, we would have done a search for each char the user pressed, and it would go slow)
+				*/
+				if (!search_in_progress){
+					try{
+						window.clearTimeout(keytimerid);
+					}catch(e){
+					}
+					keytimerid=window.setTimeout("dd_start_search('"+searchobj+"','"+dropdownobj+"')",250);
+				}
+			}
+
+			function check_keypress(evt){
+				if (window.event){
+					var k = event.keyCode;
+					if (k==13){
+						event.cancelBubble=true;
+						return false;
+					}
+				}else{
+					var k = evt.which;
+					if (k==13){
+						evt.stopPropagation();
+						return false;
+					}
+				}
+
+			}
+			</script>
+		</html>
