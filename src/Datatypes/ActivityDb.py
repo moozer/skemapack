@@ -138,15 +138,18 @@ class ActivityDb():
     
     def _MakeQuery(self, Teachers, Classes):
         if Teachers!=[]: 
-            print self.GetTeacherId(Teachers[0])
-            queryActivities = '''
-                select     activities.id as id, activities.name as name, 
-                           teachers.initials as teacher, classes.name as class 
-                from       activities, teachers, classes
-                where      activities.teacher_id = teachers.id
-                and        activities.class_id = classes.id
-                '''
-            yield queryActivities
+            for teacher in Teachers:
+                queryActivities = '''
+                    select     activities.id as id, activities.name as name, 
+                               teachers.initials as teacher, classes.name as class 
+                    from       activities, teachers, classes
+                    '''
+                queryActivities += "where      teachers.initials='%s'"%teacher
+                queryActivities += '''
+                    and        activities.teacher_id = teachers.id
+                    and        activities.class_id = classes.id
+                    '''
+                yield queryActivities
         else:
             queryActivities = '''
             select     activities.id as id, activities.name as name, 
