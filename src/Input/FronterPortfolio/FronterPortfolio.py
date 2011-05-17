@@ -78,8 +78,20 @@ class FronterPortfolio(object):
 
                 ret = {}
                 for i in range( 0, len(Handins )):
-                    ret[HandinTitles[i]] = Handins[i]
-                
+                    if Handins[i] in ['Not approved', 'Not delivered']:
+                        Missing = True
+                    else: # i.e. in progress, approved, not eval
+                        Missing = False
+                        
+                    if Handins[i] in ['In progress', 'Not evaluated']:
+                        Pending = True
+                    else:   # ie. not approved, not devlivere, approved
+                        Pending = False
+                    
+                    
+                    ret[HandinTitles[i]] = {'Evaluation': Handins[i], 
+                                            'Course': HandinTitles[i].split(' ')[0], 
+                                            'Missing': Missing, 'Pending': Pending }
                 yield ret
 
         raise StopIteration
