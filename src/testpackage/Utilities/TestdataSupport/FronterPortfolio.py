@@ -7,8 +7,9 @@ Created on May 16, 2011
 
 PortfolioFilename = 'FronterPortfolio/AnonTestData.html'
 PortfolioStudents = [
-    u'test20, test20', u'test22, test22', u'Test4, Test4', 
-    u'Test5, Test5', u'Test6, Test6', u'Test9, Test9']
+    {'Name': u'test20, test20', 'Include': True}, {'Name': u'test22, test22', 'Include': True}, 
+    {'Name': u'Test4, Test4', 'Include': True}, {'Name': u'Test5, Test5', 'Include': True}, 
+    {'Name': u'Test6, Test6', 'Include': True}, {'Name': u'Test9, Test9', 'Include': True}]
 
 PortfolioHandins = [
     u'try', u'ProNet Report hand-in', u'SD mini project', 

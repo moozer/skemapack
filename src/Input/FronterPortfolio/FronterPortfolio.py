@@ -32,7 +32,10 @@ class FronterPortfolio(object):
             tds = entry.findAll('span')
             for td in tds:
                 if td != None:
-                    StudentNames.append( td['title'] )
+                    if td['title'].find("(") == -1: # eliminate entries containing "(Slettes om nn dage)"
+                        StudentNames.append( {'Name': td['title'], 'Include': True} )
+                    else:
+                        StudentNames.append( {'Name': td['title'], 'Include': False} )
         
         return StudentNames
 
