@@ -8,7 +8,6 @@ Created on May 15, 2011
 
 # handling pythonpath
 import sys, os
-
 this_dir = os.path.abspath(__file__)
 while 1 == 1:
     this_dir, tail = os.path.split(this_dir)
@@ -16,7 +15,6 @@ while 1 == 1:
         this_dir = os.path.join(this_dir, tail) 
         break
 sys.path.append(this_dir) 
-print "Added %s to PYTHONPATH" % this_dir
 
 from optparse import OptionParser
 from Input.FronterPortfolio.FronterPortfolio import FronterPortfolio
@@ -53,15 +51,52 @@ if __name__ == '__main__':
     i = 0
     for StudentHandins in fp.getHandinsByStudent():
         if StudentList[i]['Include']:
+            CourseList = {}
+            
             print "%d Student %s" % (i, StudentList[i]['Name'] )
             outfile.write( StudentList[i]['Name'].encode('utf-8'))
             for HandinName in sorted( StudentHandins.iterkeys() ):
-                outfile.write( "\t%s"% StudentHandins[HandinName])
+                sh = StudentHandins[HandinName]
+                if sh['Course'] in CourseList:
+                    CourseList[sh['Course']]['Count'] += 1
+                    CourseList[sh['Course']]['Missing'] |= sh['Missing']
+                    CourseList[sh['Course']]['Pending'] |= sh['Pending']
+                else:
+                    CourseList[sh['Course']]= {}
+                    CourseList[sh['Course']]['Count'] = 1
+                    CourseList[sh['Course']]['Missing'] = False
+                    CourseList[sh['Course']]['Pending'] = False
+                    
+                outfile.write( "\t%s"% sh['Evaluation'])
+                
+            GlobalSum = {'Missing': False, 'Pending': False }
+            for Course in CourseList:
+                outfile.write( "\t%s%s" % ('Missing' if CourseList[Course]['Missing'] else 'Ok', 
+                                            '/Pending' if CourseList[Course]['Pending'] else  '' ))
+                GlobalSum['Missing'] |= CourseList[Course]['Missing']
+                GlobalSum['Pending'] |= CourseList[Course]['Pending']
+                
+            
+            outfile.write( "\t%s%s" % ('Missing' if GlobalSum['Missing'] else 'Ok', 
+                                       '/Pending' if GlobalSum['Pending'] else  '' ))
+            outfile.write( "\t%s" % StudentList[i]['Name'].encode('utf-8')) 
             outfile.write( "\n")
         else:
             print "%d Student %s skipped" % (i, StudentList[i]['Name'] )
 
         i = i + 1
+    
+    # @TODO header at the end ...
+    print "output header line"
+    outfile.write( "Student name" )
+    for Handin in sorted( fp.getHandinTitle() ):
+        outfile.write( "\t%s" % Handin)
+    for Course in CourseList:
+        outfile.write( "\t%s (sum)" % (Course) ) 
+    outfile.write( "\tTotal (sum)" )
+    outfile.write( "\tStudent name" )
         
+    outfile.write("\n")
+    
     print "done"
         
