@@ -48,7 +48,7 @@ class Test(unittest.TestCase):
             i = i+1
             if i == 3:
                 break
-            
+
         self.assertEqual( PortfolioHandinsFirstStudent, Result[0] )
         self.assertEqual( PortfolioHandinsSecondStudent, Result[1] )
         self.assertEqual( PortfolioHandinsThirdStudent, Result[2] )

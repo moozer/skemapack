@@ -64,8 +64,8 @@ if __name__ == '__main__':
                 else:
                     CourseList[sh['Course']]= {}
                     CourseList[sh['Course']]['Count'] = 1
-                    CourseList[sh['Course']]['Missing'] = False
-                    CourseList[sh['Course']]['Pending'] = False
+                    CourseList[sh['Course']]['Missing'] = sh['Missing']
+                    CourseList[sh['Course']]['Pending'] = sh['Pending']
                     
                 outfile.write( "\t%s"% sh['Evaluation'])
                 
@@ -99,4 +99,5 @@ if __name__ == '__main__':
     outfile.write("\n")
     
     print "done"
-        
+
+

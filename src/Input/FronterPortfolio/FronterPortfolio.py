@@ -68,7 +68,7 @@ class FronterPortfolio(object):
 
                 for td in tds:
                     try:
-                        Handins.append( td.a['title'] )
+                        Handins.append( td.a.img['title'] )
                     except:
                         Handins.append(  "<none>" )
             
