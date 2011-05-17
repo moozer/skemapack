@@ -137,6 +137,7 @@ class ActivityDb():
         raise StopIteration
     
     def _MakeQuery(self, Teachers, Classes):
+        ''' Creates the SQL queries for the db calls '''
         if Teachers!=[]: 
             for teacher in Teachers:
                 queryActivities = '''
