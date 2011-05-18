@@ -7,14 +7,8 @@ Created on May 15, 2011
 '''
 
 # handling pythonpath
-import sys, os
-this_dir = os.path.abspath(__file__)
-while 1 == 1:
-    this_dir, tail = os.path.split(this_dir)
-    if tail == 'src': # always go to src as default dir.
-        this_dir = os.path.join(this_dir, tail) 
-        break
-sys.path.append(this_dir) 
+from PythonPathUtil import AppendSrcToPythonPath
+AppendSrcToPythonPath()
 
 from optparse import OptionParser
 from Input.FronterPortfolio.FronterPortfolio import FronterPortfolio
