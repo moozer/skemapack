@@ -4,6 +4,10 @@ Created on May 7, 2011
 @author: morten
 '''
 
+# handling pythonpath
+from PythonPathUtil import AppendSrcToPythonPath
+AppendSrcToPythonPath()
+
 from optparse import OptionParser
 from Input.TfImporter.TfCsvImport import TfCsvImport
 from Input.TfImporter.TfExtraCsvImport import TfExtraCsvImport
