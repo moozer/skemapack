@@ -85,4 +85,4 @@ CREATE TABLE lessons (
     week date, -- this is the date of the monday of the corresponding week
     number_of_lessons INTEGER,
     FOREIGN KEY (activity_id) REFERENCES activities( id )
-)    
+);
