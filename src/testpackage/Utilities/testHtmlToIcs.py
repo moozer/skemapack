@@ -36,14 +36,14 @@ class Test(unittest.TestCase):
 
     def testHtmlToIcsWithDatestring(self):
         ''' HtmlToIcs : compares known skema HTML input with known ICS output '''
-        ret = os.system('python2.7 %s --infile "%s" --outfile "%s" --date-format "%s" > /dev/null' % (HtmlToIcsFilename, HtmlFileToProcess, Outputfilename, "%d-%m-%Y") )
+        ret = os.system('python %s --infile "%s" --outfile "%s" --date-format "%s" > /dev/null' % (HtmlToIcsFilename, HtmlFileToProcess, Outputfilename, "%d-%m-%Y") )
         self.assertEqual( ret, 0 )
         ret = os.system( 'diff %s %s  > /dev/null' % (IcsResultFile, Outputfilename ))
         self.assertEqual( ret, 0 )
 
     def testHtmlToIcs2010Week45(self):
         ''' HtmlToIcs : Collect week 45 (of 2010), and compare to known ics '''
-        cmd = 'python2.7 %s --id %i --outfile "%s" --date-format "%s" --first-week 45 --end-week 45 --year 2010' % (HtmlToIcsFilename, SkemaId, Outputfilename, "%d-%m-%Y")
+        cmd = 'python %s --id %i --outfile "%s" --date-format "%s" --first-week 45 --end-week 45 --year 2010' % (HtmlToIcsFilename, SkemaId, Outputfilename, "%d-%m-%Y")
         ret = os.system( cmd + "> /dev/null" )
         self.assertEqual( ret, 0 )
         ret = os.system( 'diff %s %s  > /dev/null' % (Outputfilename, SkemaUrlResultIcs ))
@@ -51,7 +51,7 @@ class Test(unittest.TestCase):
         
     def testHtmlToIcsCurrentWeek(self):
         ''' HtmlToIcs : Checking fetching of current week '''
-        cmd = 'python2.7 %s --url "%s" --outfile "%s" --date-format "%s"' % (HtmlToIcsFilename, SkemaUrlToUse, Outputfilename, "%d-%m-%Y")
+        cmd = 'python %s --url "%s" --outfile "%s" --date-format "%s"' % (HtmlToIcsFilename, SkemaUrlToUse, Outputfilename, "%d-%m-%Y")
         ret = os.system( cmd + "> /dev/null" )
         self.assertEqual( ret, 0 )
 

@@ -107,25 +107,26 @@ class Test(unittest.TestCase):
         BadWeekNo = 100
         s = DalumSkemaScraper( DalumId, [BadWeekNo]  )
         self.assertEqual( s.ExtractAppointments( NonFatal = True ), 0 )                
-                
-    @unittest.skip( "Lack access to last years data.")
-    def testGetFromWeb(self):
-        ''' DalumSkemaScraper : test correct retrieval of html from internet '''
-        s = DalumSkemaScraper( DalumId, [DalumWeek]  )
-        s.ExtractAppointments()
-        self.assertEqual( s.GetDates(), DalumDataDates_Week35 )
-        self.assertEqual( s.ExtractAppointments(), DalumDataAppCount_Week35 )
-        self.assertEqual( s.GetAppointments(), DalumDataAppointment_Week35)
-        
-    @unittest.skip( "Lack access to last years data.")
-    def testGetMultiWeekFromWeb(self):
-        ''' DalumSkemaScraper : test correct multiweek retrieval of html from internet '''
-        s = DalumSkemaScraper( DalumId, [DalumWeek-1, DalumWeek]  )
-        s.ExtractAppointments()
-        self.assertEqual( s.GetDates(), DalumDataDates_Week35 )
-        self.assertEqual( s.ExtractAppointments(), DalumDataAppCount_Week35+DalumDataAppCount_Week34 )
-        # ought to the following also...
-        #self.assertEqual( s.GetAppointments(), DalumDataAppointment_Week35+DalumDataAppointment_Week35)
+    
+    # TODO fixme
+#    @unittest.skip( "Lack access to last years data.")
+#    def testGetFromWeb(self):
+#        ''' DalumSkemaScraper : test correct retrieval of html from internet '''
+#        s = DalumSkemaScraper( DalumId, [DalumWeek]  )
+#        s.ExtractAppointments()
+#        self.assertEqual( s.GetDates(), DalumDataDates_Week35 )
+#        self.assertEqual( s.ExtractAppointments(), DalumDataAppCount_Week35 )
+#        self.assertEqual( s.GetAppointments(), DalumDataAppointment_Week35)
+#        
+#    @unittest.skip( "Lack access to last years data.")
+#    def testGetMultiWeekFromWeb(self):
+#        ''' DalumSkemaScraper : test correct multiweek retrieval of html from internet '''
+#        s = DalumSkemaScraper( DalumId, [DalumWeek-1, DalumWeek]  )
+#        s.ExtractAppointments()
+#        self.assertEqual( s.GetDates(), DalumDataDates_Week35 )
+#        self.assertEqual( s.ExtractAppointments(), DalumDataAppCount_Week35+DalumDataAppCount_Week34 )
+#        # ought to the following also...
+#        #self.assertEqual( s.GetAppointments(), DalumDataAppointment_Week35+DalumDataAppointment_Week35)
                  
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testConstructor']
