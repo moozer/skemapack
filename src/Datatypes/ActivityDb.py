@@ -12,7 +12,7 @@ class ActivityDb():
     classdocs
     '''
 
-    def __init__(self, DbFile, BaseDbFile = u"Datatypes/BaseDb.sql"):
+    def __init__(self, DbFile, BaseDbFile = u"Datatypes/BaseDb.sql", FailOnNonExist = False):
         '''
         Constructor
         @param DbFile The file to use. Try ':memory:'
@@ -27,6 +27,8 @@ class ActivityDb():
         try:
             self.GetMetadata()
         except sqlite3.OperationalError:
+            if FailOnNonExist:
+                raise IOError( "Failed to read file %s" % DbFile)
             self._InitDb(self._BaseDbFile)
     
         

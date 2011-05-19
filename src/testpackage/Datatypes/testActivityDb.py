@@ -99,7 +99,9 @@ class Test(unittest.TestCase):
         except:
             self.assertEqual( 1,0, "Failed to instantiate using db filename %s" % TestDbFilename)
                  
-
+    def testFailOnNotExist(self):
+        self.assertRaises( IOError, ActivityDb, ':memory:', u'NonExistIniFile', True)
+   
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

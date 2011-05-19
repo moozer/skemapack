@@ -4,9 +4,9 @@ Created on May 15, 2011
 @author: morten
 '''
 import unittest
-from testpackage.Utilities.SupportStuff import *
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 
-from Input.FronterPortfolio.FronterPortfolio import *
+from Input.FronterPortfolio.FronterPortfolio import * #@UnusedWildImport
 from testpackage.Utilities.TestdataSupport.FronterPortfolio import *
 
 class Test(unittest.TestCase):

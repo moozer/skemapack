@@ -32,7 +32,10 @@ class FronterPortfolio(object):
             tds = entry.findAll('span')
             for td in tds:
                 if td != None:
-                    StudentNames.append( td['title'] )
+                    if td['title'].find("(") == -1: # eliminate entries containing "(Slettes om nn dage)"
+                        StudentNames.append( {'Name': td['title'], 'Include': True} )
+                    else:
+                        StudentNames.append( {'Name': td['title'], 'Include': False} )
         
         return StudentNames
 
@@ -65,7 +68,7 @@ class FronterPortfolio(object):
 
                 for td in tds:
                     try:
-                        Handins.append( td.a['title'] )
+                        Handins.append( td.a.img['title'] )
                     except:
                         Handins.append(  "<none>" )
             
@@ -75,8 +78,20 @@ class FronterPortfolio(object):
 
                 ret = {}
                 for i in range( 0, len(Handins )):
-                    ret[HandinTitles[i]] = Handins[i]
-                
+                    if Handins[i] in ['Not approved', 'Not delivered']:
+                        Missing = True
+                    else: # i.e. in progress, approved, not eval
+                        Missing = False
+                        
+                    if Handins[i] in ['In progress', 'Not evaluated']:
+                        Pending = True
+                    else:   # ie. not approved, not devlivere, approved
+                        Pending = False
+                    
+                    
+                    ret[HandinTitles[i]] = {'Evaluation': Handins[i], 
+                                            'Course': HandinTitles[i].split(' ')[0], 
+                                            'Missing': Missing, 'Pending': Pending }
                 yield ret
 
         raise StopIteration
