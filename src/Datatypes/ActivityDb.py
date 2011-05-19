@@ -3,8 +3,8 @@ Created on May 6, 2011
 
 @author: morten
 '''
-
-import sqlite3
+ 
+import sqlite3 
 from Datatypes.ActivityData import ActivityData
 
 class ActivityDb():
@@ -137,7 +137,10 @@ class ActivityDb():
         raise StopIteration
     
     def _MakeQuery(self, Teachers, Classes):
-        ''' Creates the SQL queries for the db calls '''
+        ''' Creates the SQL queries for the db calls 
+        @param Teachers: List of teachers to generate activity lists for  
+        @param Classes:  List of classes to generate activity lists for
+        '''
         if Teachers!=[]: 
             for teacher in Teachers:
                 queryActivities = '''
