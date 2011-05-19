@@ -3,8 +3,8 @@ Created on May 6, 2011
 
 @author: morten
 '''
-
-import sqlite3
+ 
+import sqlite3 
 from Datatypes.ActivityData import ActivityData
 
 class ActivityDb():
@@ -119,30 +119,66 @@ class ActivityDb():
         
         return ActivityId
         
-    def GetActivities(self):
+    def GetActivities(self, Teachers=[], Classes=[]):
         ''' returns an iterable object of ActivityData '''
-        return self._ActivityList(self._conn)
+        return self._ActivityList(self._conn, Teachers, Classes)
         
-    def _ActivityList( self,conn ):
+    def _ActivityList( self,conn, Teachers, Classes):
         ''' Makes the actual db call.
             functions as an iterator returning ActivityData objects '''
         c = conn.cursor()
-        queryActivities = '''
+        
+        for query in self._MakeQuery(Teachers, Classes):
+            c.execute(query)
+        
+            for row in c:
+                LessonsList = self.GetLessonByActivityId( row['id'] )
+                yield ActivityData( Teacher = row['teacher'], Class = row['class'], 
+                                    Course = row['name'], LessonsList = LessonsList )
+        
+        raise StopIteration
+    
+    def _MakeQuery(self, Teachers, Classes):
+        ''' Creates the SQL queries for the db calls 
+        @param Teachers: List of teachers to generate activity lists for  
+        @param Classes:  List of classes to generate activity lists for
+        '''
+        if Teachers!=[]: 
+            for teacher in Teachers:
+                queryActivities = '''
+                    select     activities.id as id, activities.name as name, 
+                               teachers.initials as teacher, classes.name as class 
+                    from       activities, teachers, classes
+                    '''
+                queryActivities += "where      teachers.initials='%s'"%teacher
+                queryActivities += '''
+                    and        activities.teacher_id = teachers.id
+                    and        activities.class_id = classes.id
+                    '''
+                yield queryActivities
+        if Classes!=[]:
+            for thisClass in Classes:
+                queryActivities = '''
+                    select     activities.id as id, activities.name as name, 
+                               teachers.initials as teacher, classes.name as class 
+                    from       activities, teachers, classes
+                    '''
+                queryActivities += "where      classes.name='%s'"%thisClass
+                queryActivities += '''
+                    and        activities.teacher_id = teachers.id
+                    and        activities.class_id = classes.id
+                    '''
+                yield queryActivities
+        if Teachers!=[] and Classes!=[]:
+            queryActivities = '''
             select     activities.id as id, activities.name as name, 
                        teachers.initials as teacher, classes.name as class 
             from       activities, teachers, classes
             where      activities.teacher_id = teachers.id
             and        activities.class_id = classes.id
             '''
-        c.execute(queryActivities)
-        
-        for row in c:
-            LessonsList = self.GetLessonByActivityId( row['id'] )
-            yield ActivityData( Teacher = row['teacher'], Class = row['class'], 
-                                Course = row['name'], LessonsList = LessonsList )
-    
+            yield queryActivities
         raise StopIteration
-
 
     def GetLessonByActivityId(self, ActId ):
         c = self._conn.cursor()

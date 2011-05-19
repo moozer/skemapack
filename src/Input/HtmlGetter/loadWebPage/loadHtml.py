@@ -29,6 +29,7 @@ class htmlGetter(object):
         @param year: The year. Defaults to current year
         @return: A connection to the page showing the desired weeks.      
         '''
+        # TODO: Support for different starting and ending year (perhaps just if startWeek > EndWeek?)
         
         # stuff to force type checking in params
         idx = int( idx)

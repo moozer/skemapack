@@ -10,8 +10,16 @@ from Datatypes.ActivityData import ActivityData
 from testpackage.Utilities.SupportStuff import *
 from testpackage.Utilities.TestdataSupport.DbToHtml import *
 
-AD1 = ActivityData( Teacher = 'MON', Class = '2. semester network', Course = 'CourseName', 
+AD1 = ActivityData( Teacher = 'MON', Class = '2. semester network', Course = 'CourseA', 
                     LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
+AD2 = ActivityData( Teacher = 'MON', Class = '3. semester network', Course = 'CourseB', 
+                    LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
+AD3 = ActivityData( Teacher = 'PFL', Class = '2. semester network', Course = 'CourseC', 
+                    LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
+AD4 = ActivityData( Teacher = 'PFL', Class = '4. semester network', Course = 'CourseD', 
+                    LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
+
+
 
 Teachers = { 'MON': 'Morten', 'PFL': 'Poul'}
 TeacherIni = 'MON'
@@ -62,6 +70,28 @@ class Test(unittest.TestCase):
 
         for ADFromDb in self._db.GetActivities():
             self.assertEqual( ADFromDb, AD1 )
+       
+    def testInsertAndRetrieveByTeacher(self):
+        self._db.AddActivity( AD1 )
+        self._db.AddActivity( AD2 )
+        self._db.AddActivity( AD3 )
+        self._db.AddActivity( AD4 )
+        
+        listOfAD = []
+        for ADFromDb in self._db.GetActivities(Teachers=["PFL"]):
+            listOfAD.append(ADFromDb)
+        self.assertEqual( listOfAD, [AD3,AD4] )
+       
+    def testInsertAndRetrieveByClass(self):
+        self._db.AddActivity( AD1 )
+        self._db.AddActivity( AD2 )
+        self._db.AddActivity( AD3 )
+        self._db.AddActivity( AD4 )
+
+        listOfAD = []
+        for ADFromDb in self._db.GetActivities( Classes=["2. semester network"] ):
+            listOfAD.append(ADFromDb)
+        self.assertEqual( listOfAD, [AD1,AD3] )
        
     def testConstructorUsingExistingDb(self):
         try:
