@@ -13,13 +13,13 @@ from Datatypes.ActivityDb import ActivityDb
 
 def ParseCmdLineOptions():
     parser = OptionParser()
-    parser.add_option("-i", "--infile", dest="infile", default = None,
+    parser.add_option("-i", "--infile", dest="infile",
                       help="Location of TF database file to read", metavar="INFILE")
 #    parser.add_option("-o", "--outfile", dest="outfile", default="tf.html", 
 #                      help="Location of resulting html file", metavar="OUTFILE")
 #    parser.add_option("--teachers", dest="teachers", default = None,
 #                      help="A comma separated list of teacher initials", metavar="TEACHERS")
-    parser.add_option("-c", "--class", dest="classname", default = None,
+    parser.add_option("-c", "--class", dest="classname",
                       help="Class name ", metavar="CLASS")
 #    parser.add_option("-x", "--extrafile", dest="extrafile", default = None,
 #                      help="Extra csv data to include", metavar="EXTRAFILE")
@@ -39,31 +39,18 @@ def main():
     print "Loading database file: %s"%opt.infile
     ADb = ActivityDb( opt.infile, FailOnNonExist = True )
 
+    print "Listing for class %s" % opt.classname
     TeacherList = {}
-    CourseList = {}
-    for Activity in ADb.GetActivities():
-        if opt.classname:
-            if Activity.getClass() == opt.classname:
-                TeacherList[Activity.getTeacher()] = None
-                CourseList[Activity.getCourse()] = None
-        else:
-            TeacherList[Activity.getTeacher()] = None
-            CourseList[Activity.getCourse()] = None
 
-    if opt.classname:
-        print "Listing for class %s" % opt.classname
-    else:
-        print "Listing all course and teachers"
+    for Activity in ADb.GetActivities(Classes=[opt.classname]):
+        TeacherList[Activity.getTeacher()] = None
+        print Activity.getCourse(), "\t", Activity.getTeacher()
     
+ 
     print "Teachers:"
     for Teacher in TeacherList.keys():
         print Teacher
-    
-    print "--"
-    print "Courses:"
-    for Course in CourseList.keys():
-        print Course
-    
+        
 if __name__ == '__main__':
     main()
     pass
