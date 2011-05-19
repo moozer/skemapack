@@ -6,7 +6,7 @@ Created on May 7, 2011
 import unittest, os
 from Input.TfImporter.TfCsvImport import TfCsvImport
 from Datatypes.ActivityDb import ActivityDb
-from testpackage.Utilities.SupportStuff import *
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 
 TfInputCsvFile = "TfImporter/TF_skema.csv"
 TempDbFile = "testDb.sqlite"

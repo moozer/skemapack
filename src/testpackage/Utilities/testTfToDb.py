@@ -4,7 +4,7 @@ Created on May 7, 2011
 @author: morten
 '''
 import unittest, os
-from testpackage.Utilities.SupportStuff import *
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 
 TfFile = "TfToHtmlWithExtra/TF_skema.csv"
 TfExtraFile = "TfToHtmlWithExtra/TF_extra_1.csv"
