@@ -32,16 +32,25 @@ AD2 = ActivityData( Teacher = Teacher2, Class = Class2, Course = Course2, Lesson
 
 
 
+ChDirToSrc()
+AP = ActivityPlan( ActData=AD1, TeacherFullName=Teacher1Name, \
+                           PlanRelPath="1. Semester", PlanFileName="CourseName", \
+                           PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
+                           )
+AP_1 = ActivityPlan( ActData=AD1, TeacherFullName=Teacher1Name, \
+                           PlanRelPath="1. Semester", PlanFileName="CourseName", \
+                           PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
+                           )
+AP2 = ActivityPlan( ActData=AD2, TeacherFullName=Teacher2Name, \
+                           PlanRelPath="1. Semester", PlanFileName="CourseName2", \
+                           PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
+                           )
+
 
 class Test(unittest.TestCase):
 
 
     def testConstructor(self):
-        self._StartDir = ChDirToSrc()
-        AP = ActivityPlan( ActData=AD1, TeacherFullName=Teacher1Name, \
-                           PlanRelPath="1. Semester", PlanFileName="CourseName", \
-                           PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
-                           )
         self.assertEquals(AP.getActData(), AD1)
         self.assertNotEquals(AP.getActData(), AD2)
         self.assertEquals(AP.getTeacherFullName(), 'Teachers 1 Real Name')
@@ -49,7 +58,12 @@ class Test(unittest.TestCase):
         self.assertEquals(AP.getPlanFileName(), "CourseName")
         self.assertEquals(AP.getPlansRootFolder(), "testpackage/Datatypes/Testfiles/RootPlanFolder")
         pass
-
+    
+    def testEqual(self):
+        self.assertTrue( AP == AP_1 )
+        
+    def testNotEqual(self):
+        self.assertTrue( AP != AP2 )
 
 
 
