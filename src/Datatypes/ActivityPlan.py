@@ -15,6 +15,12 @@ class ActivityPlan(object):
     def __init__(self, ActData, TeacherFullName, PlanRelPath, PlanFileName, PlanLastUpdate, PlansRootFolder):
         '''
         Constructor
+        @param ActData: ActivityData instance
+        @param TeacherFullName: Teachers name
+        @param PlanRelPath: Path relative to the root folder
+        @param PlanFileName: File name
+        @param PlanLastUpdate: The date the plan file was last changed
+        @param PlansRootFolder: Root folder for the plans  
         '''
         self._ActData = ActData
         self._TeacherFullName = TeacherFullName
