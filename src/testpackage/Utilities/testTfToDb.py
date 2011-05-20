@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 '''
 Created on May 7, 2011
 
@@ -12,7 +14,7 @@ Outputfilename = "tftodbtest.sqlite"
 TfToDbFilename= "../../../Utilities/TfToDb.py"
 BaseDbFile = "TfToDb/BaseDb.sql"
 
-PythonBinaryToUse = "python2.7"
+PythonBinaryToUse = "python"
 
 class Test(unittest.TestCase):
     ''' Testing HtmlToIcs from an external shell like perspective '''
