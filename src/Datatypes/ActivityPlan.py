@@ -12,7 +12,7 @@ class ActivityPlan(object):
     '''
 
 
-    def __init__(self, ActData, TeacherFullName, PlanRelPath, PlanFileName, PlanLastUpdate, PlansRootFolder):
+    def __init__(self, ActData, TeacherFullName, PlanRelPath, PlanFileName, PlansRootFolder):
         '''
         Constructor
         @param ActData: ActivityData instance
@@ -26,7 +26,6 @@ class ActivityPlan(object):
         self._TeacherFullName = TeacherFullName
         self._PlanRelPath = PlanRelPath
         self._PlanFileName = PlanFileName
-        self._PlanLastUpdate = PlanLastUpdate
         self._PlansRootFolder = PlansRootFolder
         
     def __eq__(self, OtherAP ):
@@ -35,7 +34,6 @@ class ActivityPlan(object):
         if( self._TeacherFullName != OtherAP.getTeacherFullName() ): return False
         if( self._PlanRelPath != OtherAP.getPlanRelPath() ): return False
         if( self._PlanFileName != OtherAP.getPlanFileName() ): return False
-        if( self._PlanLastUpdate != OtherAP.getPlanLastUpdate() ): return False
         if( self._PlansRootFolder != OtherAP.getPlansRootFolder() ): return False
         return True
          
@@ -54,10 +52,6 @@ class ActivityPlan(object):
     def getPlanFileName(self):
         return self._PlanFileName
     
-    def getPlanLastUpdate(self):
-        return self._PlanLastUpdate
-    
     def getPlansRootFolder(self):
         return self._PlansRootFolder
-    
     

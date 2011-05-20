@@ -6,11 +6,13 @@ Created on May 20, 2011
 @author: flindt
 '''
 import unittest
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Datatypes.ActivityData import ActivityData
 from Datatypes.ActivityPlan import ActivityPlan
 
 
-Teacher1 = 'TeacherName'
+Teacher1 = 'TeacherIni'
+Teacher1Name = 'Teachers 1 Real Name'
 Class1 = 'ClassName'
 Course1 = 'CourseName'
 LessonsByWeek1 = {10: 1, 11: 2, 12: 3, 13: 4}
@@ -21,7 +23,8 @@ LessonsInWeek1= 1
 AD1 = ActivityData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
 AD1_2 = ActivityData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
 
-Teacher2 = 'TeacherName2'
+Teacher2 = 'Teacher2Ini'
+Teacher2Name = 'Teachers 2 Real Name'
 Class2 = 'ClassName2'
 Course2 = 'CourseName2'
 LessonsByWeek2 = {20: 11, 21: 22, 22: 12, 23: 34}
@@ -34,9 +37,20 @@ class Test(unittest.TestCase):
 
 
     def testConstructor(self):
-        #AP = ActivityPlan( ActData=AD1, )
-        self.assertTrue(False)
+        self._StartDir = ChDirToSrc()
+        AP = ActivityPlan( ActData=AD1, TeacherFullName=Teacher1Name, \
+                           PlanRelPath="1. Semester", PlanFileName="CourseName", \
+                           PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
+                           )
+        self.assertEquals(AP.getActData(), AD1)
+        self.assertNotEquals(AP.getActData(), AD2)
+        self.assertEquals(AP.getTeacherFullName(), 'Teachers 1 Real Name')
+        self.assertEquals(AP.getPlanRelPath(), "1. Semester")
+        self.assertEquals(AP.getPlanFileName(), "CourseName")
+        self.assertEquals(AP.getPlansRootFolder(), "testpackage/Datatypes/Testfiles/RootPlanFolder")
         pass
+
+
 
 
 if __name__ == "__main__":
