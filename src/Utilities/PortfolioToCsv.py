@@ -5,7 +5,7 @@ Created on May 15, 2011
 
 @author: morten
 '''
-
+ 
 # handling pythonpath
 from PythonPathUtil import AppendSrcToPythonPath
 AppendSrcToPythonPath()
@@ -19,6 +19,8 @@ def ParseCmdLineOptions():
                       help="File to read html data from", metavar="INFILE")
     parser.add_option("-o", "--outfile", dest="outfile", default="portfolio.csv",
                       help="Filename of output file", metavar="OUTFILE")        
+    parser.add_option("--exclude", dest="exclude", default=None,
+                      help="List of hand-ins to exclude from csv", metavar="EXCLUDE")        
     
     (options, args) =  parser.parse_args() #@UnusedVariable
 
@@ -33,9 +35,19 @@ if __name__ == '__main__':
     print "Opening outputfile %s" % opt.outfile
     outfile = open( opt.outfile, "w+")
     
+    
+    if opt.exclude:
+        exclude=opt.exclude.split(',')
+        print "Excluding handins"
+        for hi in exclude:
+            print "\t>%s<" % hi
+            
     print "output header line"
     outfile.write( "Student name" )
     for Handin in sorted( fp.getHandinTitle() ):
+        if opt.exclude:
+            if Handin in exclude:
+                continue
         outfile.write( "\t%s" % Handin)
     outfile.write("\n")
     
@@ -46,10 +58,15 @@ if __name__ == '__main__':
     for StudentHandins in fp.getHandinsByStudent():
         if StudentList[i]['Include']:
             CourseList = {}
+            HandinList = []
             
             print "%d Student %s" % (i, StudentList[i]['Name'] )
             outfile.write( StudentList[i]['Name'].encode('utf-8'))
             for HandinName in sorted( StudentHandins.iterkeys() ):
+                if opt.exclude:
+                    if HandinName in exclude:
+                        continue
+                
                 sh = StudentHandins[HandinName]
                 if sh['Course'] in CourseList:
                     CourseList[sh['Course']]['Count'] += 1
@@ -60,8 +77,9 @@ if __name__ == '__main__':
                     CourseList[sh['Course']]['Count'] = 1
                     CourseList[sh['Course']]['Missing'] = sh['Missing']
                     CourseList[sh['Course']]['Pending'] = sh['Pending']
-                    
+                 
                 outfile.write( "\t%s"% sh['Evaluation'])
+                HandinList.append(HandinName)
                 
             GlobalSum = {'Missing': False, 'Pending': False }
             for Course in CourseList:
@@ -84,6 +102,9 @@ if __name__ == '__main__':
     print "output header line"
     outfile.write( "Student name" )
     for Handin in sorted( fp.getHandinTitle() ):
+        if opt.exclude:
+            if Handin in exclude:
+                continue
         outfile.write( "\t%s" % Handin)
     for Course in CourseList:
         outfile.write( "\t%s (sum)" % (Course) ) 
@@ -91,6 +112,10 @@ if __name__ == '__main__':
     outfile.write( "\tStudent name" )
         
     outfile.write("\n")
+    
+    print "Handins included"
+    for Hi in HandinList:
+        print "\t>%s<" % Hi
     
     print "done"
 

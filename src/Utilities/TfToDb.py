@@ -23,7 +23,7 @@ def ParseCmdLineOptions():
                       help="Filename of database file", metavar="OUTFILE")
     parser.add_option("-x", "--extrafile", dest="extrafile", default = None,
                       help="Extra csv data to include", metavar="EXTRAFILE")
-    parser.add_option("-d", "--basedb", dest="basedb", default="BaseDb.sql",
+    parser.add_option("-d", "--basedb", dest="basedb", default=None,
                       help="path to the sql file using for initializing the database", metavar="BASEDB")
     
     (options, args) =  parser.parse_args() #@UnusedVariable

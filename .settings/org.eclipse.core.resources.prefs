@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 #Thu May 19 13:03:43 CEST 2011
+=======
+#Thu May 19 12:45:37 CEST 2011
+>>>>>>> refs/remotes/origin/master
 eclipse.preferences.version=1
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
 encoding//src/Output/TableOutput/__init__.py=utf-8
 encoding//src/Support/iCalendar-1.2/src/icalendar/cal.py=latin1
+encoding//src/Support/iCalendar-1.2/src/icalendar/parser.py=latin1
 encoding//src/Support/iCalendar-1.2/src/icalendar/parser.py=latin1
 encoding//src/Support/iCalendar-1.2/src/icalendar/prop.py=latin1
 encoding//src/Utilities/HtmlToIcs.py=UTF-8

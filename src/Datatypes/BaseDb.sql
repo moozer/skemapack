@@ -44,7 +44,7 @@ CREATE TABLE classes (
 INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("1. semester network", "1. Sem B Netværk", "asdf1234");
 INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("2. semester network", "2. semester Network", "asdf1235");
 INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("3. semester network", "3. Sem B Netværk", "asdf1236");
---INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("3. semester network", "3.Networks", "asdf1236");
+INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("3. semester network", "3.Networks", "asdf1236");
 INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("4. semester network", "4. Communication", "asdf1237");
 INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("1. semester electronics", "1. Sem A Elektronik", "asdf1234");
 INSERT INTO classes( name, alias_in_tf, official_denomination) VALUES("2. semester electronics", "2. Sem Electronics", "asdf1235");

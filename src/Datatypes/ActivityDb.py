@@ -6,7 +6,7 @@ Created on May 6, 2011
 @author: morten
 '''
  
-import sqlite3 
+import sqlite3
 from Datatypes.ActivityData import ActivityData
 
 class ActivityDb():
@@ -14,7 +14,7 @@ class ActivityDb():
     classdocs
     '''
 
-    def __init__(self, DbFile, BaseDbFile = u"Datatypes/BaseDb.sql", FailOnNonExist = False):
+    def __init__(self, DbFile, BaseDbFile = None, FailOnNonExist = False):
         '''
         Constructor
         @param DbFile The file to use. Try ':memory:'
@@ -31,6 +31,13 @@ class ActivityDb():
         except sqlite3.OperationalError:
             if FailOnNonExist:
                 raise IOError( "Failed to read file %s" % DbFile)
+            
+            if not self._BaseDbFile:
+                import inspect, os
+                this_file = inspect.currentframe().f_code.co_filename
+                self._BaseDbFile = os.path.join( os.path.dirname(this_file), u"BaseDb.sql")
+                print self._BaseDbFile
+
             self._InitDb(self._BaseDbFile)
     
         
