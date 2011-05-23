@@ -5,6 +5,8 @@ Created on May 19, 2011
 
 @author: flindt
 '''
+import os.path, time
+
 
 class ActivityPlan(object):
     '''
@@ -54,4 +56,9 @@ class ActivityPlan(object):
     
     def getPlansRootFolder(self):
         return self._PlansRootFolder
+    
+    def getLastUpdatedDate(self):
+        ''' Returns the file modification time as a local time-tupple'''
+        #print "last modified: %s" % time.strftime( "%B",time.localtime(os.path.getmtime(self._PlansRootFolder+'/'+self._PlanRelPath+'/'+self._PlanFileName)))
+        return time.localtime(os.path.getmtime(self._PlansRootFolder+'/'+self._PlanRelPath+'/'+self._PlanFileName))
     

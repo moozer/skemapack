@@ -6,6 +6,7 @@ Created on May 20, 2011
 @author: flindt
 '''
 import unittest
+import time
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Datatypes.ActivityData import ActivityData
 from Datatypes.ActivityPlan import ActivityPlan
@@ -34,15 +35,15 @@ AD2 = ActivityData( Teacher = Teacher2, Class = Class2, Course = Course2, Lesson
 
 ChDirToSrc()
 AP = ActivityPlan( ActData=AD1, TeacherFullName=Teacher1Name, \
-                           PlanRelPath="1. Semester", PlanFileName="CourseName", \
+                           PlanRelPath="1. Semester Common", PlanFileName="CourseName", \
                            PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
                            )
 AP_1 = ActivityPlan( ActData=AD1, TeacherFullName=Teacher1Name, \
-                           PlanRelPath="1. Semester", PlanFileName="CourseName", \
+                           PlanRelPath="1. Semester Common", PlanFileName="CourseName", \
                            PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
                            )
 AP2 = ActivityPlan( ActData=AD2, TeacherFullName=Teacher2Name, \
-                           PlanRelPath="1. Semester", PlanFileName="CourseName2", \
+                           PlanRelPath="1. Semester Common", PlanFileName="CourseName2", \
                            PlansRootFolder="testpackage/Datatypes/Testfiles/RootPlanFolder" \
                            )
 
@@ -54,7 +55,7 @@ class Test(unittest.TestCase):
         self.assertEquals(AP.getActData(), AD1)
         self.assertNotEquals(AP.getActData(), AD2)
         self.assertEquals(AP.getTeacherFullName(), 'Teachers 1 Real Name')
-        self.assertEquals(AP.getPlanRelPath(), "1. Semester")
+        self.assertEquals(AP.getPlanRelPath(), "1. Semester Common")
         self.assertEquals(AP.getPlanFileName(), "CourseName")
         self.assertEquals(AP.getPlansRootFolder(), "testpackage/Datatypes/Testfiles/RootPlanFolder")
         pass
@@ -64,7 +65,10 @@ class Test(unittest.TestCase):
         
     def testNotEqual(self):
         self.assertTrue( AP != AP2 )
-
+        
+    def testGetLastUpdatedDate(self):
+        self.assertTrue( AP.getLastUpdatedDate().tm_year ==2011 ) 
+        
 
 
 if __name__ == "__main__":
