@@ -5,7 +5,7 @@ Created on May 15, 2011
 
 @author: morten
 '''
-
+ 
 # handling pythonpath
 from PythonPathUtil import AppendSrcToPythonPath
 AppendSrcToPythonPath()

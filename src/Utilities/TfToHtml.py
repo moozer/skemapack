@@ -73,7 +73,8 @@ def main():
         if opt.teachers:
             for Teacher in opt.teachers.split(','):
                 tfi.EnableImportByTeacher(Teacher)
-                tfix.EnableImportByTeacher(Teacher)
+                if tfix is not None:
+                    tfix.EnableImportByTeacher(Teacher)
                 
                 print "Processing data and generating HTML for teacher %s"%Teacher
                 TO = TableOutput( tfi, ItObjectExtra=tfix,
@@ -89,7 +90,8 @@ def main():
         if opt.classes:                
             for Class in opt.classes.split(','):
                 tfi.EnableImportByClass(Class)
-                tfix.EnableImportByClass(Class)
+                if tfix is not None:
+                    tfix.EnableImportByClass(Class)
                 
                 print "Processing data and generating HTML for Class %s"%Class
                 TO = TableOutput( tfi, IncludeHeader=True, IncludeRowSums=True, IncludeColumnSums=True )

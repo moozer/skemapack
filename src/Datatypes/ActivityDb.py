@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 '''
 Created on May 6, 2011
 
@@ -198,5 +200,3 @@ class ActivityDb():
             LessonList[row['week']] = row['number_of_lessons']
         
         return LessonList
-            
-            
