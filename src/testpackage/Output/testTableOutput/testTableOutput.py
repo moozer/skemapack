@@ -48,8 +48,8 @@ IterableObjectEasy = [
 ObjectAsTextilePreparation = '''|. Class|. Teacher|. Course|-4|-3|-2|-1|0|1|2|3|. Sum|
 |. 1. Sem A Elektronik|. Teacher 7|. Subject H1||||||1000|||1000|
 | Sum ||||||||1000||| 1000.0|
-| Lessons (hours) ||||||||750.0|||750.0|
-| Preparation ||| 175.0| 175.0| 175.0| 175.0| 175.0| 175.0|||1050.0|
+| Lessons (hours) |||||||| 750|||750.0|
+| Preparation ||| 175| 175| 175| 175| 175| 175||| 1050|
 | Sum |||175.0|175.0|175.0|175.0|175.0|925.0||| 1800.0|
 '''
 
@@ -130,4 +130,6 @@ class Test(unittest.TestCase):
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
+    
+
     
