@@ -65,6 +65,7 @@ class Test(unittest.TestCase):
         self.assertRaises( ValueError, self._db.AddActivity, AD_aux )
         AD_aux.setTeacher( AD1.getTeacher())
         
+        
     def testInsertAndRetrieve(self):
         self._db.AddActivity( AD1 )
 

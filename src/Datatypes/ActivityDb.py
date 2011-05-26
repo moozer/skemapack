@@ -178,7 +178,7 @@ class ActivityDb():
                     and        activities.class_id = classes.id
                     '''
                 yield queryActivities
-        if Teachers!=[] and Classes!=[]:
+        if Teachers==[] and Classes==[]:
             queryActivities = '''
             select     activities.id as id, activities.name as name, 
                        teachers.initials as teacher, classes.name as class 
