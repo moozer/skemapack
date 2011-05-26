@@ -13,3 +13,7 @@ def AppendSrcToPythonPath():
             this_dir = os.path.join(this_dir, tail) 
             break
     sys.path.append(this_dir) 
+    sys.path.append(os.path.join(this_dir, 'Support/iCalendar-1.2/src')) 
+    
+# an use it
+AppendSrcToPythonPath()
