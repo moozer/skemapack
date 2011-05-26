@@ -20,6 +20,7 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
+from PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
 from Input.HtmlScraper.SdeSkemaScraper import ProcessWebPageById, ProcessWebPageByUrl, ProcessFile
 from Output.IcsOutput.IcsOutput import IcsOutput
 from optparse import OptionParser
@@ -43,7 +44,7 @@ def ParseCmdLineOptions():
 	parser.add_option("-y", "--year", dest="year", default="0",
 	                  help="The year to extract for, defaults to current year", metavar="YEAR")	
 	
-	(options, args) =  parser.parse_args()
+	(options, args) =  parser.parse_args() #@UnusedVariable
 
 	return options
 
@@ -62,6 +63,9 @@ def main():
 			Apps = ProcessWebPageByUrl( opt.url, opt.dateformat )
 		elif opt.id:
 			Apps = ProcessWebPageById( opt.id, opt.firstweek, opt.endweek, opt.year, opt.dateformat )
+		else:
+			print "No input file, nor url."
+			exit(3)
 	except ValueError, e:
 		print "Data reading or conversion failure. (Reason: %s)" % e.message
 		print "If this is date conversion related consider using the --date-format option."

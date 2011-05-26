@@ -44,7 +44,7 @@ class Test(unittest.TestCase):
     def testHtmlToIcs2010Week45(self):
         ''' HtmlToIcs : Collect week 45 (of 2010), and compare to known ics '''
         cmd = 'python %s --id %i --outfile "%s" --date-format "%s" --first-week 45 --end-week 45 --year 2010' % (HtmlToIcsFilename, SkemaId, Outputfilename, "%d-%m-%Y")
-        ret = os.system( cmd + "> /dev/null" )
+        ret = os.system( cmd  + "> /dev/null" )
         self.assertEqual( ret, 0 )
         ret = os.system( 'diff %s %s  > /dev/null' % (Outputfilename, SkemaUrlResultIcs ))
         self.assertEqual( ret, 0 )
