@@ -65,11 +65,23 @@ class Test(unittest.TestCase):
         self.assertRaises( ValueError, self._db.AddActivity, AD_aux )
         AD_aux.setTeacher( AD1.getTeacher())
         
+        
     def testInsertAndRetrieve(self):
         self._db.AddActivity( AD1 )
 
+        count = 0
         for ADFromDb in self._db.GetActivities():
+            self.assertEqual( ADFromDb, AD1 )           # this test will pass if no activities are found !
+            count += 1
+        self.assertEqual( 1, count)
+            
+    def testInsertAndRetrieveEmptyLists(self):
+        self._db.AddActivity( AD1 )
+        count = 0
+        for ADFromDb in self._db.GetActivities(Teachers=[]):
             self.assertEqual( ADFromDb, AD1 )
+            count += 1
+        self.assertEqual( 1, count)
        
     def testInsertAndRetrieveByTeacher(self):
         self._db.AddActivity( AD1 )

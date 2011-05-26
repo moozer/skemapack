@@ -109,7 +109,7 @@ class TableOutput(object):
                 TTable += "|"
                 if str(Week) in Hours:
                     RowSum += Hours[str(Week)]
-                    TTable += str(Hours[str(Week)])
+                    TTable += "{0: .0f}".format(Hours.get(str(Week),""))
             
             # add the sum cell if applicable
             if self._IncludeRowSums:
@@ -129,11 +129,11 @@ class TableOutput(object):
                 TTable += "|"
                 if str(Week) in Prep:
                     RowSum += Prep.get(str(Week),"")
-                    TTable += "{0: .1f}".format(Prep.get(str(Week),""))
+                    TTable += "{0: .0f}".format(Prep.get(str(Week),""))
 
             # add the sum cell if applicable
             if self._IncludeRowSums:
-                TTable += "|" + str(RowSum)
+                TTable += "|" + "{0: .0f}".format(RowSum)
             
             
             TTable += "|\n"
