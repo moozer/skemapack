@@ -27,10 +27,11 @@ class Test(unittest.TestCase):
 
 
     def testDbToHtml(self):
+        ''' TestDbToHtml : DbToHtml utility test '''
         ADb = ActivityDb( TestDbFilename )
         
         
-        TO = TableOutput( ADb.GetActivities(),
+        TO = TableOutput( ADb.GetActivities( Teachers = [TeacherInitials]),
                           IncludeHeader=False, IncludeRowSums=False, 
                           IncludeColumnSums=False, IncludePreperation=False )
         HTML = TO.GetHtmlTable( RawHtmlWeekStart, RawHtmlWeekEnd )
@@ -38,6 +39,7 @@ class Test(unittest.TestCase):
         f.write( HTML )
         f.close()
         
+#        ret= os.system( 'diff %s %s' % (RawHtmlTableOutput, TmpTableOutputFile ))
         ret= os.system( 'diff %s %s  > /dev/null' % (RawHtmlTableOutput, TmpTableOutputFile ))
         self.assertEqual( ret, 0, "output table mismatch" )
 
