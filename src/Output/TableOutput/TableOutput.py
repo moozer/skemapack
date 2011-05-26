@@ -64,7 +64,7 @@ class TableOutput(object):
         Sum = 0
 
         TTable += "| Sum "
-        for i in range( 2, len(self._HeaderElements)+1):
+        for i in range( 2, len(self._HeaderElements)+1): #@UnusedVariable
             TTable += "|"
         
         for Week in WeekNo:
@@ -99,7 +99,7 @@ class TableOutput(object):
         TTable = ""
         if self._IncludeColumnSums:
             TTable += "| Lessons (hours) "
-            for i in range( 2, len(self._HeaderElements)+1):
+            for i in range( 2, len(self._HeaderElements)+1): #@UnusedVariable
                 TTable += "|"
             #for e in self._HeaderElements: #@UnusedVariable
             #    TTable += "|"
