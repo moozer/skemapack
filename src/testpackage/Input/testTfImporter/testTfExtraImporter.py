@@ -50,7 +50,6 @@ class Test(unittest.TestCase):
 
     def testEnableSearchByTeacher(self):
         ''' TfExtraCvsImporter : test selecting teacher based search '''
-        print os.getcwd()
         tfi = TfExtraCsvImport(TfExtraInputCsvFile )
         tfi.EnableImportByTeacher(Teacher1Initials)
         self.assertEqual( tfi.IsSearchEnabled(), True )

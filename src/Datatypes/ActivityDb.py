@@ -36,7 +36,6 @@ class ActivityDb():
                 import inspect, os
                 this_file = inspect.currentframe().f_code.co_filename
                 self._BaseDbFile = os.path.join( os.path.dirname(this_file), u"BaseDb.sql")
-                print self._BaseDbFile
 
             self._InitDb(self._BaseDbFile)
     
