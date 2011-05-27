@@ -4,7 +4,7 @@ Created on May 8, 2011
 @author: morten
 '''
 import unittest, os
-from testpackage.Utilities.SupportStuff import *
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 
 from Datatypes.ActivityDb import ActivityDb
 from testpackage.Utilities.TestdataSupport.DbToHtml import *
@@ -27,10 +27,9 @@ class Test(unittest.TestCase):
 
 
     def testDbToHtml(self):
-        ''' TestDbToHtml : DbToHtml utility test '''
+        ''' TestDbToHtml : testing from db to table output '''
         ADb = ActivityDb( TestDbFilename )
-        
-        
+    
         TO = TableOutput( ADb.GetActivities( Teachers = [TeacherInitials]),
                           IncludeHeader=False, IncludeRowSums=False, 
                           IncludeColumnSums=False, IncludePreperation=False )

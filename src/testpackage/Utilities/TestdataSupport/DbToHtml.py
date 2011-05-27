@@ -4,7 +4,7 @@ Created on May 8, 2011
 @author: morten
 '''
 
-TestDbFilename = "DbToHtml/testDb.sqlite"
+TestDbFilename = "DbToHtml/RawHtmlTable.sqlite"
 
 RawHtmlTableOutput = "DbToHtml/RawHtmlTable.html"
 RawHtmlWeekStart = 1
