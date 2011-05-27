@@ -27,7 +27,7 @@ def ParseCmdLineOptions():
     parser.add_option( "-i", "--interface", dest="interface", default="cli",
                       help="Interface cli or api", metavar="CLI")
     
-    (options, args) =  parser.parse_args()
+    (options, args) =  parser.parse_args() #@UnusedVariable
     return options
 
 
