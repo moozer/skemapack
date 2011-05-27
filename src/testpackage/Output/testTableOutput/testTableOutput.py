@@ -49,7 +49,7 @@ class Test(unittest.TestCase):
         self.assertEqual( Result, ObjectAsTextileRowAndColumnSum )
 
     def testGetTextileWithPreparation(self):
-        ''' TableOutput : test building the textile table with Row and column sums'''
+        ''' TableOutput : test building the textile table with Row and column sums and preparation'''
         TO = TableOutput( IterableObjectEasy, IncludeRowSums=True, IncludeColumnSums=True, 
                           IncludePreperation=True )
         Result = TO.GetTextileTable( StartWeek=1, EndWeek=3 )        

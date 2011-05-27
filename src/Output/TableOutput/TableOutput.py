@@ -273,7 +273,7 @@ class TableOutput(object):
         ''' Converts the textile to html '''
         self.GetTextileTable( StartWeek, EndWeek)
         result = textile.textile( self._TextileTable)
-        return result
+        return result+'\n'
     
     def GetWeeks(self):
         ''' returns the resulting week used in html generation '''
