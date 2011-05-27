@@ -127,16 +127,18 @@ class ActivityDb():
         
         return ActivityId
         
-    def GetActivities(self, Teachers=[], Classes=[]):
-        ''' returns an iterable object of ActivityData '''
-        return self._ActivityList(self._conn, Teachers, Classes)
+    def GetActivities(self, Teachers=[], Classes=[], SortBy = None):
+        ''' returns an iterable object of ActivityData 
+        @param SortBy: Is one of "name" (for coursename), "teacher", "class"
+        '''
+        return self._ActivityList(self._conn, Teachers, Classes, SortBy)
         
-    def _ActivityList( self,conn, Teachers, Classes):
+    def _ActivityList( self,conn, Teachers, Classes, SortBy):
         ''' Makes the actual db call.
             functions as an iterator returning ActivityData objects '''
         c = conn.cursor()
         
-        for query in self._MakeQuery(Teachers, Classes):
+        for query in self._MakeQuery(Teachers, Classes, SortBy):
             c.execute(query)
         
             for row in c:
@@ -146,7 +148,7 @@ class ActivityDb():
         
         raise StopIteration
     
-    def _MakeQuery(self, Teachers, Classes):
+    def _MakeQuery(self, Teachers, Classes, SortBy):
         ''' Creates the SQL queries for the db calls 
         @param Teachers: List of teachers to generate activity lists for  
         @param Classes:  List of classes to generate activity lists for
@@ -163,6 +165,8 @@ class ActivityDb():
                     and        activities.teacher_id = teachers.id
                     and        activities.class_id = classes.id
                     '''
+                if SortBy:
+                    queryActivities += "order by %s" % SortBy
                 yield queryActivities
         if Classes!=[]:
             for thisClass in Classes:
@@ -176,6 +180,8 @@ class ActivityDb():
                     and        activities.teacher_id = teachers.id
                     and        activities.class_id = classes.id
                     '''
+                if SortBy:
+                    queryActivities += "order by %s" % SortBy
                 yield queryActivities
         if Teachers==[] and Classes==[]:
             queryActivities = '''
@@ -185,6 +191,8 @@ class ActivityDb():
             where      activities.teacher_id = teachers.id
             and        activities.class_id = classes.id
             '''
+            if SortBy:
+                queryActivities += "order by %s" % SortBy
             yield queryActivities
         raise StopIteration
 

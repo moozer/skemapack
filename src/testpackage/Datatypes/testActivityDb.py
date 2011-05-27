@@ -19,8 +19,6 @@ AD3 = ActivityData( Teacher = 'PFL', Class = '2. semester network', Course = 'Co
 AD4 = ActivityData( Teacher = 'PFL', Class = '4. semester network', Course = 'CourseD', 
                     LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
 
-
-
 Teachers = { 'MON': 'Morten', 'PFL': 'Poul'}
 TeacherIni = 'MON'
 TeacherId = 1
@@ -115,6 +113,16 @@ class Test(unittest.TestCase):
         self.assertRaises( IOError, ActivityDb, ':memory:', u'NonExistIniFile', True)
    
 
+    def testExtractSorted(self):
+        self._db.AddActivity( AD2 )
+        self._db.AddActivity( AD1 )
+        
+        listOfAD = []
+        for ADFromDb in self._db.GetActivities( SortBy = 'name' ):
+            listOfAD.append(ADFromDb)
+        self.assertEqual( listOfAD, [AD1,AD2] )
+       
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
