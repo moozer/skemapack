@@ -37,6 +37,12 @@ ObjectAsTextileRowAndColumnSum = '''|. Class|. Teacher|. Course|38|39|40|41|42|4
 | Sum ||||4|6|8||10|4|4|4|4|4|4|4||| 56.0|
 '''
 
+HtmlWithCompare_43_44 = '''\t<table>
+\t\t<tr>\n\t\t\t<td>Class</td>\n\t\t\t<td>Teacher</td>\n\t\t\t<td>Course</td>\n\t\t\t<td>43</td>\n\t\t\t<td>44</td>\n\t\t</tr>
+\t\t<tr>\n\t\t\t<td>1. Sem A Elektronik</td>\n\t\t\t<td>Teacher 7</td>\n\t\t\t<td>Subject H1</td>\n\t\t\t<td><table class="Equal"><tr><td>10</td></tr><tr><td>10</td></tr></table></td>\n\t\t\t<td></td>\n\t\t</tr>
+\t\t<tr>\n\t\t\t<td>1. Sem A Elektronik</td>\n\t\t\t<td>Teacher 7</td>\n\t\t\t<td>Subject L1</td>\n\t\t\t<td></td>\n\t\t\t<td><table class="Equal"><tr><td>4</td></tr><tr><td>4</td></tr></table></td>\n\t\t</tr>
+\t</table>
+'''
 IterableObjectEasy = [
     ActivityData( LessonsList = {1: 1000}, Course = 'Subject H1', 
                 Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
