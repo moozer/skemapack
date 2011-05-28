@@ -16,6 +16,8 @@ LessonsInWeek1= 1
 
 CD1 = ActivityData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
 CD1_2 = ActivityData( Teacher = Teacher1, Class = Class1, Course = Course1, LessonsList = LessonsByWeek1 )
+CD1NonExistantWeekNo = 5
+
 
 Teacher2 = 'TeacherName2'
 Class2 = 'ClassName2'

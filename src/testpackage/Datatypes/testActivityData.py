@@ -34,6 +34,10 @@ class TestActivityData(unittest.TestCase):
     def testGetWeekValue(self):
         self.assertTrue( CD1.getLessons(Week1) == LessonsInWeek1 )
         
+    def testBadWeekNo(self):
+        self.assertEqual( CD1.getLessons(CD1NonExistantWeekNo), None )
+        
+        
     def testSetTeacher(self):
         CD_aux.setTeacher(TeacherTestNAme)
         self.assertEqual( TeacherTestNAme, CD_aux.getTeacher( ))

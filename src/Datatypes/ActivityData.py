@@ -53,4 +53,6 @@ class ActivityData(object):
         return self._LessonsList.keys()
     
     def getLessons(self, WeekNo):
+        if not WeekNo in self._LessonsList:
+            return None
         return self._LessonsList[WeekNo]
