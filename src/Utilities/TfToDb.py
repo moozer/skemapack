@@ -46,6 +46,7 @@ if __name__ == '__main__':
 
     print "Using db file %s" % opt.outfile        
     db = ActivityDb( opt.outfile, opt.basedb )
+    db.SetTitle( opt.infile )
     
     # Do the data movement.
     tfi.EnableImportAll()
