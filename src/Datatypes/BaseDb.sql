@@ -20,19 +20,19 @@ CREATE TABLE teachers (
     initials TEXT, 
     name TEXT
     );
-INSERT INTO teachers VALUES(1,'MON','Morten');
-INSERT INTO teachers VALUES(2,'PFL','Poul');
-INSERT INTO teachers VALUES(3,'PDA','Per');
-INSERT INTO teachers VALUES(4,'PSS','Peder');
-INSERT INTO teachers VALUES(5,'SUN','Susanne');
-INSERT INTO teachers VALUES(6,'VL','Viggo');
-INSERT INTO teachers VALUES(7,'HHAL','Helge');
-INSERT INTO teachers VALUES(8,'BSZ','Bettina');
-INSERT INTO teachers VALUES(9,'JLU','Jan');
-INSERT INTO teachers VALUES(10,'IMR','Ib');
-INSERT INTO teachers VALUES(11,'KESM','Kent');
+INSERT INTO teachers( initials, name ) VALUES('MON','Morten');
+INSERT INTO teachers( initials, name ) VALUES('PFL','Poul');
+INSERT INTO teachers( initials, name ) VALUES('PDA','Per');
+INSERT INTO teachers( initials, name ) VALUES('PSS','Peder');
+INSERT INTO teachers( initials, name ) VALUES('SUN','Susanne');
+INSERT INTO teachers( initials, name ) VALUES('VL','Viggo');
+INSERT INTO teachers( initials, name ) VALUES('HHAL','Helge');
+INSERT INTO teachers( initials, name ) VALUES('BSZ','Bettina');
+INSERT INTO teachers( initials, name ) VALUES('JLU','Jan');
+INSERT INTO teachers( initials, name ) VALUES('IMR','Ib');
+INSERT INTO teachers( initials, name ) VALUES('KESM','Kent');
+INSERT INTO teachers( initials, name ) VALUES('SK','Stig');
 
-COMMIT;
 
 -- table containing class names
 CREATE TABLE classes (
@@ -85,3 +85,6 @@ CREATE TABLE lessons (
     number_of_lessons INTEGER,
     FOREIGN KEY (activity_id) REFERENCES activities( id )
 );
+
+COMMIT;
+
