@@ -67,6 +67,17 @@ class ActivityDb():
 
         return retval
    
+    def GetTitle(self):
+        return self.GetMetadata()['Title']
+    
+    def SetTitle(self, NewTitle ):
+        OldTitle = self.GetTitle()
+        
+        c = self._conn.cursor()
+        c.execute("update metadata set value = ? where key = 'Title'", (NewTitle,) )
+        
+        return OldTitle
+    
     # --- Teacher table
     def GetTeacherList(self):
         ''' returns the complete list of metadata '''

@@ -23,6 +23,8 @@ Teachers = { 'MON': 'Morten', 'PFL': 'Poul'}
 TeacherIni = 'MON'
 TeacherId = 1
 
+DbTitle = "TestTitle"
+
 AD_aux = ActivityData( Teacher = 'MON', Class = 'ClassName', Course = 'CourseName', 
                     LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )
 
@@ -122,6 +124,9 @@ class Test(unittest.TestCase):
             listOfAD.append(ADFromDb)
         self.assertEqual( listOfAD, [AD1,AD2] )
        
+    def testGetSetTitle(self):
+        self._db.SetTitle( DbTitle )
+        self.assertEqual( DbTitle, self._db.GetTitle())
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
