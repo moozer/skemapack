@@ -44,21 +44,45 @@ class HtmlOutput():
         # looping until both are None
         if self._CmpObj:
             while( CmpEntry or entry ):        
-                EntryVal = entry.getCourse()
-                CmpValue = CmpEntry.getCourse()
-                
-                if (not CmpEntry) or (EntryVal < CmpValue):
+                if not entry: # then CmpEntry is used.
+                    Html += self._GenerateTableEntries(WeekNo, None, CmpEntry )
+                    CmpEntry = self._getNext(iterCmpObj)
+                    continue
+                if not CmpEntry:
                     Html += self._GenerateTableEntries(WeekNo, entry, None )
                     entry = self._getNext(iterObj)
-                elif (not entry) or (EntryVal > CmpValue):
+                    continue
+                
+                # both are valid
+                EntryVal = entry.getCourse() if entry else None
+                CmpValue = CmpEntry.getCourse() if CmpEntry else None
+               
+                # comparing class
+                if entry.getClass() > CmpEntry.getClass():
                     Html += self._GenerateTableEntries(WeekNo, None, CmpEntry )
                     CmpEntry = self._getNext(iterCmpObj)                
-                elif entry.getCourse() == CmpEntry.getCourse():
-                    Html += self._GenerateTableEntries(WeekNo, entry, CmpEntry )
-                    CmpEntry = self._getNext(iterCmpObj)
+                    continue
+                if entry.getClass() < CmpEntry.getClass():
+                    Html += self._GenerateTableEntries(WeekNo, entry, None )
                     entry = self._getNext(iterObj)
-                else:
-                    raise ValueError("Should never get here!")
+                    continue
+
+                # comparing course
+                if EntryVal < CmpValue:
+                    Html += self._GenerateTableEntries(WeekNo, entry, None )
+                    entry = self._getNext(iterObj)
+                    continue
+                if (EntryVal > CmpValue):
+                    Html += self._GenerateTableEntries(WeekNo, None, CmpEntry )
+                    CmpEntry = self._getNext(iterCmpObj)                
+                    continue
+                if EntryVal == CmpValue:
+                    Html += self._GenerateTableEntries(WeekNo, entry, CmpEntry )
+                    entry = self._getNext(iterObj)
+                    CmpEntry = self._getNext(iterCmpObj)
+                    continue
+
+                raise ValueError("Should never get here!")
         else:
             while( entry ):        
                 Html += self._GenerateTableEntries(WeekNo, entry, None )
@@ -68,10 +92,6 @@ class HtmlOutput():
         return Html
     
     def _getNext(self, iter ):
-        # if iter is None, return None
-        if not iter:
-            return None
-        
         try:
             NextEntry = iter.next()
         except StopIteration:
@@ -87,32 +107,42 @@ class HtmlOutput():
         TTable = "\t\t<tr>\n"
         
         # Course name, teacher name, etc.
-        TTable += "\t\t\t<td>%s</td>\n" % entry.getClass()
-        TTable += "\t\t\t<td>%s</td>\n" % entry.getTeacher()
-        TTable += "\t\t\t<td>%s</td>\n" % entry.getCourse()
-
+        if not entry:
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( None, CmpEntry.getClass() )
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( None, CmpEntry.getTeacher() )
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( None, CmpEntry.getCourse() )
+        elif not CmpEntry:
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( entry.getClass(), None )
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( entry.getTeacher(), None )
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( entry.getCourse(), None )
+        else:
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( entry.getClass(), CmpEntry.getClass() )
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( entry.getTeacher(), CmpEntry.getTeacher() )
+            TTable += "\t\t\t<td>%s</td>\n" % self._CellContent( entry.getCourse(), CmpEntry.getCourse() )
+            
         # the weeks
         for Week in WeekNo:
-            if Week in entry.getListOfWeeks():
-                if not entry:
-                    Content = self._CellContent( None, CmpEntry.getLessons(Week) ) 
-                elif not CmpEntry:
-                    Content = self._CellContent( entry.getLessons(Week), None ) 
-                else:
-                    Content = self._CellContent( entry.getLessons(Week), CmpEntry.getLessons(Week) ) 
-
-                TTable += "\t\t\t<td>%s</td>\n" % Content
+            if not entry:
+                Content = self._CellContent( None, CmpEntry.getLessons(Week) ) 
+            elif not CmpEntry:
+                Content = self._CellContent( entry.getLessons(Week), None ) 
             else:
-                TTable += "\t\t\t<td></td>\n"
+                Content = self._CellContent( entry.getLessons(Week), CmpEntry.getLessons(Week) ) 
+
+            TTable += "\t\t\t<td>%s</td>\n" % Content
 
         TTable += "\t\t</tr>\n"
         return TTable
 
     def _CellContent(self, EntryTxt, CmpEntryTxt ):
+        # the case of no lesson in week
+        if (not EntryTxt) and (not CmpEntryTxt):
+            return ""
+         
         if not self._CmpObj:
-            return EntryTxt
+            return EntryTxt if EntryTxt else ""
         
-        txt = "<table class=\"%s\">" % (self._CssClassEqual if EntryTxt == CmpEntryTxt else self.CssClassDiff )
+        txt = "<table class=\"%s\">" % (self._CssClassEqual if EntryTxt == CmpEntryTxt else self._CssClassDiff )
         txt += "<tr><td>%s</td></tr><tr><td>%s</td></tr>" % (EntryTxt, CmpEntryTxt)
         txt += "</table>"
         return txt
