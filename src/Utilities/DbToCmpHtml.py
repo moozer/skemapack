@@ -8,6 +8,7 @@ from PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
 from optparse import OptionParser
 from Datatypes.ActivityDb import ActivityDb
 from Output.TableOutput.HtmlOutput import HtmlOutput
+import codecs
 
 # index file content.
 IndexFileHtml = '''<html>
@@ -107,11 +108,11 @@ def main():
     opt = ParseCmdLineOptions()
     
     # file with all teachers.
-    f = open("%sAll.html" % (opt.outfilebase,), "w")
+    f = codecs.open("%sAll.html" % (opt.outfilebase,), "w", 'utf-8')
     f.write( Header )
 
     # file with links.
-    f_links = open("%sLinks.html" % (opt.outfilebase,), "w")
+    f_links = codecs.open("%sLinks.html" % (opt.outfilebase,), "w", 'utf-8')
     f_links.write( LinksFileHeader )
    
     print "Loading database file: %s"%opt.infile
@@ -130,10 +131,14 @@ def main():
             HO = HtmlOutput( ADb.GetActivities( Teachers = [CurTeacher] ) )
             HTML = HO.GetHtmlTable(1, 52)
             print "Saving data to HTML (Teacher %s)" % CurTeacher
-            WriteTeacherTable(CurTeacher, HTML, f)
+            try:
+                WriteTeacherTable(CurTeacher, HTML, f)
+            except:
+                print "Failed to write table:\n %s\n"%HTML
+                raise
                
             # output specific files for each teacher also         
-            f_teacher = open("%s%s.html" % (opt.outfilebase, CurTeacher), "w")
+            f_teacher = codecs.open("%s%s.html" % (opt.outfilebase, CurTeacher), "w", 'utf-8')
             WriteHeader(f_teacher)
             f_teacher.write( "Dataset is %s" % ADb.GetTitle())
             WriteTeacherTable(CurTeacher, HTML, f_teacher)
@@ -167,7 +172,7 @@ def main():
     f_links.write( LinksFileFooter )
     print "Links saved in %s"%f_links.name
     
-    f_index = open( "index.html", "w")
+    f_index = codecs.open( "index.html", "w", 'utf-8')
     f_index.write(IndexFileHtml%(f_links.name, f.name) )
     
 if __name__ == '__main__':
