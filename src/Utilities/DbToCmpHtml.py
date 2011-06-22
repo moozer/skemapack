@@ -37,8 +37,8 @@ def ParseCmdLineOptions():
                       help="Database file to use", metavar="INFILE")
     parser.add_option("-c", "--comparefile", dest="cmpfile", default = None,
                       help="Database file to use in comparison" )
-    parser.add_option("-o", "--outfile", dest="outfile", default="tf.html", 
-                      help="Location of resulting html file", metavar="OUTFILE")
+    parser.add_option("-o", "--outfilebase", dest="outfilebase", default="TF_", 
+                      help="Basename of files", metavar="OUTFILEBASE")
 #    parser.add_option("--teachers", dest="teachers", default = None,
 #                      help="A comma separated list of teacher initials", metavar="TEACHERS")
 #    parser.add_option("--classes", dest="classes", default = None,
@@ -55,17 +55,32 @@ def ParseCmdLineOptions():
     return options
 
 
+
+def WriteTeacherTable(CurTeacher, HtmlToOutput, filehandle):
+    ''' writes the table to file '''
+    filehandle.write("<h2>Course for teacher %s</h2>" % CurTeacher)
+    filehandle.write(HtmlToOutput)
+    filehandle.write("<br />")
+
+
+def WriteHeader(filehandle):
+    filehandle.write(Header)
+
+def WriteFooter(filehandle):
+    filehandle.write(Footer)
+
+
 def main():
     opt = ParseCmdLineOptions()
     
-    f = open(opt.outfile, "w")
+    f = open("%sAll.html" % (opt.outfilebase,), "w")
     f.write( Header )
-    
+   
     print "Loading database file: %s"%opt.infile
     ADb = ActivityDb( opt.infile )
 
     AllTeachers = ADb.GetTeacherList().keys()
-
+    
     f.write( "<h2>All activities</h2><br />" )
     
     print "Processing data and generating HTML"
@@ -77,9 +92,17 @@ def main():
             HO = HtmlOutput( ADb.GetActivities( Teachers = [CurTeacher] ) )
             HTML = HO.GetHtmlTable(1, 52)
             print "Saving data to HTML (Teacher %s)" % CurTeacher
-            f.write( "<h2>Course for teacher %s</h2>" % CurTeacher )
-            f.write( HTML )
-            f.write( "<br />")
+            WriteTeacherTable(CurTeacher, HTML, f)
+               
+            # output specific files for each teacher also         
+            f_teacher = open("%s%s.html" % (opt.outfilebase, CurTeacher), "w")
+            WriteHeader(f_teacher)
+            f_teacher.write( "Dataset is %s" % ADb.GetTitle())
+            WriteTeacherTable(CurTeacher, HTML, f_teacher)
+            WriteFooter(f_teacher)
+            f_teacher.close()
+            print "html saved in %s"%f_teacher.name
+
     else:
         ADbCmp = ActivityDb( opt.cmpfile )
         f.write( "First dataset is %s <br />" % ADb.GetTitle())
@@ -97,7 +120,7 @@ def main():
             f.write( "<br />")
 
     f.write( Footer )
-    print "html saved in %s"%opt.outfile
+    print "html saved in %s"%f.name
     
     
 if __name__ == '__main__':
