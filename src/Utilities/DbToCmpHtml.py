@@ -104,6 +104,16 @@ def WriteFooter(filehandle):
     filehandle.write(Footer)
 
 
+
+def SaveTeacherFile(Filename, DatasetTitle, CurTeacher, HTML):
+    # output specific files for each teacher also
+    f_teacher = codecs.open(Filename, "w", 'utf-8')
+    WriteHeader(f_teacher)
+    f_teacher.write("Dataset is %s" % DatasetTitle)
+    WriteTeacherTable(CurTeacher, HTML, f_teacher)
+    WriteFooter(f_teacher)
+    f_teacher.close()
+
 def main():
     opt = ParseCmdLineOptions()
     
@@ -131,23 +141,15 @@ def main():
             HO = HtmlOutput( ADb.GetActivities( Teachers = [CurTeacher] ) )
             HTML = HO.GetHtmlTable(1, 52)
             print "Saving data to HTML (Teacher %s)" % CurTeacher
-            try:
-                WriteTeacherTable(CurTeacher, HTML, f)
-            except:
-                print "Failed to write table:\n %s\n"%HTML
-                raise
-               
-            # output specific files for each teacher also         
-            f_teacher = codecs.open("%s%s.html" % (opt.outfilebase, CurTeacher), "w", 'utf-8')
-            WriteHeader(f_teacher)
-            f_teacher.write( "Dataset is %s" % ADb.GetTitle())
-            WriteTeacherTable(CurTeacher, HTML, f_teacher)
-            WriteFooter(f_teacher)
-            f_teacher.close()
-            print "html saved in %s"%f_teacher.name
             
+            WriteTeacherTable(CurTeacher, HTML, f)
+               
+            TeacherFilename = "%s%s.html" % (opt.outfilebase, CurTeacher)
+            SaveTeacherFile(TeacherFilename, ADb.GetTitle(), CurTeacher, HTML)
+            print "html saved in %s" % TeacherFilename
+
             # output the teacher file to links file
-            f_links.write( '<a href="%s" target ="showframe">%s</a><br/>\n' %(f_teacher.name, CurTeacher))
+            f_links.write( '<a href="%s" target ="showframe">%s</a><br/>\n' %(TeacherFilename, CurTeacher))
 
     else:
         ADbCmp = ActivityDb( opt.cmpfile )
@@ -161,10 +163,17 @@ def main():
                              ADbCmp.GetActivities( Teachers =  [CurTeacher], SortBy = 'class,name ' ) )
             HTML = HO.GetHtmlTable(1, 52)        
             print "Saving data to HTML (Teacher %s)" % CurTeacher
-            f.write( "<h2>Course for teacher %s</h2>" % CurTeacher )
-            f.write( HTML )
-            f.write( "<br />")
+            WriteTeacherTable(CurTeacher, HTML, f)
+               
+            TeacherFilename = "%s%s.html" % (opt.outfilebase, CurTeacher)
+            SaveTeacherFile(TeacherFilename, ADb.GetTitle(), CurTeacher, HTML)
+            print "html saved in %s" % TeacherFilename
 
+            # output the teacher file to links file
+            f_links.write( '<a href="%s" target ="showframe">%s</a><br/>\n' %(TeacherFilename, CurTeacher))
+
+
+    # closing shop
     f.write( Footer )
     print "html saved in %s"%f.name
     
