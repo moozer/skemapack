@@ -9,6 +9,39 @@ from optparse import OptionParser
 from Datatypes.ActivityDb import ActivityDb
 from Output.TableOutput.HtmlOutput import HtmlOutput
 
+# index file content.
+IndexFileHtml = '''<html>
+
+<frameset cols="120,*">
+  <frame src="%s" />
+  <frame src="%s" name="showframe" />
+</frameset>
+
+</html>
+'''
+
+# links file stuff
+LinksFileHeader = '''<html>
+    <header>
+        <title>TF links</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style TYPE="text/css"> 
+        <!-- 
+            table { border: solid 1px black;
+                    text-align: center } 
+            tr    { background: #ddd; }
+            .NotEqual { width: 100%; }
+            .NotEqual tr { background: #b33; }
+            .Equal    { width: 100%; }
+        --> 
+        </style>
+    </header>
+    <body>
+    '''
+LinksFileFooter = '''    </body>
+</html>'''
+
+# the TF files
 Header = '''<html>
     <header>
         <title>TF</title>
@@ -73,8 +106,13 @@ def WriteFooter(filehandle):
 def main():
     opt = ParseCmdLineOptions()
     
+    # file with all teachers.
     f = open("%sAll.html" % (opt.outfilebase,), "w")
     f.write( Header )
+
+    # file with links.
+    f_links = open("%sLinks.html" % (opt.outfilebase,), "w")
+    f_links.write( LinksFileHeader )
    
     print "Loading database file: %s"%opt.infile
     ADb = ActivityDb( opt.infile )
@@ -102,6 +140,9 @@ def main():
             WriteFooter(f_teacher)
             f_teacher.close()
             print "html saved in %s"%f_teacher.name
+            
+            # output the teacher file to links file
+            f_links.write( '<a href="%s" target ="showframe">%s</a><br/>\n' %(f_teacher.name, CurTeacher))
 
     else:
         ADbCmp = ActivityDb( opt.cmpfile )
@@ -122,6 +163,12 @@ def main():
     f.write( Footer )
     print "html saved in %s"%f.name
     
+    f_links.write( '<a href="%s" target ="showframe">%s</a><br/>\n' %(f.name, "All"))
+    f_links.write( LinksFileFooter )
+    print "Links saved in %s"%f_links.name
+    
+    f_index = open( "index.html", "w")
+    f_index.write(IndexFileHtml%(f_links.name, f.name) )
     
 if __name__ == '__main__':
     main()
