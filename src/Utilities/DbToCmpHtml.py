@@ -8,7 +8,7 @@ from PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
 from optparse import OptionParser
 from Datatypes.ActivityDb import ActivityDb
 from Output.TableOutput.HtmlOutput import HtmlOutput
-import codecs
+import codecs, os
 
 # index file content.
 IndexFileHtml = '''<html>
@@ -73,6 +73,8 @@ def ParseCmdLineOptions():
                       help="Database file to use in comparison" )
     parser.add_option("-o", "--outfilebase", dest="outfilebase", default="TF_", 
                       help="Basename of files", metavar="OUTFILEBASE")
+    parser.add_option("-d", "--directory", dest="directory", default=".", 
+                      help="Html directory")    
 #    parser.add_option("--teachers", dest="teachers", default = None,
 #                      help="A comma separated list of teacher initials", metavar="TEACHERS")
 #    parser.add_option("--classes", dest="classes", default = None,
@@ -116,6 +118,8 @@ def SaveTeacherFile(Filename, DatasetTitle, CurTeacher, HTML):
 
 def main():
     opt = ParseCmdLineOptions()
+    
+    os.chdir( opt.directory )
     
     # file with all teachers.
     f = codecs.open("%sAll.html" % (opt.outfilebase,), "w", 'utf-8')
