@@ -9,6 +9,7 @@ This utility is intended to be run as a cron job.
 '''
 
 # includes 
+from PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
 from optparse import OptionParser
 import datetime, os, filecmp, shutil
 from Input.HtmlScraper.SdeSkemaScraper import ProcessWebPageById
