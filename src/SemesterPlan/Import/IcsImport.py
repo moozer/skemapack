@@ -4,7 +4,7 @@ Created on Sep 7, 2011
 @author: morten
 '''
 try:
-    from icalendar import Event, Calendar
+    from icalendar import Calendar
 except:
     print "Icalendar import error"
     print "Get the module from http://codespeak.net/icalendar/"
