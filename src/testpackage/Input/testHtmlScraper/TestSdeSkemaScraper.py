@@ -140,6 +140,7 @@ class TestInstantiations(unittest.TestCase):
         pass
     
     def testSdeSkemaIterator(self):
+        """ SdeSkemaScraper : test iterator functionality """
         parser = SdeSkemaScraper()
         parser.feed(SimpleSkemaData)
         parser.close()
