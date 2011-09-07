@@ -20,7 +20,7 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
+from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper, SdeSkema
 import unittest
 import datetime
 
@@ -139,6 +139,16 @@ class TestInstantiations(unittest.TestCase):
         self.assertEqual(i,72)
         pass
     
+    def testSdeSkemaIterator(self):
+        parser = SdeSkemaScraper()
+        parser.feed(SimpleSkemaData)
+        parser.close()
+        
+        i = 0
+        for entry in SdeSkema( SimpleSkemaData ):
+            self.assertEqual( entry, parser.Appointments[i] )
+            i = i+1
+        
 
 def main():
     suite = unittest.TestLoader().loadTestsFromTestCase(TestInstantiations)

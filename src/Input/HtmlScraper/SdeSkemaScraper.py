@@ -9,6 +9,17 @@ import urllib
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 import datetime
 		
+def SdeSkema( data, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M"):
+	''' Iterator the wraps the class. For convenience.
+	'''
+	scraper = SdeSkemaScraper( DateFormat, TimeFormat )
+	scraper.feed(data)
+	
+	for App in scraper.Appointments:
+		yield App
+
+	scraper.close()
+	
 class SdeSkemaScraper( ):
 	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M"):
 		""" Initialisation """
