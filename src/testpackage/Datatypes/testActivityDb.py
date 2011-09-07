@@ -7,8 +7,8 @@ Created on May 6, 2011
 import unittest, os
 from Datatypes.ActivityDb import ActivityDb
 from Datatypes.ActivityData import ActivityData
-from testpackage.Utilities.SupportStuff import *
-from testpackage.Utilities.TestdataSupport.DbToHtml import *
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
+from testpackage.Utilities.TestdataSupport.DbToHtml import * #@UnusedWildImport
 
 AD1 = ActivityData( Teacher = 'MON', Class = '2. semester network', Course = 'CourseA', 
                     LessonsList = {10: 1, 11: 2, 12: 3, 13: 4} )

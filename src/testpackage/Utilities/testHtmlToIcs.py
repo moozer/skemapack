@@ -5,7 +5,7 @@ Created on Nov 11, 2010
 '''
 import unittest
 import os
-from SupportStuff import *
+from SupportStuff import * #@UnusedWildImport
 
 HtmlToIcsFilename= "../../../Utilities/HtmlToIcs.py"
 HtmlFileToProcess = "HtmlFromSkema/laererSkema.aspx_29-52.html"

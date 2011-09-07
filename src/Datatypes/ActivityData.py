@@ -6,7 +6,7 @@ Created on May 5, 2011
 
 class ActivityData(object):
     '''
-    Data container for course data.
+    Data container for course data by week.
     '''
     
     def __init__(self, Teacher, Class, Course, LessonsList ):
