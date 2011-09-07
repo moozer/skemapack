@@ -7,9 +7,14 @@ import unittest
 
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from SemesterPlan.Import.IcsImport import IcsImport
+from datetime import date
 
-IcsFile = "SemesterPlanImport/test.ics"
 BadIcsFilename = "ThisFileDoesNotExist"
+IcsFile = "SemesterPlanImport/test.ics"
+FirstEnry = {'StartDate': date(2012, 1, 11), 
+             'EndDate': date(2012, 1, 13), 
+             'Description': u'Questions, procedures and other details will be made available at a later date.', 
+             'Summary': u'3rd semester oral exam (preliminary)'}
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -28,16 +33,17 @@ class Test(unittest.TestCase):
     def testIcsImportBasicIteration(self):
         for entry in IcsImport( IcsFile ):
             self.assertEqual(True, True)
+            print entry
         pass
 
     def testIcsImportFirstEntry(self):
         for entry in IcsImport( IcsFile ):
-            self.assertEqual(entry, "something")
+            self.assertEqual(entry, FirstEnry)
             break
         
     def testIcsImportBadFilename(self):
         try:
-            for entry in IcsImport( BadIcsFilename ):
+            for entry in IcsImport( BadIcsFilename ): #@UnusedVariable
                 break
         except (IOError):
             pass
