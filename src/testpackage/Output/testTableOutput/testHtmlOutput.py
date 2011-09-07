@@ -8,7 +8,7 @@ import unittest
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Output.TableOutput.HtmlOutput import HtmlOutput
 from testpackage.Utilities.TestdataSupport.TableOutput import * #@UnusedWildImport
-from testpackage.Utilities.TestdataSupport.ActivityData import * 
+from testpackage.Utilities.TestdataSupport.ActivityData import * #@UnusedWildImport
 
 class Test(unittest.TestCase):
     def setUp(self):
