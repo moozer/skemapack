@@ -15,7 +15,7 @@ def PrintConfig( configdict ):
     print "#"
     
 # TODO: move to support file
-# TODO: Eventes should be a data type with event.__str__()
+# TODO: Events should be a data type with event.__str__()
 def PrintEvents( events ):
     for event in events:
         for key in event.keys():
@@ -29,6 +29,7 @@ def ImportSdeSkema( config ):
     parser.feed( Data )
     parser.close()
     
+    # TODO: Decide on name for this, Appointments or Events
     return  parser.Appointments 
 
 
@@ -36,8 +37,8 @@ if __name__ == '__main__':
     # 1) read config/parameter
     config = { 
               'TeacherId': 5421,
-              'FirstWeek': 33,
-              'LastWeek': 52,
+              'FirstWeek': 33,       
+              'LastWeek': 52,       # TODO: handle wrapping around new year
               'Year': 2011,
               'Dateformat': "%d-%m-%Y"
               }
