@@ -4,15 +4,25 @@ Created on Sep 13, 2011
 @author: morten
 '''
 
-import sys
+import sys, datetime
 
-def ReadEvents(str):
-    Event = {}
+# TODO: move me.
+def ReadEvent(str, config):
+    EventDict = {}
     for pair in str.split('; '):
         if pair[-1] == '\n':
             continue
         (key, value) = pair.split(': ', 1)
-        Event[key.strip()] = value.strip()
+        EventDict[key.strip()] = value.strip()
+
+    Event = { 
+             'Date': datetime.datetime.strptime(EventDict['Date'], config['Dateformat']),
+             'Hours': (datetime.datetime.strptime(EventDict['StartTime'], config['Dateformat']+" %H:%M:%S"), 
+                       datetime.datetime.strptime(EventDict['EndTime'], config['Dateformat']+" %H:%M:%S")),
+             'Location': EventDict['Location'],
+             'Class': EventDict['Class'],
+             'Subject': EventDict['Subject']
+             }
     return Event
 
 def ReceiveConfig():
@@ -37,7 +47,8 @@ def ReceiveConfig():
           'FirstWeek': 33,
           'LastWeek': 52,
           'Year': 2011,
-          'Dateformat': u"%d-%m-%Y",
+          'Dateformat': u"%Y-%m-%d",
+          'OutputDateformat': u"%Y-%m-%d",
           'Subject': u'IT Security',
           'Class': u'11OIT3bH2'
           }
@@ -47,12 +58,13 @@ def ExportText( config ):
     EventCount = 0
     print "Listing all events with subject %s"%config['Subject']
     for line in sys.stdin.readlines():
-        Event = ReadEvents(line)
+        Event = ReadEvent(line, config)
         if Event['Subject'] == config['Subject']:
             EventCount += 1
-            print "%d\t%s"%(EventCount,Event['Date'])
+            print "%d\t%s"%(EventCount,Event['Hours'][0].strftime(config['OutputDateformat']))
         
 if __name__ == '__main__':
+    # TODO: implement an argument switch to handle changing stdin to read from file
     sys.stdin = file('../testpackage/Utilities/testdata/SdeSkemaEventData.txt')
     
     # 1) read config/parameter
