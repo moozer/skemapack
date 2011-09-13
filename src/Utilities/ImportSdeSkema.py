@@ -18,7 +18,9 @@ def PrintConfig( configdict ):
 # TODO: Eventes should be a data type with event.__str__()
 def PrintEvents( events ):
     for event in events:
-        print event
+        for key in event.keys():
+            print "%s: %s; "%(key, event[key]),
+        print "" # adding final newline
     
 def ImportSdeSkema( config ):
     myLoader = loadWeb.htmlGetter()
@@ -34,12 +36,11 @@ if __name__ == '__main__':
     # 1) read config/parameter
     config = { 
               'TeacherId': 5421,
-              'FirstWeek': 35,
+              'FirstWeek': 33,
               'LastWeek': 52,
               'Year': 2011,
               'Dateformat': "%d-%m-%Y"
               }
-    #python ~/bin/SkemaOnCron.py -I 5421 -n 5 -d ~/bin/ics
 
     # 2) output config
     PrintConfig( config )
