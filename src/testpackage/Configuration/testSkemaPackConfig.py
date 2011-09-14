@@ -17,7 +17,9 @@ class Test(unittest.TestCase):
         self.assertEquals(self.config._ConfigParser.get("SkemaScraper", "LastWeek"), "52", "LastWeek is not correct")
         self.assertEquals(self.config._ConfigParser.get("SkemaScraper", "Year"), "2011", "Year is not correct")
         
-
+    def testPrintConfig(self):
+        self.config = SkemaPackConfig('config_test.cfg')
+        print self.config
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testLoadFromFile']

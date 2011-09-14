@@ -32,6 +32,12 @@ class SkemaPackConfig(object):
         
         
     def __str__(self):
-        pass
+        PrintString = ''
+        for Section in self._ConfigParser.sections():
+            PrintString += "# ["+ Section + "]\n"
+            for key in self._ConfigParser.items(Section):
+                PrintString += "# " + key[0] + " = " + key[1] + "\n"
+                
+        return PrintString
             
         
