@@ -8,13 +8,8 @@ from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 from Configuration.SkemaPackConfig import SkemaPackConfig
 
-# TODO: move to file that contains general import/export supprt functions
-def PrintConfig( configdict ):
-    print "## Configuration used"
-    for entry in configdict.keys():
-        print "# %s = %s"%(entry, configdict[entry])
-    print "#"
-    
+# TODOne: move to file that contains general import/export supprt functions
+
 # TODO: move to support file
 # TODO: Events should be a data type with event.__str__()
 def PrintEvents( events ):
@@ -36,16 +31,6 @@ def ImportSdeSkema( config ):
 
 if __name__ == '__main__':
 #    # 1) read config/parameter
-#    config = { 
-#              'TeacherId': 5421,
-#              'FirstWeek': 33,       
-#              'LastWeek': 52,       # TODO: handle wrapping around new year
-#              'Year': 2011,
-#              'Dateformat': "%d-%m-%Y"
-#              }
-#
-#    # 2) output config
-#    PrintConfig( config )
     
     #TODO: this filename should not be hardcoded :)
     config = SkemaPackConfig('../testpackage/Configuration/config_test.cfg') 
