@@ -12,10 +12,10 @@ class Test(unittest.TestCase):
 
     def testLoadFromFile(self):
         self.config = SkemaPackConfig('config_test.cfg')
-        self.assertEquals(self.config._ConfigParser.get("SkemaScraper", "TeacherId"), "5421", "TeacherId is not correct")
-        self.assertEquals(self.config._ConfigParser.get("SkemaScraper", "FirstWeek"), "33", "FirstWeek is not correct")
-        self.assertEquals(self.config._ConfigParser.get("SkemaScraper", "LastWeek"), "52", "LastWeek is not correct")
-        self.assertEquals(self.config._ConfigParser.get("SkemaScraper", "Year"), "2011", "Year is not correct")
+        self.assertEquals(self.config.get("SkemaScraper", "TeacherId"), "5421", "TeacherId is not correct")
+        self.assertEquals(self.config.get("SkemaScraper", "FirstWeek"), "33", "FirstWeek is not correct")
+        self.assertEquals(self.config.get("SkemaScraper", "LastWeek"), "52", "LastWeek is not correct")
+        self.assertEquals(self.config.get("SkemaScraper", "Year"), "2011", "Year is not correct")
         
     def testPrintConfig(self):
         self.config = SkemaPackConfig('config_test.cfg')

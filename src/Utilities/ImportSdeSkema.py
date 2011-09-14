@@ -6,6 +6,7 @@ Created on Sep 13, 2011
 
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
+from Configuration.SkemaPackConfig import SkemaPackConfig
 
 # TODO: move to file that contains general import/export supprt functions
 def PrintConfig( configdict ):
@@ -24,8 +25,8 @@ def PrintEvents( events ):
     
 def ImportSdeSkema( config ):
     myLoader = loadWeb.htmlGetter()
-    Data = myLoader.getSkemaWithPost(config['TeacherId'], config['FirstWeek'], config['LastWeek'], config['Year']).read()
-    parser = SdeSkemaScraper( config['Dateformat'] )
+    Data = myLoader.getSkemaWithPost(config.get("SkemaScraper", "TeacherId"), config.get("SkemaScraper", "FirstWeek"), config.get("SkemaScraper", "LastWeek"), config.get("SkemaScraper", "Year")).read()
+    parser = SdeSkemaScraper( config.get("SkemaScraper", "Dateformat") )
     parser.feed( Data )
     parser.close()
     
@@ -34,17 +35,21 @@ def ImportSdeSkema( config ):
 
 
 if __name__ == '__main__':
-    # 1) read config/parameter
-    config = { 
-              'TeacherId': 5421,
-              'FirstWeek': 33,       
-              'LastWeek': 52,       # TODO: handle wrapping around new year
-              'Year': 2011,
-              'Dateformat': "%d-%m-%Y"
-              }
-
-    # 2) output config
-    PrintConfig( config )
+#    # 1) read config/parameter
+#    config = { 
+#              'TeacherId': 5421,
+#              'FirstWeek': 33,       
+#              'LastWeek': 52,       # TODO: handle wrapping around new year
+#              'Year': 2011,
+#              'Dateformat': "%d-%m-%Y"
+#              }
+#
+#    # 2) output config
+#    PrintConfig( config )
+    
+    #TODO: this filename should not be hardcoded :)
+    config = SkemaPackConfig('../testpackage/Configuration/config_test.cfg') 
+    print config 
     
     # 3) import from skema
     Events = ImportSdeSkema( config )
