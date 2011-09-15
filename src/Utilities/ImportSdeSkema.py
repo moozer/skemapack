@@ -6,57 +6,39 @@ Created on Sep 13, 2011
 
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
+from Configuration.SkemaPackConfig import SkemaPackConfig
 
-# TODO: move to file that contains general import/export supprt functions
-def PrintConfig( configdict ):
-    print "## Configuration used"
-    for entry in configdict.keys():
-        print "# %s = %s"%(entry, configdict[entry])
-    print "#"
-    
+# TODOne: move to file that contains general import/export supprt functions
+
 # TODO: move to support file
-# TODO: Eventes should be a data type with event.__str__()
-def PrintEvents( events, config ):
+# TODO: Events should be a data type with event.__str__()
+def PrintEvents( events ):
     for event in events:
-        print "%s: %s; "%('Date', event['Date'].strftime(config['OutputDateformat'])),
-        print "%s: %s; "%('StartTime', event['Hours'][0]),
-        print "%s: %s; "%('EndTime', event['Hours'][1]),
-        print "%s: %s; "%('Location', event['Location']),
-        print "%s: %s; "%('Class', event['Class']),
-        print "%s: %s; "%('Subject', event['Subject']),
+        for key in event.keys():
+            print "%s: %s; "%(key, event[key]),
         print "" # adding final newline
     
 def ImportSdeSkema( config ):
     myLoader = loadWeb.htmlGetter()
-    Data = myLoader.getSkemaWithPost(config['TeacherId'], config['FirstWeek'], config['LastWeek'], config['Year']).read()
-
-    # TODO: 'data' field in appointments is wrong.
-    parser = SdeSkemaScraper( config['Dateformat'] )
+    Data = myLoader.getSkemaWithPost(config.get("SkemaScraper", "TeacherId"), config.get("SkemaScraper", "FirstWeek"), config.get("SkemaScraper", "LastWeek"), config.get("SkemaScraper", "Year")).read()
+    parser = SdeSkemaScraper( config.get("SkemaScraper", "Dateformat") )
     parser.feed( Data )
     parser.close()
     
+    # TODO: Decide on name for this, Appointments or Events
     return  parser.Appointments 
 
 
 if __name__ == '__main__':
-    # 1) read config/parameter
-    config = { 
-              'TeacherId': 5421,
-              'FirstWeek': 33,
-              'LastWeek': 52,
-              'Year': 2011,
-              'Dateformat': "%d-%m-%Y",
-              'OutputDateformat': '%Y-%m-%d'
-              }
+#    # 1) read config/parameter
+    
+    #TODO: this filename should not be hardcoded :)
+    config = SkemaPackConfig('../testpackage/Configuration/config_test.cfg') 
+    print config 
     
     # 3) import from skema
     Events = ImportSdeSkema( config )
-
-    config['Dateformat'] = config['OutputDateformat']
-
-    # 2) output config
-    PrintConfig( config )
     
     # 4) output all events to stdout
-    PrintEvents( Events, config )
+    PrintEvents( Events )
     

@@ -4,7 +4,7 @@
 """Extract list of URLs in a web page
 """
 
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup 
 import urllib
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 import datetime

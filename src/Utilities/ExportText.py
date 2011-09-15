@@ -49,7 +49,7 @@ def ReceiveConfig():
           'Year': 2011,
           'Dateformat': u"%Y-%m-%d",
           'OutputDateformat': u"%Y-%m-%d",
-          'Subject': u'IT Security',
+          'Subject': u'Datacom.',
           'Class': u'11OIT3bH2'
           }
     return config
@@ -61,7 +61,9 @@ def ExportText( config ):
         Event = ReadEvent(line, config)
         if Event['Subject'] == config['Subject']:
             EventCount += 1
-            print "%d\t%s"%(EventCount,Event['Hours'][0].strftime(config['OutputDateformat']))
+            print "%d\t%s\t%s"%(EventCount,
+                                Event['Hours'][0].strftime(config['OutputDateformat']),
+                                Event['Class'])
         
 if __name__ == '__main__':
     # TODO: implement an argument switch to handle changing stdin to read from file
