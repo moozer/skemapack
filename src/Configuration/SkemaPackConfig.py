@@ -11,23 +11,27 @@ class SkemaPackConfig(object):
     '''
     Holds all the configurations for skemapack
     
-    Can be initialized from a file or a Dictionary
+    Can be initialized from a file ( TODO ?: or a Dictionary)
     
     Look at http://docs.python.org/library/configparser.html for details on the config file syntax
     
     '''
     
-    def __init__(self, ConfigFilename):
+    def __init__(self, ConfigFilename = ""):
         '''
         Constructor for loading configuration from a file
         '''
         if os.path.isfile(ConfigFilename):
-            pass
+            self._ConfigFileName = ConfigFilename
+        elif os.path.isfile("skemapack.cfg"):
+            self._ConfigFileName = "skemapack.cfg"
+        elif os.path.isfile(os.path.expanduser("~/.skemapack/skemapack.cfg")):
+            self._ConfigFileName = os.path.expanduser("~/.skemapack/skemapack.cfg")
         else:
             raise exceptions.ValueError
         
         self._ConfigParser = ConfigParser.ConfigParser()
-        self._ConfigParser.read(ConfigFilename)
+        self._ConfigParser.read(self._ConfigFileName)
         
         self.get = self._ConfigParser.get
         
