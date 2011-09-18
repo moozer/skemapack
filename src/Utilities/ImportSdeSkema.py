@@ -6,7 +6,7 @@ Created on Sep 13, 2011
 
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
-from Configuration.SkemaPackConfig import SkemaPackConfig
+from Configuration.CommandLineOptions import ReadOptions
 
 # TODOne: move to file that contains general import/export supprt functions
 
@@ -30,14 +30,10 @@ def ImportSdeSkema( config ):
 
 
 if __name__ == '__main__':
+    
 #    # 1) read config/parameter
-    
-    #TODO: this filename should not be hardcoded :)
-    config = SkemaPackConfig('../testpackage/Configuration/config_test.cfg') 
-    print config 
-    
     # 3) import from skema
-    Events = ImportSdeSkema( config )
+    Events = ImportSdeSkema( ReadOptions() )
     
     # 4) output all events to stdout
     PrintEvents( Events )
