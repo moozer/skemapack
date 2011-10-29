@@ -33,6 +33,9 @@ INSERT INTO teachers( initials, name ) VALUES('IMR','Ib');
 INSERT INTO teachers( initials, name ) VALUES('KESM','Kent');
 INSERT INTO teachers( initials, name ) VALUES('SK','Stig');
 INSERT INTO teachers( initials, name ) VALUES('HKR','Henrik');
+INSERT INTO teachers( initials, name ) VALUES('NN','Endnu ukendt 1');
+INSERT INTO teachers( initials, name ) VALUES('NN2','Endnu ukendt 2');
+
 
 
 -- table containing class names
