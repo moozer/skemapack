@@ -8,24 +8,14 @@ from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 from Configuration.CommandLineOptions import ReadOptions
 from Datatypes.EventFunctions import WriteEvents
-
-# TODOne: move to file that contains general import/export supprt functions
-
-## TODO: move to support file
-## TODO: Events should be a data type with event.__str__()
-#def PrintEvents( events ):
-#    for event in events:
-#        for key in event.keys():
-#            print "%s: %s; "%(key, event[key]),
-#        print "" # adding final newline
     
-def ImportSdeSkema( config ):
+def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
     myLoader = loadWeb.htmlGetter()
-    Data = myLoader.getSkemaWithPost(config.get("SkemaScraper", "TeacherId"), 
-                                     config.get("SkemaScraper", "FirstWeek"), 
-                                     config.get("SkemaScraper", "LastWeek"), 
-                                     config.get("SkemaScraper", "Year")).read()
-    parser = SdeSkemaScraper( config.get("SkemaScraper", "InputDateformat") )
+    Data = myLoader.getSkemaWithPost(config.get(ConfigSet, "TeacherId"), 
+                                     config.get(ConfigSet, "FirstWeek"), 
+                                     config.get(ConfigSet, "LastWeek"), 
+                                     config.get(ConfigSet, "Year")).read()
+    parser = SdeSkemaScraper( config.get(ConfigSet, "InputDateformat") )
     parser.feed( Data )
     parser.close()
     
@@ -42,5 +32,6 @@ if __name__ == '__main__':
     Events = ImportSdeSkema( config )
     
     # 4) output all events to stdout
+    print config # placed here to allow config to be changed...
     WriteEvents( Events, config, "SkemaScraper" )
     

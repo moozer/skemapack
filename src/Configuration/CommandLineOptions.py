@@ -19,14 +19,14 @@ def ParseCmdLineOptions():
 
 def ReadOptions():
     opt = ParseCmdLineOptions()
-    print "commandLine options:"
-    print opt
+    print "## commandLine options:"
+    print "## %s" % opt
     
     try:
         config = SkemaPackConfig(opt.ConfigFileName)
     except:
         print "No configuration file found. Try 'ImportSdeSkema.py --configfile=myconfig.cfg'"
         sys.exit(1)  
-    print config 
+    # print config 
     return config
 

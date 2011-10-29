@@ -5,25 +5,26 @@ Created on Sep 13, 2011
 '''
 
 import sys, datetime
+from Datatypes.EventFunctions import ReadEvent
 
 # TODO: move me.
-def ReadEvent(str, config):
-    EventDict = {}
-    for pair in str.split('; '):
-        if pair[-1] == '\n':
-            continue
-        (key, value) = pair.split(': ', 1)
-        EventDict[key.strip()] = value.strip()
-
-    Event = { 
-             'Date': datetime.datetime.strptime(EventDict['Date'], config['Dateformat']),
-             'Hours': (datetime.datetime.strptime(EventDict['StartTime'], config['Dateformat']+" %H:%M:%S"), 
-                       datetime.datetime.strptime(EventDict['EndTime'], config['Dateformat']+" %H:%M:%S")),
-             'Location': EventDict['Location'],
-             'Class': EventDict['Class'],
-             'Subject': EventDict['Subject']
-             }
-    return Event
+#def ReadEvent(str, config):
+#    EventDict = {}
+#    for pair in str.split('; '):
+#        if pair[-1] == '\n':
+#            continue
+#        (key, value) = pair.split(': ', 1)
+#        EventDict[key.strip()] = value.strip()
+#
+#    Event = { 
+#             'Date': datetime.datetime.strptime(EventDict['Date'], config['Dateformat']),
+#             'Hours': (datetime.datetime.strptime(EventDict['StartTime'], config['Dateformat']+" %H:%M:%S"), 
+#                       datetime.datetime.strptime(EventDict['EndTime'], config['Dateformat']+" %H:%M:%S")),
+#             'Location': EventDict['Location'],
+#             'Class': EventDict['Class'],
+#             'Subject': EventDict['Subject']
+#             }
+#    return Event
 
 def ReceiveConfig():
     config = {}
@@ -49,7 +50,7 @@ def ReceiveConfig():
           'Year': 2011,
           'Dateformat': u"%Y-%m-%d",
           'OutputDateformat': u"%Y-%m-%d",
-          'Subject': u'Datacom.',
+          'Subject': u'System Design',
           'Class': u'11OIT3bH2'
           }
     return config
@@ -57,13 +58,38 @@ def ReceiveConfig():
 def ExportText( config ):
     EventCount = 0
     print "Listing all events with subject %s"%config['Subject']
+    
+    PrevEvent = None
+    Multiple = 1
+    
     for line in sys.stdin.readlines():
         Event = ReadEvent(line, config)
         if Event['Subject'] == config['Subject']:
             EventCount += 1
-            print "%d\t%s\t%s"%(EventCount,
-                                Event['Hours'][0].strftime(config['OutputDateformat']),
-                                Event['Class'])
+            
+            if PrevEvent is None:
+                PrevEvent = Event
+                continue
+            
+            # current event date
+            datestr = Event['Hours'][0].strftime(config['OutputDateformat'])
+            
+            if datestr == PrevEvent['Hours'][0].strftime(config['OutputDateformat']):
+                Multiple += 1
+            else:
+                print "%d-%d\t%s\t%s (%d)"%(EventCount-Multiple,EventCount-1,
+                                     PrevEvent['Class'], 
+                                     PrevEvent['Hours'][0].strftime(config['OutputDateformat']),
+                                     Multiple)
+                Multiple = 1
+                
+            PrevEvent = Event
+    
+    if PrevEvent is not None:
+        print "%d-%d\t%s\t%s (%d)"%(EventCount-Multiple+1,EventCount,
+                         PrevEvent['Class'], 
+                         PrevEvent['Hours'][0].strftime(config['OutputDateformat']),
+                         Multiple)
         
 if __name__ == '__main__':
     # TODO: implement an argument switch to handle changing stdin to read from file
