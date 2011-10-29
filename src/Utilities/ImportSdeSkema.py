@@ -7,21 +7,25 @@ Created on Sep 13, 2011
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 from Configuration.CommandLineOptions import ReadOptions
+from Datatypes.EventFunctions import WriteEvents
 
 # TODOne: move to file that contains general import/export supprt functions
 
-# TODO: move to support file
-# TODO: Events should be a data type with event.__str__()
-def PrintEvents( events ):
-    for event in events:
-        for key in event.keys():
-            print "%s: %s; "%(key, event[key]),
-        print "" # adding final newline
+## TODO: move to support file
+## TODO: Events should be a data type with event.__str__()
+#def PrintEvents( events ):
+#    for event in events:
+#        for key in event.keys():
+#            print "%s: %s; "%(key, event[key]),
+#        print "" # adding final newline
     
 def ImportSdeSkema( config ):
     myLoader = loadWeb.htmlGetter()
-    Data = myLoader.getSkemaWithPost(config.get("SkemaScraper", "TeacherId"), config.get("SkemaScraper", "FirstWeek"), config.get("SkemaScraper", "LastWeek"), config.get("SkemaScraper", "Year")).read()
-    parser = SdeSkemaScraper( config.get("SkemaScraper", "Dateformat") )
+    Data = myLoader.getSkemaWithPost(config.get("SkemaScraper", "TeacherId"), 
+                                     config.get("SkemaScraper", "FirstWeek"), 
+                                     config.get("SkemaScraper", "LastWeek"), 
+                                     config.get("SkemaScraper", "Year")).read()
+    parser = SdeSkemaScraper( config.get("SkemaScraper", "InputDateformat") )
     parser.feed( Data )
     parser.close()
     
@@ -32,9 +36,11 @@ def ImportSdeSkema( config ):
 if __name__ == '__main__':
     
 #    # 1) read config/parameter
+    config = ReadOptions()
+
     # 3) import from skema
-    Events = ImportSdeSkema( ReadOptions() )
+    Events = ImportSdeSkema( config )
     
     # 4) output all events to stdout
-    PrintEvents( Events )
+    WriteEvents( Events, config, "SkemaScraper" )
     
