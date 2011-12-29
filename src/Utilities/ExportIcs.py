@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 '''
 Created on Dec 29, 2011
 
@@ -18,7 +21,7 @@ def ExportIcs( config, ConfigSet = "ExportIcs" ):
     Events = []
     
     infile = config.get( ConfigSet, 'InputFile' )
-    sys.stderr.write( "ExportIcs imput from file: %s" % ( infile ,) )
+    sys.stderr.write( "ExportIcs imput from file: %s\n" % ( infile ,) )
     fin = open( infile, "r")
         
     for line in fin.readlines():
@@ -30,7 +33,7 @@ def ExportIcs( config, ConfigSet = "ExportIcs" ):
 
     # save to file or stdout as specified in the config.
     outfile = config.get( ConfigSet, 'OutputFile' )
-    sys.stderr.write( "ExportIcs output to file: %s" % ( outfile ,) )
+    sys.stderr.write( "ExportIcs output to file: %s\n" % ( outfile ,) )
     f = open( outfile, "wb" )
     f.write( io.GetIcsString() )
     f.close()
