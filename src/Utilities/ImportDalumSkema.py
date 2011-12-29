@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 '''
 Created on Sep 13, 2011
 
@@ -10,6 +13,12 @@ from Datatypes.EventFunctions import WriteEvents
 from datetime import date, datetime, timedelta
     
 def ImportDalumSkema( config, ConfigSet = "DalumSkema" ):
+    ''' Retrieves events from dalum in the given interval.
+    config needed 'offset', 'NumWeeks', 'BaseWeek' (using current year, 0 means current week),
+    'TeacherId'
+    @param config: the configuration object
+    @param ConfigSet: The sub configuration to use   
+    '''
     now = date.today()
     
     # getting reference date
@@ -23,7 +32,6 @@ def ImportDalumSkema( config, ConfigSet = "DalumSkema" ):
     WeekOffset = int( config.get( ConfigSet, 'Offset' ) )
     WeekCount =  int( config.get( ConfigSet, 'NumWeeks' ) )
     
-    config.get( ConfigSet, 'BaseWeek' )
     StartDate = BaseDate + timedelta(weeks=WeekOffset)
     EndDate = BaseDate + timedelta(weeks=WeekOffset+WeekCount)
 
@@ -37,17 +45,6 @@ def ImportDalumSkema( config, ConfigSet = "DalumSkema" ):
     s.ExtractAppointments( NonFatal = True )
     Apps = s.GetAppointments()
     return Apps
-#    myLoader = loadWeb.htmlGetter()
-#    Data = myLoader.getSkemaWithPost(config.get(ConfigSet, "TeacherId"), 
-#                                     config.get(ConfigSet, "FirstWeek"), 
-#                                     config.get(ConfigSet, "LastWeek"), 
-#                                     config.get(ConfigSet, "Year")).read()
-#    parser = SdeSkemaScraper( config.get(ConfigSet, "InputDateformat") )
-#    parser.feed( Data )
-#    parser.close()
-    
-    # TODO: Decide on name for this, Appointments or Events
-#    return  parser.Appointments 
 
 
 if __name__ == '__main__':
