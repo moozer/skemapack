@@ -10,12 +10,18 @@ from Output.IcsOutput.IcsOutput import IcsOutput
 from Datatypes.EventFunctions import ReadEvent
 
 def ExportIcs( config, ConfigSet = "ExportIcs" ):
-    ''' Configuration items needed are the same as for ReadEvent, and
+    ''' Configuration items needed are the same as for ReadEvent() 
+        and 'OutputFile', 'InputFile'
     @param Config: the configuration object to use
     @param ConfigSet: The sub set of the configuration object.
     '''
     Events = []
-    for line in sys.stdin.readlines():
+    
+    infile = config.get( ConfigSet, 'InputFile' )
+    sys.stderr.write( "ExportIcs imput from file: %s" % ( infile ,) )
+    fin = open( infile, "r")
+        
+    for line in fin.readlines():
         Event = ReadEvent(line, config, ConfigSet)
         if Event is not None:
             Events.append( Event )
