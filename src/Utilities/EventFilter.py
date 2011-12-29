@@ -73,7 +73,7 @@ def EventFilter( config, ConfigSet = "Filter" ):
 
 if __name__ == '__main__':
     # TODO: implement an argument switch to handle changing stdin to read from file
-    sys.stdin = file('../testpackage/Utilities/testdata/SdeSkemaEventData.txt')
+    sys.stdin = file('../testpackage/Utilities/testdata/SdeSkemaEventData2011A.txt')
     
     # 1) read config/parameter
     # none yet
