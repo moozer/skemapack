@@ -1,21 +1,6 @@
 ## commandLine options:
 ## {'ConfigFileName': 'SkemaMON.cfg'}
 ## Config used
-# [Filter]
-# outputdateformat = %Y-%m-%d
-# class = 11OIT1bH2
-# inputdateformat = %Y-%m-%d
-# subject = Networking
-# [SkemaScraper2012]
-# year = 2012
-# teacherid = 5421
-# outputdateformat = %Y-%m-%d
-# lastweek = 4
-# inputdateformat = %d-%m-%Y
-# firstweek = 1
-# [ExportTextDefault]
-# outputdateformat = %Y-%m-%d
-# template = Date: $Date; StartTime: $StartTime; EndTime: $EndTime; Location: $Location; Class: $Class; Subject: $Subject;
 # [SkemaScraper]
 # year = 2011
 # teacherid = 5421
@@ -23,10 +8,6 @@
 # lastweek = 52
 # inputdateformat = %d-%m-%Y
 # firstweek = 33
-# [ExportText]
-# outputdateformat = %Y-%m-%d
-# inputdateformat = %Y-%m-%d
-# template = $EventCount $StartTime ($Multiplicity) $Class $Subject
 #
 
 Date: 2011-08-22; StartTime: 2011-08-22 08:30:00; EndTime: 2011-08-22 09:15:00; Location: b-1.44; Class: 11OIT3bH2; Subject: Adv. networking; 
