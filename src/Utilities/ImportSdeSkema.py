@@ -27,11 +27,12 @@ if __name__ == '__main__':
     
 #    # 1) read config/parameter
     config = ReadOptions()
+    ConfigSet = "SkemaScraper"
 
     # 3) import from skema
-    Events = ImportSdeSkema( config )
+    Events = ImportSdeSkema( config, ConfigSet )
     
     # 4) output all events to stdout
     print config # placed here to allow config to be changed...
-    WriteEvents( Events, config, "SkemaScraper" )
+    WriteEvents( Events, config, ConfigSet )
     
