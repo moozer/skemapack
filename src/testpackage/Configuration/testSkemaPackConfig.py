@@ -46,6 +46,9 @@ class Test(unittest.TestCase):
         self.config = SkemaPackConfig('config_test.cfg')
         print self.config
         
+    def testFromSTDIN(self):
+        pass
+        
     
 
 if __name__ == "__main__":

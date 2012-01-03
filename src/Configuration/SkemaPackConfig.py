@@ -7,6 +7,20 @@ import exceptions
 import os
 import ConfigParser
 
+class SkemaPackConfig_stdin(object):
+    '''
+    This class reads from STDIN and strips the first # on each line.
+    The first line with no # is EOF
+    '''
+    
+    def __init__(self):
+        self.name="STDIN"
+        pass
+    
+    def readln(self):
+        return 0        # No more configuration lines 
+    
+
 class SkemaPackConfig(object):
     '''
     Holds all the configurations for skemapack
@@ -21,6 +35,7 @@ class SkemaPackConfig(object):
         '''
         Constructor for loading configuration from a file
         '''
+        
         if os.path.isfile(ConfigFilename):
             self._ConfigFileName = ConfigFilename
         elif os.path.isfile("skemapack.cfg"):
