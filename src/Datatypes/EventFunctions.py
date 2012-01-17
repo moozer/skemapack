@@ -8,6 +8,13 @@ import datetime
 
 
 def ReadEvent(InputText, config, ConfigSet):
+    ''' extracts event information from InputText
+    Config needed is 'InputDateformat'
+    @param InputText: text containing the event information
+    @param config: configuration object to use.
+    @param ConfigSet: The sub configuration to use
+    @return: an Event dictionary with 'Date', 'Hours'[2], 'Location', 'Class' and 'Subject'
+    '''
     if InputText[0] in ['#', '\n']:
         return None
     
