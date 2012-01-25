@@ -64,7 +64,7 @@ class htmlGetter(object):
         parser1.feed(page1)  
         print parser1.values   
         params = urllib.urlencode(parser1.values)
-        params += '&' + urllib.urlencode({'ctl00$ContentPlaceHolder1$weeknrend' : '52','ctl00$ContentPlaceHolder1$weeknrstart' : '1', 'ctl00$ContentPlaceHolder1$weekyear' : '2010'})
+        params += '&' + urllib.urlencode({'ctl00$ContentPlaceHolder1$weeknrend' : '52','ctl00$ContentPlaceHolder1$weeknrstart' : '1', 'ctl00$ContentPlaceHolder1$weekyear' : '2011'})
         print params
         
     def _getInitialPage(self, idx = 3735):
@@ -78,7 +78,9 @@ class htmlGetter(object):
         params = urllib.urlencode(parser.values)
         params += '&' + urllib.urlencode({ 'ctl00$ContentPlaceHolder1$weeknrstart' : str(weekStart),'ctl00$ContentPlaceHolder1$weeknrend': str(weekEnd), \
                                           'ctl00$ContentPlaceHolder1$weekyear' : str( year ), \
-                                          'ctl00$ContentPlaceHolder1$Localizedbutton1' : 'Hent+valgte+ugers+skema'})
+                                          'ctl00$ContentPlaceHolder1$Localizedbutton1' : 'Hent+valgte+ugers+skema', \
+                                          'ctl00$ContentPlaceHolder1$myweekstart' : '2012-01-23', \
+                                          'ctl00$ContentPlaceHolder1$myweekend' : '2012-01-28'})
         self._values = params
         
     def _doPost(self, idx = 3735):
@@ -88,4 +90,9 @@ class htmlGetter(object):
         conn.request("POST", "/laererSkema.aspx?idx=%i&amp;lang=da-DK"%idx, self._values, headers)
         self._postResult = conn.getresponse()
         
+    
+    
+if __name__ == "__main__":
+    myget = htmlGetter()
+    print myget.getSkemaWithPost(3735,4,9,2012).read()
     
