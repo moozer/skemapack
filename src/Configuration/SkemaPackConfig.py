@@ -45,7 +45,7 @@ class SkemaPackConfig_stdin_eal(object):
         try:
             thisLine = sys.stdin.readline().split('#')[1].strip()
         except IndexError:
-            pass
+            return None
         return thisLine        # No more configuration lines 
     
 
@@ -104,6 +104,8 @@ class SkemaPackConfig(object):
 if __name__ == "__main__":
     myConfig = SkemaPackConfig()
     print myConfig
+    
+    
     pass
             
     
