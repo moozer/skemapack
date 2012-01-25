@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 '''
@@ -8,59 +7,42 @@ Created on Nov 9, 2010
 '''
 
 #from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPage, ProcessFile
-from Output.IcsOutput.IcsOutput import IcsOutput
+#from Output.IcsOutput.IcsOutput import IcsOutput
 import Input.HtmlGetter.loadWebPage.loadHtml as HtmlGetter
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 
-from Output.Calendar.Gmail.gmailOutput import GmailOutput_cli,GmailOutput_API
+from Output.Calendar.Gmail.gmailOutput import GmailOutput_API
 
-def ParseCmdLineOptions():
-    from optparse import OptionParser
-    parser = OptionParser()
-    parser.add_option("-n", "--user", dest="user",
-                      help="Gmail user name", metavar="USER")
-    parser.add_option("-p", "--passwd", dest="pw",
-                      help="Gmail password", metavar="PW")
-    parser.add_option("-u", "--url", dest="url", default="http://skema.sde.dk/laerer/3735/en-US.aspx",
-                      help="Skema url", metavar="URL")
-    
-    parser.add_option( "-i", "--interface", dest="interface", default="cli",
-                      help="Interface cli or api", metavar="CLI")
-    
-    (options, args) =  parser.parse_args() #@UnusedVariable
-    return options
+from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
 
 
 def main():
-    opt = ParseCmdLineOptions()
+    myConfig = SkemaPackConfig( SkemaPackConfig_stdin() )
     
-    print (opt.user)
-    print (opt.pw)
-    print (opt.url)
-    print (opt.interface)
+    print myConfig.get("SkemaScraper","Dateformat")
     
     myHtmlGetter = HtmlGetter.htmlGetter()
-    htmlResponse = myHtmlGetter.getSkemaWithPost(3735,43,52)
+    htmlResponse = myHtmlGetter.getSkemaWithPost(myConfig.get("SkemaScraper","TeacherId"),3,5)
+    response = htmlResponse.read()
+    print response
+    htmlScraper = SdeSkemaScraper(DateFormat = myConfig.get("SkemaScraper","Dateformat"))
     
-    htmlScraper = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
-    htmlScraper.feed(htmlResponse.read())
+    htmlScraper.feed(response)
     
-    if opt.interface == "cli":
-        myGmailOutput = GmailOutput_cli("poul.flindt.skema","minmine1")
-    else:
-        try:
-            myGmailOutput = GmailOutput_API("poul.flindt.skema","minmine1")
-        except :
-            #TODO : GmailOutput_API should raise a common exception when gdata throws gdata.service.BasAuthentication
-            print ( "login to gmail failed - please check username and password")
-            exit()
+
+    try:
+        myGmailOutput = GmailOutput_API(myConfig.get("gmail","username"),myConfig.get("gmail","Password"))
+    except :
+        #TODO : GmailOutput_API should raise a common exception when gdata throws gdata.service.BasAuthentication
+        print ( "login to gmail failed - please check username and password")
+        exit()
     
     
     for Appointment in htmlScraper.Appointments:
+        print Appointment
         myGmailOutput.addAppointment(Appointment)
-    
-    
     
     return 0
 
-if __name__ == '__main__': main()
+if __name__ == '__main__': 
+    main()

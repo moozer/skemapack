@@ -82,6 +82,7 @@ class htmlGetter(object):
                                           'ctl00$ContentPlaceHolder1$myweekstart' : '2012-01-23', \
                                           'ctl00$ContentPlaceHolder1$myweekend' : '2012-01-28'})
         self._values = params
+        # The two dates in the request seems to be ignored, so they are left hardcoded for now
         
     def _doPost(self, idx = 3735):
         ''' Use the values from the Initial page to do a post and get the whole skema '''
@@ -94,5 +95,5 @@ class htmlGetter(object):
     
 if __name__ == "__main__":
     myget = htmlGetter()
-    print myget.getSkemaWithPost(3735,4,9,2012).read()
+    print myget.getSkemaWithPost(3735,4,5,2012).read()
     
