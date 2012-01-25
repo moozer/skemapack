@@ -40,7 +40,12 @@ class SkemaPackConfig_stdin_eal(object):
         pass
     
     def readline(self):
-        thisLine = sys.stdin.readline().lstrip('#')
+        #thisLine = sys.stdin.readline().lstrip('#')
+        thisLine = ""
+        try:
+            thisLine = sys.stdin.readline().split('#')[1].strip()
+        except IndexError:
+            pass
         return thisLine        # No more configuration lines 
     
 
@@ -85,7 +90,8 @@ class SkemaPackConfig(object):
         
         
     def __str__(self):
-        PrintString = '## Config used\n'
+        #PrintString = '## Config used\n'
+        PrintString = ""
         for Section in self._ConfigParser.sections():
             PrintString += "# ["+ Section + "]\n"
             for key in self._ConfigParser.items(Section):
