@@ -14,9 +14,6 @@ import sys
 class SkemaPackConfig_stdin(object):
     '''
     This class reads from STDIN
-    
-    This class reads from STDIN and strips the first # on each line.
-    The first line with no # is EOF
     '''
     
     def __init__(self):
@@ -29,8 +26,6 @@ class SkemaPackConfig_stdin(object):
     
 class SkemaPackConfig_stdin_eal(object):
     '''
-    This class reads from STDIN
-    
     This class reads from STDIN and strips the first # on each line.
     The first line with no # is EOF
     '''
@@ -40,13 +35,12 @@ class SkemaPackConfig_stdin_eal(object):
         pass
     
     def readline(self):
-        #thisLine = sys.stdin.readline().lstrip('#')
         thisLine = ""
         try:
             thisLine = sys.stdin.readline().split('#')[1].strip()
         except IndexError:
-            return None
-        return thisLine        # No more configuration lines 
+            return None         # No more configuration lines 
+        return thisLine        
     
 
 class SkemaPackConfig(object):
@@ -63,25 +57,7 @@ class SkemaPackConfig(object):
         '''
         Constructor for loading configuration from a file
         '''
-        
-        #=======================================================================
-        # if os.path.isfile(ConfigFilename):
-        #    self._ConfigFileName = ConfigFilename
-        # elif os.path.isfile("skemapack.cfg"):
-        #    self._ConfigFileName = "skemapack.cfg"
-        # elif os.path.isfile(os.path.expanduser("~/.skemapack/skemapack.cfg")):
-        #    self._ConfigFileName = os.path.expanduser("~/.skemapack/skemapack.cfg")
-        # else:
-        #    raise exceptions.ValueError
-        #=======================================================================
-        
-        
-        
-        #=======================================================================
-        # self._ConfigParser = ConfigParser.ConfigParser()
-        # self._ConfigParser.read(self._ConfigFileName)
-        #=======================================================================
-        
+       
         self._ConfigParser = ConfigParser.ConfigParser()
         self._ConfigParser.readfp(ConfigFilename)
         
@@ -105,7 +81,5 @@ if __name__ == "__main__":
     myConfig = SkemaPackConfig()
     print myConfig
     
-    
-    pass
             
     
