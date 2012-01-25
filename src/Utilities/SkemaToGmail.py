@@ -19,12 +19,12 @@ from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
 def main():
     myConfig = SkemaPackConfig( SkemaPackConfig_stdin() )
     
-    print myConfig.get("SkemaScraper","Dateformat")
-    
     myHtmlGetter = HtmlGetter.htmlGetter()
-    htmlResponse = myHtmlGetter.getSkemaWithPost(myConfig.get("SkemaScraper","TeacherId"),3,5)
+    htmlResponse = myHtmlGetter.getSkemaWithPost(myConfig.get("SkemaScraper","TeacherId"),\
+                                                 myConfig.get("SkemaScraper","FirstWeek"),\
+                                                 myConfig.get("SkemaScraper","LastWeek"))
     response = htmlResponse.read()
-    print response
+    
     htmlScraper = SdeSkemaScraper(DateFormat = myConfig.get("SkemaScraper","Dateformat"))
     
     htmlScraper.feed(response)
@@ -39,7 +39,6 @@ def main():
     
     
     for Appointment in htmlScraper.Appointments:
-        print Appointment
         myGmailOutput.addAppointment(Appointment)
     
     return 0
