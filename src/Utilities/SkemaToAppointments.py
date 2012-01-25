@@ -1,19 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 '''
-Created on Nov 9, 2010
+Created on Jan 25, 2012
 
 @author: pfl
 '''
 
-# TODO: split this tool into two separate ones: SkemaToApp and AppToGmail
-
-#from Input.HtmlScraper.BeautifulSkemaScraper import ProcessWebPage, ProcessFile
-#from Output.IcsOutput.IcsOutput import IcsOutput
 import Input.HtmlGetter.loadWebPage.loadHtml as HtmlGetter
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
-
-from Output.Calendar.Gmail.gmailOutput import GmailOutput_API
 
 from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
 
@@ -32,18 +26,8 @@ def main():
     htmlScraper.feed(response)
     
 
-    try:
-        myGmailOutput = GmailOutput_API(myConfig.get("gmail","username"),myConfig.get("gmail","Password"))
-    except :
-        #TODO : GmailOutput_API should raise a common exception when gdata throws gdata.service.BasAuthentication
-        print ( "login to gmail failed - please check username and password")
-        exit()
-    
-    
     for Appointment in htmlScraper.Appointments:
-        myGmailOutput.addAppointment(Appointment)
-    
-    return 0
+        print Appointment
 
 if __name__ == '__main__': 
     main()

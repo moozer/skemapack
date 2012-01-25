@@ -6,18 +6,17 @@ Created on Nov 9, 2010
 
 http://code.google.com/apis/calendar/data/1.0/developers_guide_python.html#GettingStarted
 '''
-from subprocess import Popen,PIPE
 
 try:
     import gdata.calendar.service
-    import gdata.service
-    import atom.service
+#    import gdata.service
+#    import atom.service
     import gdata.calendar
     import atom
-    import getopt
-    import sys
-    import string
-    import time
+#    import getopt
+#    import sys
+#    import string
+#    import time
 except ImportError:
     print ("Google API import error.")
     # TODO: add link to gdata package
