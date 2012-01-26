@@ -55,7 +55,7 @@ class htmlGetter(object):
         ''' 
         return self._params
         
-    def _getInitialPage(self, idx = 3735):
+    def _getInitialPage(self, idx ):
         self._initialPage = urllib.urlopen('http://skema.sde.dk/laererSkema.aspx?idx=%i&lang=da-DK'%idx).read()
         if self._initialPage.find( 'IndexOutOfRange' ) <> -1:
             raise IndexError   
@@ -72,7 +72,7 @@ class htmlGetter(object):
         self._values = params
         # The two dates in the request seems to be ignored, so they are left hardcoded for now
         
-    def _doPost(self, idx = 3735):
+    def _doPost(self, idx ):
         ''' Use the values from the Initial page to do a post and get the whole skema '''
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         conn = httplib.HTTPConnection('skema.sde.dk:80')
@@ -80,7 +80,7 @@ class htmlGetter(object):
         self._postResult = conn.getresponse()
         
     
-    
+# TODO: move this to a test  
 if __name__ == "__main__":
     myget = htmlGetter()
     print myget.getSkemaWithPost(3735,4,5,2012).read()
