@@ -30,6 +30,7 @@ class htmlGetter(object):
         @return: A connection to the page showing the desired weeks.      
         '''
         # TODO: Support for different starting and ending year (perhaps just if startWeek > EndWeek?)
+        # TODO: Check if dates can be used and not week numbers
         
         # stuff to force type checking in params
         idx = int( idx)
@@ -53,19 +54,6 @@ class htmlGetter(object):
         @returns A collection of the parameters used in extraction
         ''' 
         return self._params
-        
-    def _printWebPage(self):
-        '''
-        This method is for development only, from this helper methods will be created
-        Load a page and print the content to stdout
-        '''
-        page1 = urllib.urlopen('http://skema.sde.dk/laererSkema.aspx?idx=3735&lang=da-DK').read() 
-        parser1 = ParseForValues()
-        parser1.feed(page1)  
-        print parser1.values   
-        params = urllib.urlencode(parser1.values)
-        params += '&' + urllib.urlencode({'ctl00$ContentPlaceHolder1$weeknrend' : '52','ctl00$ContentPlaceHolder1$weeknrstart' : '1', 'ctl00$ContentPlaceHolder1$weekyear' : '2011'})
-        print params
         
     def _getInitialPage(self, idx = 3735):
         self._initialPage = urllib.urlopen('http://skema.sde.dk/laererSkema.aspx?idx=%i&lang=da-DK'%idx).read()
