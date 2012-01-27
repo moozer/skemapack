@@ -12,12 +12,17 @@ import sys
 
 
 def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
-
-    myLoader = loadWeb.htmlGetter()
-    Data = myLoader.getSkemaWithPost(config.get(ConfigSet, "TeacherId"), 
+    # read data from file or net
+    if config.get(ConfigSet, "Infile"):
+        Data = open(config.get(ConfigSet, "Infile")).read()
+    else:
+        myLoader = loadWeb.htmlGetter()
+        Data = myLoader.getSkemaWithPost(config.get(ConfigSet, "TeacherId"), 
                                      config.get(ConfigSet, "FirstWeek"), 
                                      config.get(ConfigSet, "LastWeek"), 
                                      config.get(ConfigSet, "Year")).read()
+                                     
+    # and process data
     parser = SdeSkemaScraper( config.get(ConfigSet, "InputDateformat") )
     parser.feed( Data )
     parser.close()
