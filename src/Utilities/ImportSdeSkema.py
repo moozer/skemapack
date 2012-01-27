@@ -6,10 +6,13 @@ Created on Sep 13, 2011
 
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
-from Configuration.CommandLineOptions import ReadOptions
 from Datatypes.EventFunctions import WriteEvents
-    
+from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
+import sys
+
+
 def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
+
     myLoader = loadWeb.htmlGetter()
     Data = myLoader.getSkemaWithPost(config.get(ConfigSet, "TeacherId"), 
                                      config.get(ConfigSet, "FirstWeek"), 
@@ -24,9 +27,14 @@ def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
 
 
 if __name__ == '__main__':
-    
+
+    if len(sys.argv) > 2:
+        cfgfile = sys.argv[1]
+    else:
+        cfgfile = SkemaPackConfig_stdin()
+
 #    # 1) read config/parameter
-    config = ReadOptions()
+    config = SkemaPackConfig( cfgfile )
     ConfigSet = "SkemaScraper"
 
     # 3) import from skema
