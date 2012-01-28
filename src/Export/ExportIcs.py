@@ -7,10 +7,10 @@ Created on Dec 29, 2011
 @author: morten
 '''
 
-from Configuration.CommandLineOptions import ReadOptions
 import sys
 from Output.IcsOutput.IcsOutput import IcsOutput
-from Datatypes.EventFunctions import ReadEvent
+from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
+from Import.ImportFile import ImportFile
 
 def ExportIcs( Events, config, ConfigSet = "ExportIcs" ):
     ''' Configuration items needed are the same as for ReadEvent() 
@@ -30,29 +30,20 @@ def ExportIcs( Events, config, ConfigSet = "ExportIcs" ):
     f.close()
     
 if __name__ == '__main__':
-    # TODO: implement an argument switch to handle changing stdin to read from file
-    sys.stdin = file('../testpackage/Utilities/testdata/SdeSkemaEventData.txt')
+    # allow cfg file from cmd line
+    if len(sys.argv) > 1:
+        cfgfile = open( sys.argv[1] )
+    else:
+        cfgfile = SkemaPackConfig_stdin()
+
+#    # 1) read config/parameter
+    config = SkemaPackConfig( cfgfile )
+    ConfigSet = "ExportIcs"
+
+    # 3) import from file (which might be stdin
+    Events = ImportFile( config, ConfigSet )
     
-    # 1) read config/parameter
-    # none yet
-
-    # 2) receive config
-    config = ReadOptions( Silent = True)
-
-    # 3) print config
-    # PrintConfig( config )
-        
-    # 4) receive events and output them
-    Events = []
+    # 4) output all events to ics
+    ExportIcs( Events, config )
     
-    infile = config.get( ConfigSet, 'InputFile' )
-    sys.stderr.write( "ExportIcs imput from file: %s\n" % ( infile ,) )
-    fin = open( infile, "r")
-        
-    for line in fin.readlines():
-        Event = ReadEvent(line, config, ConfigSet)
-        if Event is not None:
-            Events.append( Event )
-
-    ExportIcs( config )
     
