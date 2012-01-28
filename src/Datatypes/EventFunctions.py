@@ -32,8 +32,8 @@ def ReadEvent(InputText, config, ConfigSet):
     
     Event = { 
              'Date': datetime.datetime.strptime(EventDict['Date'], config.get( ConfigSet, 'InputDateformat' )),
-             'Hours': (datetime.datetime.strptime(EventDict['StartTime'], config.get( ConfigSet, 'InputDateformat' )+" %H:%M:%S"), 
-                       datetime.datetime.strptime(EventDict['EndTime'], config.get( ConfigSet, 'InputDateformat' )+" %H:%M:%S")),
+             'Hours': [datetime.datetime.strptime(EventDict['StartTime'], config.get( ConfigSet, 'InputDateformat' )+" %H:%M:%S"), 
+                       datetime.datetime.strptime(EventDict['EndTime'], config.get( ConfigSet, 'InputDateformat' )+" %H:%M:%S")],
              'Location': EventDict['Location'],
              'Class': EventDict['Class'],
              'Subject': EventDict['Subject']
