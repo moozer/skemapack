@@ -13,7 +13,10 @@ import sys
 
 def ImportFile( config, ConfigSet = "ImportFile" ):
     # read data from file or net
-    fp = open(config.get(ConfigSet, "Infile"))
+    if not config.has_option(ConfigSet, "Infile"):
+        fp = open( "/dev/stdin" )
+    else:
+        fp = open(config.get(ConfigSet, "Infile"))
 
     Events = []
     for EventText in fp:
