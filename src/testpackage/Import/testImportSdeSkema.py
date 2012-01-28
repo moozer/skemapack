@@ -52,6 +52,3 @@ if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
     
-    
-#dict: {'Date': datetime.datetime(2012, 1, 4, 0, 0), 'Hours': [datetime.datetime(2012, 1, 4, 10, 20), datetime.datetime(2012, 1, 4, 11, 5)], 'Location': u'b-1.44', 'Class': u'11OIT3bH2', 'Subject': u'Adv. networking'}
-#dict: {'Date': datetime.datetime(2012, 1, 4, 0, 0), 'Hours': (datetime.datetime(2012, 1, 4, 10, 20), datetime.datetime(2012, 1, 4, 11, 5)), 'Subject': 'Adv. networking', 'Location': 'b-1.44', 'Class': '11OIT3bH2'}
