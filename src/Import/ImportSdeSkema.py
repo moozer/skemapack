@@ -1,9 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 '''
 Created on Sep 13, 2011
 
 @author: morten
 '''
-
+from Other.PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
 from Datatypes.EventFunctions import WriteEvents
@@ -12,8 +15,11 @@ import sys
 
 
 def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
+    ''' Config parameters: TeacherId, FirstWeek, LastWeek, Year, InputDateformat, 
+            Infile (if set, read from file)
+    '''
     # read data from file or net
-    if config.get(ConfigSet, "Infile"):
+    if config.has_option(ConfigSet, "Infile"):
         Data = open(config.get(ConfigSet, "Infile")).read()
     else:
         myLoader = loadWeb.htmlGetter()
@@ -33,8 +39,9 @@ def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
 
 if __name__ == '__main__':
 
-    if len(sys.argv) > 2:
-        cfgfile = sys.argv[1]
+    # allow cfg file from cmd line
+    if len(sys.argv) > 1:
+        cfgfile = open( sys.argv[1] )
     else:
         cfgfile = SkemaPackConfig_stdin()
 
