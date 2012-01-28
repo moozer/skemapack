@@ -62,8 +62,8 @@ class SkemaPackConfig(object):
         self._ConfigParser.readfp(ConfigFilename)
         
         self.get = self._ConfigParser.get
-        
-        
+        self.has_option = self._ConfigParser.has_option
+    
         
     def __str__(self):
         #PrintString = '## Config used\n'
