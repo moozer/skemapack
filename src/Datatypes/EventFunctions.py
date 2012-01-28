@@ -50,13 +50,21 @@ def MakeEventText(  event, DateFormat ):
                  }
     return EventText
     
+def MakeEventString( event, DateFormat  ):
+    EvStr = ""
+    EventT = MakeEventText(event, DateFormat )
+    for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject']:
+        EvStr += "%s: %s; "%(key, EventT[key])
+    EvStr += "\n" # adding final newline
+    return EvStr
     
 # TODO: Events should be a data type with event.__str__()
 # TODO: implement output to file based on config
 def WriteEvents( events, config, ConfigSet  ):
-        
+    
     for event in events:
         EventT = MakeEventText(event, config.get( ConfigSet, 'OutputDateformat') )
         for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject']:
             print "%s: %s;"%(key, EventT[key]),
         print "" # adding final newline
+        
