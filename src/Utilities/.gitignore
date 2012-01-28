@@ -5,3 +5,8 @@
 /TfToHtml.py
 /out.sqlite
 /portfolio.csv
+/icalendar
+/ImportFile.py
+/ImportSdeSkema.py
+/ExportFile.py
+/ExportIcs.py
