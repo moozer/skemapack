@@ -29,11 +29,12 @@ class Test(unittest.TestCase):
         pass
 
 
-    def testReadFromFile(self):
+    def testReadHtmlFromFile(self):
         ''' ImportSdeSkema : Test reading from file (as opposed to the net)'''
         events =  ImportSdeSkema( self.myConfig, ConfigSet = CfgSet )
         self.assertEqual( len(events), EventsInFile )
         pass
+
 
 
 if __name__ == "__main__":
