@@ -67,7 +67,9 @@ class Test(unittest.TestCase):
         self.assertTrue( AP != AP2 )
         
     def testGetLastUpdatedDate(self):
-        self.assertTrue( AP.getLastUpdatedDate().tm_year ==2011 ) 
+        ''' ActivityPlan : sanity check of current year '''
+        # TODO: hard coded year?!
+        self.assertTrue( AP.getLastUpdatedDate().tm_year ==2012 ) 
         
 
 
