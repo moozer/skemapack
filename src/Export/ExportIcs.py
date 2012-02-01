@@ -9,7 +9,8 @@ Created on Dec 29, 2011
 
 import sys
 from Output.IcsOutput.IcsOutput import IcsOutput
-from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
+from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin,\
+    SkemaPackConfig_stdin_eal
 from Import.ImportFile import ImportFile
 
 def ExportIcs( Events, config, ConfigSet = "ExportIcs" ):
@@ -34,7 +35,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         cfgfile = open( sys.argv[1] )
     else:
-        cfgfile = SkemaPackConfig_stdin()
+        cfgfile = SkemaPackConfig_stdin_eal()
 
 #    # 1) read config/parameter
     config = SkemaPackConfig( cfgfile )
