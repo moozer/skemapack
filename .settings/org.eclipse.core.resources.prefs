@@ -1,4 +1,4 @@
-#Wed Sep 14 08:48:01 CEST 2011
+#Sun Feb 05 00:21:47 CET 2012
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
@@ -7,9 +7,6 @@ encoding//src/Configuration/__init__.py=utf-8
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
 encoding//src/Output/TableOutput/__init__.py=utf-8
-encoding//src/Support/iCalendar-1.2/src/icalendar/cal.py=latin1
-encoding//src/Support/iCalendar-1.2/src/icalendar/parser.py=latin1
-encoding//src/Support/iCalendar-1.2/src/icalendar/prop.py=latin1
 encoding//src/Utilities/HtmlToIcs.py=UTF-8
 encoding//src/testpackage/Input/testHtmlScraper/TestSdeSkemaScraper.py=utf-8
 encoding//src/testpackage/Output/testTableOutput/testTableOutput.py=utf-8
