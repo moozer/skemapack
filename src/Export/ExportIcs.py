@@ -37,6 +37,8 @@ if __name__ == '__main__':
     else:
         cfgfile = SkemaPackConfig_stdin_eal()
 
+    sys.stderr.write( "ExportIcs : config file is %s\n"%cfgfile.name)
+
 #    # 1) read config/parameter
     config = SkemaPackConfig( cfgfile )
     ConfigSet = "ExportIcs"
