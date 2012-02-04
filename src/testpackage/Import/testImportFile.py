@@ -5,10 +5,10 @@ Created on 28 Jan 2012
 '''
 import unittest
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
-from Configuration.SkemaPackConfig import SkemaPackConfig
+from Configuration.SkemaPackConfig import SkemaPackConfig, SkemaPackConfigFromFile
 from Import.ImportFile import ImportFile
 import datetime
-
+import sys
 
 ImportFileWorkDir = 'ImportFile'
 ImportFileCfgFilename = 'ImportFile.cfg'
@@ -29,6 +29,9 @@ ImportFileData = [
     {'Date': datetime.datetime(2011, 8, 29, 0, 0), 'Hours': [datetime.datetime(2011, 8, 29, 10, 20), datetime.datetime(2011, 8, 29, 11, 5)], 'Subject': 'IT Security', 'Location': 'b-1.44', 'Class': '11OIT3bH2'}, 
     {'Date': datetime.datetime(2011, 9, 1, 0, 0),  'Hours': [datetime.datetime(2011, 8, 29, 11, 5),  datetime.datetime(2011, 8, 29, 11, 50)], 'Subject': 'IT Security', 'Location': 'b-1.44', 'Class': '11OIT3bH2'}];
 
+ImportFileFailedStreamCfgFilename = 'ImportFileFailedStream.cfg'
+ImportFileFailedStreamDataFilename  = 'ImportFileFailedStreamTestData.txt'
+ImportFileFailedStreamDataNoEntries = 156
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -51,6 +54,17 @@ class Test(unittest.TestCase):
         ''' ImportFile : basic test of inpur capability '''
         events = ImportFile( self.myConfig )
         self.assertEqual( events, ImportFileData )
+        pass
+    
+    def testConfigObjectNone(self):
+        ''' ImportFile : test if importfile can handle None as config object '''
+        old_stdin = sys.stdin
+        fp = file( ImportFileFailedStreamDataFilename )
+        sys.stdin = fp 
+        e = ImportFile( None )
+        sys.stdin = old_stdin
+        fp.close()
+        self.assertEqual( len(e), ImportFileFailedStreamDataNoEntries )
         pass
 
 
