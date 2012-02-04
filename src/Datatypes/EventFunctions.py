@@ -5,9 +5,10 @@ Created on Oct 29, 2011
 '''
 
 import datetime
+import sys
 
 
-def ReadEvent(InputText, config, ConfigSet):
+def ReadEvent(InputText, DateFormat = "%Y-%m-%d"):
     ''' extracts event information from InputText
     Config needed is 'InputDateformat'
     @param InputText: text containing the event information
@@ -15,9 +16,11 @@ def ReadEvent(InputText, config, ConfigSet):
     @param ConfigSet: The sub configuration to use
     @return: an Event dictionary with 'Date', 'Hours'[2], 'Location', 'Class' and 'Subject'
     '''
+    NoEntriesInEvent = 6 # to avoid magic values
+    
     if InputText[0] in ['#', '\n']:
         return None
-    
+
     EventDict = {}
     for pair in InputText.split('; '):
         if pair[-1] == '\n':
@@ -25,15 +28,14 @@ def ReadEvent(InputText, config, ConfigSet):
         (key, value) = pair.split(': ', 1)
         EventDict[key.strip()] = value.strip()
         
-    if len( EventDict) != 6:
-        print "Bad line in input: '%s'"%(InputText)
-        print EventDict
+    if len( EventDict) != NoEntriesInEvent:
+        sys.stderr.write( "Bad line in input: '%s'\n"%(InputText) )
         return None
     
     Event = { 
-             'Date': datetime.datetime.strptime(EventDict['Date'], config.get( ConfigSet, 'InputDateformat' )),
-             'Hours': [datetime.datetime.strptime(EventDict['StartTime'], config.get( ConfigSet, 'InputDateformat' )+" %H:%M:%S"), 
-                       datetime.datetime.strptime(EventDict['EndTime'], config.get( ConfigSet, 'InputDateformat' )+" %H:%M:%S")],
+             'Date': datetime.datetime.strptime(EventDict['Date'], DateFormat ),
+             'Hours': [datetime.datetime.strptime(EventDict['StartTime'], DateFormat+" %H:%M:%S"), 
+                       datetime.datetime.strptime(EventDict['EndTime'], DateFormat+" %H:%M:%S")],
              'Location': EventDict['Location'],
              'Class': EventDict['Class'],
              'Subject': EventDict['Subject']
