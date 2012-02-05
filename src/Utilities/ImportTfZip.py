@@ -4,7 +4,7 @@ Created on Jul 12, 2011
 @author: morten
 '''
 
-from PythonPathUtil import AppendSrcToPythonPath
+from Other.PythonPathUtil import AppendSrcToPythonPath
 AppendSrcToPythonPath()
 
 from optparse import OptionParser
