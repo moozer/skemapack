@@ -6,7 +6,7 @@ Created on 28 Jan 2012
 
 @author: moz
 '''
-from Datatypes.EventFunctions import WriteEvents, ReadEvent
+from Datatypes.EventFunctions import ReadEvent
 from Configuration.SkemaPackConfig import SkemaPackConfig
 import sys
 from Export.ExportFile import ExportFile

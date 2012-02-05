@@ -7,7 +7,7 @@ Created on 28 Jan 2012
 @author: moz
 '''
 
-from Datatypes.EventFunctions import WriteEvents, ReadEvent, MakeEventString
+from Datatypes.EventFunctions import MakeEventString
 #from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
 import sys
 

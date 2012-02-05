@@ -5,7 +5,7 @@ Created on 28 Jan 2012
 '''
 import unittest
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
-from Configuration.SkemaPackConfig import SkemaPackConfig, SkemaPackConfigFromFile
+from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
 import datetime
 import sys

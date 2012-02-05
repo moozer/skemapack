@@ -4,7 +4,6 @@ Created on Nov 11, 2010
 @author: morten
 '''
 import unittest
-import os
 from SupportStuff import * #@UnusedWildImport
 
 HtmlToIcsFilename= "../../../Utilities/HtmlToIcs.py"
