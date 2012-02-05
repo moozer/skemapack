@@ -32,7 +32,7 @@ class Test(unittest.TestCase):
         pass
 
 
-    def testName(self):
+    def testKnownEventExport(self):
         ''' ExportIcs : exporting known entries '''
         events = ImportFile( self.myConfig )
         ExportIcs( events, self.myConfig )
