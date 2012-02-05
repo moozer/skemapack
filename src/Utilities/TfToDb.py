@@ -7,7 +7,7 @@ Created on May 7, 2011
 '''
 
 # handling pythonpath
-from PythonPathUtil import AppendSrcToPythonPath
+from Other.PythonPathUtil import AppendSrcToPythonPath
 AppendSrcToPythonPath()
 
 from optparse import OptionParser
