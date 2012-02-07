@@ -42,7 +42,7 @@ class Test(unittest.TestCase):
         ''' ExportFile : test if ExportFile can handle None as config object '''
         old_stdout = sys.stdout
         fp = file( ExportFileTestFileName, 'w+' )
-        sys.stdin = fp 
+        sys.stdout = fp 
         ExportFile( ImportFileData ) # exprot using defaults
         sys.stdout = old_stdout
         fp.close()
