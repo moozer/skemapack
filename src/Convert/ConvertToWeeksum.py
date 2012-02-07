@@ -14,7 +14,7 @@ def ConvertToWeeksum( events, config, ConfigSet = "ConvertToWeeksum"):
 
     # loop over all events and do the sum.    
     for event in events:
-        Year, Week, Weekday = event['Date'].isocalendar()
+        Year, Week, Weekday = event['Date'].isocalendar() #@UnusedVariable
         
         if not Year in Weeksum.keys():
             Weeksum[Year] = {}
@@ -60,4 +60,5 @@ if __name__ == '__main__':
     Events = ImportFile( config, ConfigSet )
     
     # output to file
+    # TODO: this breaks since ExportFile doesn'tknow about week sums.
     ExportFile( Events, config, ConfigSet )

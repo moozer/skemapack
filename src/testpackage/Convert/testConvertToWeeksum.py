@@ -7,7 +7,7 @@ import unittest
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
-from Export.ExportFile import ExportFile
+#from Export.ExportFile import ExportFile
 from Convert.ConvertToWeeksum import ConvertToWeeksum
 
 ImportFileWorkDir = 'ImportFile'
