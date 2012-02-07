@@ -87,7 +87,7 @@ class TableOutput(object):
         ''' 
         Hours = {}
         Prep = {}
-        HourTotal = {}
+        #HourTotal = {}
         for Week in WeekNo:
             if str(Week) in ColumnSums:
                 Hours[str(Week)] = ColumnSums[str(Week)]*0.75

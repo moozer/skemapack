@@ -4,7 +4,7 @@ Created on May 28, 2011
 @author: morten
 '''
 
-from PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
+from Other.PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
 from optparse import OptionParser
 from Datatypes.ActivityDb import ActivityDb
 from Output.TableOutput.HtmlOutput import HtmlOutput
