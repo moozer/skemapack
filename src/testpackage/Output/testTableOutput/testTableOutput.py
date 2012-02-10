@@ -6,7 +6,7 @@ Created on Nov 7, 2010
 '''
 import unittest
 from Output.TableOutput.TableOutput import TableOutput
-from Datatypes.ActivityData import ActivityData
+#from Datatypes.ActivityData import ActivityData
 
 from testpackage.Utilities.TestdataSupport.TableOutput import * #@UnusedWildImport
 
