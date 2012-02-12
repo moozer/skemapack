@@ -11,36 +11,28 @@ import sys
 def ConvertToWeeksum( events, config, ConfigSet = "ConvertToWeeksum"):
     
     Weeksum = {}
-
+    WeekData = {}
+    
     # loop over all events and do the sum.    
     for event in events:
         Year, Week, Weekday = event['Date'].isocalendar() #@UnusedVariable
         
-        if not Year in Weeksum.keys():
-            Weeksum[Year] = {}
+        key = "%d-%d-%s-%s-%s"%(Year, Week, event['Subject'], event['Class'], event['Teacher'])
+        if not key in Weeksum.keys():
+            Weeksum[key] = 0
+            WeekData[key] = event # all subsequent data sets are the same
             
-        if not Week in Weeksum[Year].keys():
-            Weeksum[Year][Week] = {}
-            
-        if not event['Subject'] in Weeksum[Year][Week].keys():
-            Weeksum[Year][Week][event['Subject']] = {}
+        Weeksum[key] += 1
 
-        if not event['Class'] in Weeksum[Year][Week][event['Subject']].keys():
-            Weeksum[Year][Week][event['Subject']][event['Class']] = 0
-
-        Weeksum[Year][Week][event['Subject']][event['Class']] += 1
-
-    # and convert to nice iterable list
+    # and convert to nice iterable list (sorted by year, week, subject, etc)
     Result = []
-    for Year in Weeksum.keys():
-        for Week in Weeksum[Year].keys():
-            for Subject in Weeksum[Year][Week].keys():
-                for Class in Weeksum[Year][Week][Subject].keys():
-                    entry = { 'Year': Year, 'Week': Week, 
-                              'Subject': Subject, 'Class': Class,
-                              'LessonCount': Weeksum[Year][Week][Subject][Class]}
-                    Result.append(entry)
-        
+    for key in sorted( Weeksum.keys()):
+        Year, Week, Weekday = WeekData[key]['Date'].isocalendar() #@UnusedVariable
+        entry = { 'Year': Year, 'Week': Week, 
+                  'Subject': WeekData[key]['Subject'], 'Class': WeekData[key]['Class'],
+                  'LessonCount': Weeksum[key], 'Teacher': WeekData[key]['Teacher']}
+        Result.append(entry)
+
     return Result
 
 if __name__ == '__main__':
