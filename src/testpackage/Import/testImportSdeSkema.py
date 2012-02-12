@@ -8,8 +8,6 @@ from Import.ImportSdeSkema import ImportSdeSkema
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
-from Datatypes.EventFunctions import WriteEvents, ReadEvent, MakeEventString
-
 
 CfgFilename = 'BasicSdeSkemaImportFromFile.cfg'
 EventsInFile = 38

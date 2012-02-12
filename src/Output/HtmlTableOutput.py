@@ -3,7 +3,7 @@ Created on 10 Feb 2012
 
 @author: moz
 '''
-from datetime import time, date, datetime, timedelta
+from datetime import date, timedelta
 
 def HtmlTableOutput( Weeksums ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
