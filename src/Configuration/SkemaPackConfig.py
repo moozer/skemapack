@@ -6,8 +6,6 @@ Created on Sep 14, 2011
 
 @author: flindt
 '''
-import exceptions
-import os
 import ConfigParser
 import sys
 
