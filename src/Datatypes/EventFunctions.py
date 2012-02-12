@@ -14,9 +14,9 @@ def ReadEvent(InputText, DateFormat = "%Y-%m-%d"):
     @param InputText: text containing the event information
     @param config: configuration object to use.
     @param ConfigSet: The sub configuration to use
-    @return: an Event dictionary with 'Date', 'Hours'[2], 'Location', 'Class' and 'Subject'
+    @return: an Event dictionary with 'Date', 'Hours'[2], 'Location', 'Class', 'Subject', 'Teacher'
     '''
-    NoEntriesInEvent = 6 # to avoid magic values
+    NoEntriesInEvent = 7 # to avoid magic values
     
     if InputText[0] in ['#', '\n']:
         return None
@@ -38,7 +38,8 @@ def ReadEvent(InputText, DateFormat = "%Y-%m-%d"):
                        datetime.datetime.strptime(EventDict['EndTime'], DateFormat+" %H:%M:%S")],
              'Location': EventDict['Location'],
              'Class': EventDict['Class'],
-             'Subject': EventDict['Subject']
+             'Subject': EventDict['Subject'],
+             'Teacher': EventDict['Teacher']
              }
     return Event
 
@@ -48,14 +49,15 @@ def MakeEventText(  event, DateFormat ):
                     'EndTime':    event['Hours'][1].strftime( DateFormat +" %H:%M:%S"),
                     'Location':   event['Location'],
                     'Class':      event['Class'],
-                    'Subject':    event['Subject']                              
+                    'Subject':    event['Subject'],
+                    'Teacher':    event['Teacher']                             
                  }
     return EventText
     
 def MakeEventString( event, DateFormat  ):
     EvStr = ""
     EventT = MakeEventText(event, DateFormat )
-    for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject']:
+    for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject', 'Teacher']:
         EvStr += "%s: %s; "%(key, EventT[key])
     EvStr += "\n" # adding final newline
     return EvStr
@@ -66,7 +68,7 @@ def WriteEvents( events, config, ConfigSet  ):
     
     for event in events:
         EventT = MakeEventText(event, config.get( ConfigSet, 'OutputDateformat') )
-        for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject']:
+        for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject', 'Teacher']:
             print "%s: %s;"%(key, EventT[key]),
         print "" # adding final newline
         

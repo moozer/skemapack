@@ -45,9 +45,9 @@ SimpleSkemaData = """
 </div>
 """
 SimpleSkemaDataResult = [
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}, 
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}, 
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}
+    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}, 
+    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}, 
+    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}
 ]
 
 SkemaDataBadChars = """
@@ -68,9 +68,9 @@ SkemaDataBadChars = """
 </div>
 """
 SkemaDataBadCharsResult =  [
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302æøåæøå', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}, 
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'},
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1æøåæøå', 'Subject': u'Netvxrk/OOP'},
+    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302æøåæøå', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}, 
+    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''},
+    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1æøåæøå', 'Subject': u'Netvxrk/OOP', 'Teacher': u''},
     ]
 
 class TestInstantiations(unittest.TestCase):                            

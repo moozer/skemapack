@@ -29,7 +29,8 @@ def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
                                      config.get(ConfigSet, "Year")).read()
                                      
     # and process data
-    parser = SdeSkemaScraper( config.get(ConfigSet, "InputDateformat") )
+    parser = SdeSkemaScraper( config.get(ConfigSet, "InputDateformat"),
+                              Teacher = config.get(ConfigSet, "Teacher" ) )
     parser.feed( Data )
     parser.close()
     

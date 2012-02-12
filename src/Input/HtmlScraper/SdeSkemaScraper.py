@@ -11,7 +11,7 @@ import datetime
 	
 	
 class SdeSkemaScraper( ):
-	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M"):
+	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M", Teacher = ""):
 		""" Initialisation """
 		
 		self.DateFormat = DateFormat
@@ -22,6 +22,7 @@ class SdeSkemaScraper( ):
 		self.LessonContent = []
 		self.LessonHours = []
 		self.Appointments = []
+		self.Teacher = Teacher
 		
 	def feed( self, data ):
 		''' entry ser således ud
@@ -123,7 +124,8 @@ class SdeSkemaScraper( ):
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
 										"Subject": self.LessonContent[2].contents[0],
 										"Class": self.LessonContent[6].contents[0],
-										"Location": self.LessonContent[10].contents[0]
+										"Location": self.LessonContent[10].contents[0],
+										"Teacher": self.Teacher
 									} )
 		else: # entries with "BOOKED"
 			#print self.LessonContent[2].contents[0]
@@ -133,6 +135,7 @@ class SdeSkemaScraper( ):
 										"Subject":  self.LessonContent[2].contents[0],
 										"Class": "",
 										"Location": "",
+										"Teacher": self.Teacher
 									} )
 		#print "lesson dump", self.Appointments[-1]
 	
