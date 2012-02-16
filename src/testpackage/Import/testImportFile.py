@@ -9,6 +9,7 @@ from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
 import datetime
 import sys
+from testpackage.Utilities.TestdataSupport.WeeksumData import * 
 
 ImportFileWorkDir = 'ImportFile'
 ImportFileCfgFilename = 'ImportFile.cfg'
@@ -67,6 +68,14 @@ class Test(unittest.TestCase):
         self.assertEqual( len(e), ImportFileFailedStreamDataNoEntries )
         pass
 
+#    def testImportWeeksums(self):
+#        ''' ImportFile : test if import file handles weeksums '''
+#        ws = ImportFile( self.myConfig, "ImportWeeksums" )
+#        self.assertEqual( ws, ImportFileTestDataSum )
+
+    def testImportFailsOnNonexistentSection(self):
+        ''' ImportFile : Test if ImportFile raises a KeyError error when section specified is not in file '''
+        self.assertRaises(KeyError, ImportFile, self.myConfig, "ThisSectionDoesNotExist")
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

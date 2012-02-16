@@ -17,6 +17,10 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
         FileToUse = sys.stdin
         DateFormat = "%Y-%m-%d"
     else:
+        # check if specified section is present
+        if not config.has_section( ConfigSet ):
+            raise KeyError("Section \"%s\" not found"%ConfigSet)
+        
         # read data from file or net
         if not config.has_option(ConfigSet, "Infile"):
             FileToUse = sys.stdin
