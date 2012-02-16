@@ -6,7 +6,7 @@ Created on 28 Jan 2012
 
 @author: moz
 '''
-from Datatypes.EventFunctions import ReadEvent
+from Datatypes.EventFunctions import ReadString
 from Configuration.SkemaPackConfig import SkemaPackConfig
 import sys
 from Export.ExportFile import ExportFile
@@ -35,16 +35,29 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
 
     sys.stderr.write( "ImportFile : using %s for input\n"%FileToUse.name)
 
-    Events = []
-    for EventText in FileToUse:
-        event = ReadEvent(EventText, DateFormat )
-        if not event:
-            continue
+    try:
+        # read events
+        Events = []
+        for EventText in FileToUse:
+            event = ReadString(EventText, DateFormat )
+            if not event:
+                continue
+            
+            Events.append( event )
+    
+        return Events 
+    except KeyError:
+        # read weeksums
+        ws = []
+        for WsText in FileToUse:
+            event = ReadString(WsText, DateFormat )
+            if not event:
+                continue
+            
+            ws.append( event )
+    
+        return ws 
         
-        Events.append( event )
-
-    return Events 
-
 
 if __name__ == '__main__':
     # initial vars

@@ -68,10 +68,10 @@ class Test(unittest.TestCase):
         self.assertEqual( len(e), ImportFileFailedStreamDataNoEntries )
         pass
 
-#    def testImportWeeksums(self):
-#        ''' ImportFile : test if import file handles weeksums '''
-#        ws = ImportFile( self.myConfig, "ImportWeeksums" )
-#        self.assertEqual( ws, ImportFileTestDataSum )
+    def testImportWeeksums(self):
+        ''' ImportFile : test if import file handles weeksums '''
+        ws = ImportFile( self.myConfig, "ImportWeeksums" )
+        self.assertEqual( ws, ImportFileTestDataSum )
 
     def testImportFailsOnNonexistentSection(self):
         ''' ImportFile : Test if ImportFile raises a KeyError error when section specified is not in file '''
