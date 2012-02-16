@@ -10,10 +10,13 @@ from Import.ImportFile import ImportFile
 from Export.ExportFile import ExportFile
 from testpackage.Import.testImportFile import ImportFileData, ImportFileWorkDir, ImportFileCfgFilename
 import sys
-
+from testpackage.Utilities.TestdataSupport.WeeksumData import * 
+import filecmp
 # using the same vars as testImportFile
 
 ExportFileTestFileName = "teststdout.txt"
+ExportFileWeeksumKnownResult = "WeeksumKnownResult.txt"
+ExportfileResultFile = "ExportFileData.txt"
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -48,6 +51,11 @@ class Test(unittest.TestCase):
         fp.close()
         pass
 
+    def testSaveWeeksums(self):
+        ''' ExportFile : test if exportfile can handle weeksums '''
+        ExportFile(ImportFileTestDataSum, self.myConfig )
+        self.assertTrue( filecmp.cmp( ExportfileResultFile, ExportFileWeeksumKnownResult, shallow=False ) )
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

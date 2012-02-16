@@ -1,0 +1,4 @@
+Year: 2011; Week: 34; LessonCount: 4; Class: 11OIT3bH2; Subject: Adv. networking; Teacher: mon; 
+Year: 2011; Week: 34; LessonCount: 5; Class: 11OIT3bH2; Subject: IT Security; Teacher: mon; 
+Year: 2011; Week: 35; LessonCount: 2; Class: 11OIT3bH2; Subject: Adv. networking; Teacher: mon; 
+Year: 2011; Week: 35; LessonCount: 3; Class: 11OIT3bH2; Subject: IT Security; Teacher: mon; 

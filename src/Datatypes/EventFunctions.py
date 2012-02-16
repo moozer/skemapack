@@ -72,3 +72,23 @@ def WriteEvents( events, config, ConfigSet  ):
             print "%s: %s;"%(key, EventT[key]),
         print "" # adding final newline
         
+## ------ weeksum stuff below
+def MakeWeeksumText( Weeksum, DateFormat ):
+    EventText = {   'Year':         Weeksum['Year'],
+                    'Week':         Weeksum['Week'],
+                    'LessonCount':  Weeksum['LessonCount'],
+                    'Class':        Weeksum['Class'],
+                    'Subject':      Weeksum['Subject'],
+                    'Teacher':      Weeksum['Teacher']                             
+                 }
+    return EventText
+
+def MakeWeeksumString( Weeksum, DateFormat  ):
+    WsStr = ""
+    EventT = MakeWeeksumText(Weeksum, DateFormat )
+    for key in ['Year', 'Week', 'LessonCount', 'Class', 'Subject', 'Teacher']:
+        WsStr += "%s: %s; "%(key, EventT[key])
+    WsStr += "\n" # adding final newline
+    return WsStr
+    
+    
