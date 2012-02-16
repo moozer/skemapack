@@ -9,15 +9,11 @@ from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
 #from Export.ExportFile import ExportFile
 from Convert.ConvertToWeeksum import ConvertToWeeksum
+from testpackage.Utilities.TestdataSupport.WeeksumData import * 
 
 ImportFileWorkDir = 'ImportFile'
 ImportFileCfgFilename = 'ImportFile.cfg'
 
-# TODO: Sums are wrong due to bad 'date' in events.
-ResultSum = [{'Week': 34, 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
-             {'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
-             {'Week': 35, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'},
-             {'Week': 35, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'} ]
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -39,7 +35,7 @@ class Test(unittest.TestCase):
         ''' ConvertToWeeksum : basic init '''
         events = ImportFile( self.myConfig )
         Sum = ConvertToWeeksum( events, self.myConfig )
-        self.assertEqual(Sum, ResultSum )
+        self.assertEqual(Sum, ImportFileTestDataSum )
         pass
 
 
