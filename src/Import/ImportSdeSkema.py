@@ -9,10 +9,9 @@ Created on Sep 13, 2011
 from Other.PythonPathUtil import AppendSrcToPythonPath #@UnusedImport
 from Input.HtmlScraper.SdeSkemaScraper import SdeSkemaScraper
 import Input.HtmlGetter.loadWebPage.loadHtml as loadWeb
-from Datatypes.EventFunctions import WriteEvents
 from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
 import sys
-
+from Export.ExportFile import ExportFile
 
 def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
     ''' Config parameters: TeacherId, FirstWeek, LastWeek, Year, InputDateformat, 
@@ -54,6 +53,5 @@ if __name__ == '__main__':
     Events = ImportSdeSkema( config, ConfigSet )
     
     # 4) output all events to stdout
-    print config # placed here to allow config to be changed...
-    WriteEvents( Events, config, ConfigSet )
+    ExportFile( Events, config, ConfigSet )
     
