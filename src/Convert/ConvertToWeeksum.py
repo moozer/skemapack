@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 '''
 Created on 7 Feb 2012
 
@@ -51,6 +54,9 @@ if __name__ == '__main__':
     # import from file
     Events = ImportFile( config, ConfigSet )
     
+    Ws = ConvertToWeeksum( Events, config, ConfigSet )
+    print config # placed here to allow config to be changed...
+
     # output to file
     # TODO: this breaks since ExportFile doesn'tknow about week sums.
-    ExportFile( Events, config, ConfigSet )
+    ExportFile( Ws, config, ConfigSet )

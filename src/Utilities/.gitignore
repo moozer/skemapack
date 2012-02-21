@@ -10,3 +10,5 @@
 /ImportSdeSkema.py
 /ExportFile.py
 /ExportIcs.py
+/ConvertToWeeksum.py
+/ExportHtml.py
