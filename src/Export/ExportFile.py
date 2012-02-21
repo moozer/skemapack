@@ -30,6 +30,11 @@ def ExportFile( Events, config = None, ConfigSet = "ExportFile" ):
         else:
             DateFormat = config.get(ConfigSet, "OutputDateformat")
 
+    # outputting config first
+    if config:
+        fp.write( str(config) ) 
+        
+
     try: # is this an event?
         # looping over events and outputting
         for event in Events:
