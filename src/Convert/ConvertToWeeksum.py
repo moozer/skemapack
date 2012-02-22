@@ -41,7 +41,7 @@ def ConvertToWeeksum( events, config, ConfigSet = "ConvertToWeeksum"):
 if __name__ == '__main__':
         # initial vars
     Module = "ConvertToWeeksum"
-    ConfigSet = "SkemaScraper"
+    ConfigSet = "ConvertToWeeksum"
     
     # handle command line config file (if set)
     if len(sys.argv) > 2:
@@ -49,14 +49,13 @@ if __name__ == '__main__':
         sys.stderr.write( "%s : config file is %s\n"%(Module, config.name))
     else:
         config = None
-        sys.stderr.write( "%s : config from stdin\n"%Module)
+        sys.stderr.write( "%s : data and config from stdin\n"%Module)
         
     # import from file
-    Events = ImportFile( config, ConfigSet )
+    Events, config = ImportFile( config, ConfigSet )
     
     Ws = ConvertToWeeksum( Events, config, ConfigSet )
-    print config # placed here to allow config to be changed...
-
+    
     # output to file
     # TODO: this breaks since ExportFile doesn'tknow about week sums.
     ExportFile( Ws, config, ConfigSet )
