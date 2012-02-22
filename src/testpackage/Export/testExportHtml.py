@@ -6,7 +6,7 @@ Created on 10 Feb 2012
 import unittest
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Configuration.SkemaPackConfig import SkemaPackConfig
-
+from Import.ImportFile import ImportFile
 from Export.ExportHtml import ExportHtml
 import filecmp
 
@@ -15,12 +15,13 @@ ExportHtmlCfgFile = "ExportHtml.cfg"
 ExportHtmlKnownResult = "KnownExportHtml.html"
 ExportHtmlOutputfile = "ExportHtml.html"
 
-
 WeeksumData = [{'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
              {'Week': 34, 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}, 
              {'Week': 35, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
              {'Week': 35, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}]
 
+ExportHtmlSemesterOutput = "ExportHtmlSemester.html"
+ExportHtmlSemesterKnownResult = "KnownExportHtmlSemester.html"
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -42,6 +43,14 @@ class Test(unittest.TestCase):
         ExportHtml( WeeksumData, self.myConfig) 
         self.assertTrue( filecmp.cmp(ExportHtmlOutputfile, ExportHtmlKnownResult) )
         pass
+    
+    def testCompleteSemesterFail(self):
+        ''' ExportHtml : recreate error running exporthtml on real semester dataset '''
+        ws, config = ImportFile( self.myConfig, "ImportFileSemester" ) #@UnusedVariable
+        ExportHtml( ws, self.myConfig, "ExportHtmlSemester") 
+        self.assertTrue( filecmp.cmp(ExportHtmlSemesterOutput, ExportHtmlSemesterKnownResult) )
+
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

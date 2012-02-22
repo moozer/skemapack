@@ -30,7 +30,7 @@ def HtmlTableOutput( Weeksums ):
         Data[DataStr].append(Week)
 
     # output header line
-    #Header = ("Class", "Teacher", "Course")
+    # TODO: Header = ("Class", "Teacher", "Course")
     Header = ("Class", "Subject")
     
     # table start
@@ -41,6 +41,7 @@ def HtmlTableOutput( Weeksums ):
     for text in Header:
         HtmlTable += "<td>%s</td>"%text
 
+    # output weeks in header row.
     CurWeek = WeekRange[0]
     while CurWeek <= WeekRange[1]:
         Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
@@ -48,18 +49,28 @@ def HtmlTableOutput( Weeksums ):
         CurWeek += timedelta(7) # add 7 days
     
     HtmlTable += "</tr>\n"
-    
+
     # output content
     for Entry in Data.keys():
         CurEntry = Data[Entry]
         
+        # new row
         HtmlTable += "\t<tr>"
+
+        # output class and subject
         for text in Header:
             HtmlTable += "<td>%s</td>"%CurEntry[0][text]
     
+        # loop through the week of current class+subject combination (the DataStr from above)
         CurWeek = WeekRange[0]
         EntryCounter = 0
         while CurWeek <= WeekRange[1]:
+            # are we looking at a week af the last of current lessons?
+            if EntryCounter >= len(CurEntry):
+                HtmlTable += "<td>.</td>"
+                CurWeek += timedelta(7) # add 7 days
+                continue
+            
             Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
             if      (CurEntry[EntryCounter]['Year'] == Year) \
                 and (CurEntry[EntryCounter]['Week'] == Week):
@@ -69,6 +80,7 @@ def HtmlTableOutput( Weeksums ):
                 HtmlTable += "<td>.</td>"
             CurWeek += timedelta(7) # add 7 days
         
+        # end row
         HtmlTable += "</tr>\n"
     
     # table end    

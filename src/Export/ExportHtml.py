@@ -8,7 +8,7 @@ Created on 10 Feb 2012
 '''
 
 import sys
-from Configuration.SkemaPackConfig import SkemaPackConfig, SkemaPackConfig_stdin_eal
+from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
 from Output.HtmlTableOutput import HtmlTableOutput
 
@@ -61,18 +61,19 @@ if __name__ == '__main__':
     # allow cfg file from cmd line
     if len(sys.argv) > 1:
         cfgfile = open( sys.argv[1] )
+        config = SkemaPackConfig( cfgfile )
+        sys.stderr.write( "ExportHtml : config file is %s\n"%cfgfile.name)
     else:
-        cfgfile = SkemaPackConfig_stdin_eal()
+        config = None
+        sys.stderr.write( "ExportHtml : config file is %s\n"%"<stdin>")
 
-    sys.stderr.write( "ExportHtml : config file is %s\n"%cfgfile.name)
 
 #    # 1) read config/parameter
-    config = SkemaPackConfig( cfgfile )
     ConfigSet = "ExportHtml"
 
     # 3) import from file (which might be stdin
-    Events = ImportFile( config, ConfigSet )
-    
+    Events, config = ImportFile( config, ConfigSet )
+    print config
     # 4) output all events to ics
     ExportHtml( Events, config )
 
