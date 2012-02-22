@@ -20,7 +20,7 @@ def ConvertToWeeksum( events, config, ConfigSet = "ConvertToWeeksum"):
     for event in events:
         Year, Week, Weekday = event['Date'].isocalendar() #@UnusedVariable
         
-        key = "%d-%d-%s-%s-%s"%(Year, Week, event['Subject'], event['Class'], event['Teacher'])
+        key = "%d-%2.d-%s-%s-%s"%(Year, Week, event['Subject'], event['Class'], event['Teacher'])
         if not key in Weeksum.keys():
             Weeksum[key] = 0
             WeekData[key] = event # all subsequent data sets are the same
