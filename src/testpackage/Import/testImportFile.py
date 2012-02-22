@@ -33,6 +33,18 @@ ImportFileData = [
 ImportFileFailedStreamCfgFilename = 'ImportFileFailedStream.cfg'
 ImportFileFailedStreamDataFilename  = 'ImportFileFailedStreamTestData.txt'
 ImportFileFailedStreamDataNoEntries = 156
+ImportFileFailedStreamConfig = '''# [SkemaScraper]
+# teacherid = 5421
+# firstweek = 4
+# lastweek = 27
+# year = 2012
+# inputdateformat = %d-%m-%Y
+# outputdateformat = %Y-%m-%d
+# [ExportIcs]
+# outfile = MON_2012S.ics
+# inputdateformat = %Y-%m-%d
+#
+'''
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -53,8 +65,9 @@ class Test(unittest.TestCase):
 
     def testBasicRead(self):
         ''' ImportFile : basic test of input capability '''
-        events = ImportFile( self.myConfig )
+        events, config = ImportFile( self.myConfig )
         self.assertEqual( events, ImportFileData )
+        self.assertEqual(config, self.myConfig )
         pass
     
     def testConfigObjectNone(self):
@@ -62,7 +75,7 @@ class Test(unittest.TestCase):
         old_stdin = sys.stdin
         fp = file( ImportFileFailedStreamDataFilename )
         sys.stdin = fp 
-        e = ImportFile( None )
+        e, config = ImportFile( None ) #@UnusedVariable
         sys.stdin = old_stdin
         fp.close()
         self.assertEqual( len(e), ImportFileFailedStreamDataNoEntries )
@@ -70,12 +83,23 @@ class Test(unittest.TestCase):
 
     def testImportWeeksums(self):
         ''' ImportFile : test if import file handles weeksums '''
-        ws = ImportFile( self.myConfig, "ImportWeeksums" )
+        ws, config = ImportFile( self.myConfig, "ImportWeeksums" ) #@UnusedVariable
         self.assertEqual( ws, ImportFileTestDataSum )
 
     def testImportFailsOnNonexistentSection(self):
         ''' ImportFile : Test if ImportFile raises a KeyError error when section specified is not in file '''
         self.assertRaises(KeyError, ImportFile, self.myConfig, "ThisSectionDoesNotExist")
+        
+    def testImportConfigFromStdin(self):
+        ''' ImportFile : check if import of config from stdin works '''
+        old_stdin = sys.stdin
+        fp = file( ImportFileFailedStreamDataFilename )
+        sys.stdin = fp 
+        e, config = ImportFile( None ) #@UnusedVariable
+        sys.stdin = old_stdin
+        fp.close()
+        self.assertEqual( str(config), ImportFileFailedStreamConfig )
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
         ''' ImportSdeSkema : Test reading from file (as opposed to the net)'''
         events =  ImportSdeSkema( self.myConfig, ConfigSet = CfgSet )
         # WriteEvents(events, self.myConfig, CfgSet )
-        KnownResult = ImportFile( self.myConfig )
+        KnownResult, config = ImportFile( self.myConfig ) #@UnusedVariable
         
         self.assertEqual(len(events), len(KnownResult) )
         

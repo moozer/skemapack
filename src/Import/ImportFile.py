@@ -7,31 +7,40 @@ Created on 28 Jan 2012
 @author: moz
 '''
 from Datatypes.EventFunctions import ReadString
-from Configuration.SkemaPackConfig import SkemaPackConfig
+from Configuration.SkemaPackConfig import SkemaPackConfig, SkemaPackConfig_stdin_eal
 import sys
 from Export.ExportFile import ExportFile
 
 def ImportFile( config = None, ConfigSet = "ImportFile" ):
-    # if no config supplied, use defaults
+    '''
+    Imports events and config from file (or stdin)
+    @param config: The config object to use. If None, then we try to use defaults or stdin
+    @param ConfigSet: The section of the configuration to use
+    @raise KeyError: If supplied ConfigSet is not in config
+    @return: (events, config) or (weeksums, config) 
+    '''  
+    # if no config supplied, use stdin
     if not config:
-        FileToUse = sys.stdin
-        DateFormat = "%Y-%m-%d"
-    else:
+        # create new config object
+        config = SkemaPackConfig( SkemaPackConfig_stdin_eal() )
+        # we accept non-existent section when piping from stdin
+    else: 
         # check if specified section is present
         if not config.has_section( ConfigSet ):
             raise KeyError("Section \"%s\" not found"%ConfigSet)
-        
-        # read data from file or net
-        if not config.has_option(ConfigSet, "Infile"):
-            FileToUse = sys.stdin
-        else:
-            FileToUse = open( config.get(ConfigSet, "Infile") )
+            
+      
+    # read data from file or net
+    if not config.has_option(ConfigSet, "Infile"):
+        FileToUse = sys.stdin
+    else:
+        FileToUse = open( config.get(ConfigSet, "Infile") )
 
-        # read data from file or net
-        if not config.has_option(ConfigSet, "InputDateformat"):
-            DateFormat = "%Y-%m-%d"
-        else:
-            DateFormat = config.get(ConfigSet, "InputDateformat")
+    # read data from file or net
+    if not config.has_option(ConfigSet, "InputDateformat"):
+        DateFormat = "%Y-%m-%d"
+    else:
+        DateFormat = config.get(ConfigSet, "InputDateformat")
 
     sys.stderr.write( "ImportFile : using %s for input\n"%FileToUse.name)
 
@@ -45,7 +54,7 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
             
             Events.append( event )
     
-        return Events 
+        ret = Events 
     except KeyError:
         # read weeksums
         ws = []
@@ -56,8 +65,9 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
             
             ws.append( event )
     
-        return ws 
+        ret =  ws 
         
+    return (ret, config)
 
 if __name__ == '__main__':
     # initial vars

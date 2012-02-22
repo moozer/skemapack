@@ -37,7 +37,7 @@ class Test(unittest.TestCase):
     def testBasicExportAndImport(self):
         ''' ExportFile : basic write+read test '''
         ExportFile(ImportFileData, self.myConfig )
-        Events = ImportFile(self.myConfig, 'ImportExportedFile')
+        Events, config  = ImportFile(self.myConfig, 'ImportExportedFile') #@UnusedVariable
         self.assertEqual( Events, ImportFileData )
         pass
     

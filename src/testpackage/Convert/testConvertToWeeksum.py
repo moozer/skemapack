@@ -33,7 +33,7 @@ class Test(unittest.TestCase):
 
     def testSimpleConvert(self):
         ''' ConvertToWeeksum : basic init '''
-        events = ImportFile( self.myConfig )
+        events, config = ImportFile( self.myConfig ) #@UnusedVariable
         Sum = ConvertToWeeksum( events, self.myConfig )
         self.assertEqual(Sum, ImportFileTestDataSum )
         pass
