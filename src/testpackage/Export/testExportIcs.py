@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
 
     def testKnownEventExport(self):
         ''' ExportIcs : exporting known entries '''
-        events, config = ImportFile( self.myConfig )
+        events, config = ImportFile( self.myConfig ) #@UnusedVariable
         ExportIcs( events, self.myConfig )
         
         ret = os.system( 'diff %s %s ' % (IcsFilename, IcsKnownResultFile ))

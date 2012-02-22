@@ -201,7 +201,7 @@ class Test(unittest.TestCase):
 
     def testConstructor(self):
         ''' TableIterator : Testing construction '''
-        ti = TableIterator( TableHtml )
+        ti = TableIterator( TableHtml ) #@UnusedVariable
         
     def testIteration(self):
         ''' TableIterator : Test that the iterator part works (type only) '''

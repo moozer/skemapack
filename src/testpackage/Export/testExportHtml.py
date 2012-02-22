@@ -50,8 +50,6 @@ class Test(unittest.TestCase):
         ExportHtml( ws, self.myConfig, "ExportHtmlSemester") 
         self.assertTrue( filecmp.cmp(ExportHtmlSemesterOutput, ExportHtmlSemesterKnownResult) )
 
-        
-
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
