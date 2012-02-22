@@ -57,5 +57,4 @@ if __name__ == '__main__':
     Ws = ConvertToWeeksum( Events, config, ConfigSet )
     
     # output to file
-    # TODO: this breaks since ExportFile doesn'tknow about week sums.
     ExportFile( Ws, config, ConfigSet )
