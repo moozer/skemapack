@@ -40,7 +40,7 @@ def ReadString(InputText, DateFormat = "%Y-%m-%d"):
     
     if len( EventDict) == NumEntriesInEvent:
         Event = { 
-             'Date': datetime.datetime.strptime(EventDict['Date'], DateFormat ),
+             'Date': datetime.datetime.strptime(EventDict['Date'], DateFormat ).date(),
              'Hours': [datetime.datetime.strptime(EventDict['StartTime'], DateFormat+" %H:%M:%S"), 
                        datetime.datetime.strptime(EventDict['EndTime'], DateFormat+" %H:%M:%S")],
              'Location': EventDict['Location'],
