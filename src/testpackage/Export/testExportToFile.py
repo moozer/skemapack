@@ -10,10 +10,13 @@ from Import.ImportFile import ImportFile
 from Export.ExportFile import ExportFile
 from testpackage.Import.testImportFile import ImportFileData, ImportFileWorkDir, ImportFileCfgFilename
 import sys
-
+from testpackage.Utilities.TestdataSupport.WeeksumData import * 
+import filecmp
 # using the same vars as testImportFile
 
 ExportFileTestFileName = "teststdout.txt"
+ExportFileWeeksumKnownResult = "WeeksumKnownResult.txt"
+ExportfileResultFile = "ExportFileData.txt"
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -34,7 +37,7 @@ class Test(unittest.TestCase):
     def testBasicExportAndImport(self):
         ''' ExportFile : basic write+read test '''
         ExportFile(ImportFileData, self.myConfig )
-        Events = ImportFile(self.myConfig, 'ImportExportedFile')
+        Events, config  = ImportFile(self.myConfig, 'ImportExportedFile') #@UnusedVariable
         self.assertEqual( Events, ImportFileData )
         pass
     
@@ -42,12 +45,17 @@ class Test(unittest.TestCase):
         ''' ExportFile : test if ExportFile can handle None as config object '''
         old_stdout = sys.stdout
         fp = file( ExportFileTestFileName, 'w+' )
-        sys.stdin = fp 
+        sys.stdout = fp 
         ExportFile( ImportFileData ) # exprot using defaults
         sys.stdout = old_stdout
         fp.close()
         pass
 
+    def testSaveWeeksums(self):
+        ''' ExportFile : test if exportfile can handle weeksums '''
+        ExportFile(ImportFileTestDataSum, self.myConfig )
+        self.assertTrue( filecmp.cmp( ExportfileResultFile, ExportFileWeeksumKnownResult, shallow=False ) )
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

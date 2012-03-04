@@ -1,0 +1,60 @@
+# [SkemaScraper]
+# teacherid = 5421
+# firstweek = 4
+# lastweek = 27
+# year = 2012
+# inputdateformat = %d-%m-%Y
+# outputdateformat = %Y-%m-%d
+# teacher = mon
+# [ExportIcs]
+# outfile = MON_2012S.ics
+# inputdateformat = %Y-%m-%d
+# [ExportHtml]
+# outfile = MON_2012S.html
+#
+Year: 2012; Week: 4; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 4; LessonCount: 3; Class: 12OIT2bH1; Subject: System Design; Teacher: mon; 
+Year: 2012; Week: 5; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 5; LessonCount: 3; Class: 12OIT2bH1; Subject: Project 1; Teacher: mon; 
+Year: 2012; Week: 5; LessonCount: 5; Class: 12OIT2bH1; Subject: System Design; Teacher: mon; 
+Year: 2012; Week: 6; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 6; LessonCount: 4; Class: 12OIT2bH1; Subject: Project 1; Teacher: mon; 
+Year: 2012; Week: 6; LessonCount: 4; Class: 12OIT2bH1; Subject: System Design; Teacher: mon; 
+Year: 2012; Week: 7; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 7; LessonCount: 4; Class: 12OIT2bH1; Subject: Project 1; Teacher: mon; 
+Year: 2012; Week: 7; LessonCount: 4; Class: 12OIT2bH1; Subject: System Design; Teacher: mon; 
+Year: 2012; Week: 9; LessonCount: 4; Class: 12OIT2bH1; Subject: Project 1; Teacher: mon; 
+Year: 2012; Week: 9; LessonCount: 4; Class: 12OIT2bH1; Subject: System Design; Teacher: mon;
+Year: 2012; Week: 10; LessonCount: 4; Class: 12OIT2bH1; Subject: Project 1; Teacher: mon; 
+Year: 2012; Week: 10; LessonCount: 4; Class: 12OIT2bH1; Subject: System Design; Teacher: mon; 
+Year: 2012; Week: 13; LessonCount: 1; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 13; LessonCount: 1; Class: 12OIT2bH1; Subject: Project 1; Teacher: mon; 
+Year: 2012; Week: 15; LessonCount: 3; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 15; LessonCount: 1; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 16; LessonCount: 2; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 16; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 17; LessonCount: 4; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 17; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 18; LessonCount: 4; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 18; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 19; LessonCount: 4; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 19; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 20; LessonCount: 4; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 20; LessonCount: 3; Class: 12OIT2bH1; Subject: IT Security; Teacher: mon; 
+Year: 2012; Week: 20; LessonCount: 3; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 21; LessonCount: 4; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 21; LessonCount: 4; Class: 12OIT2bH1; Subject: IT Security; Teacher: mon; 
+Year: 2012; Week: 21; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 22; LessonCount: 1; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 22; LessonCount: 5; Class: 12OIT2bH1; Subject: IT Security; Teacher: mon; 
+Year: 2012; Week: 22; LessonCount: 2; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 23; LessonCount: 5; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 23; LessonCount: 3; Class: 12OIT2bH1; Subject: IT Security; Teacher: mon; 
+Year: 2012; Week: 23; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 24; LessonCount: 2; Class: 12OIT4bS1; Subject: Counselling; Teacher: mon; 
+Year: 2012; Week: 24; LessonCount: 4; Class: 12OIT2bH1; Subject: IT Security; Teacher: mon; 
+Year: 2012; Week: 24; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 25; LessonCount: 4; Class: 12OIT2bH1; Subject: IT Security; Teacher: mon; 
+Year: 2012; Week: 25; LessonCount: 4; Class: 12OIT2bH1; Subject: Networking; Teacher: mon; 
+Year: 2012; Week: 27; LessonCount: 1; Class: 12OIT2bH1; Subject: IT Security; Teacher: mon; 
+

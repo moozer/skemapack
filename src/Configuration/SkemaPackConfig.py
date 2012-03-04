@@ -6,8 +6,6 @@ Created on Sep 14, 2011
 
 @author: flindt
 '''
-import exceptions
-import os
 import ConfigParser
 import sys
 
@@ -63,6 +61,7 @@ class SkemaPackConfig(object):
         
         self.get = self._ConfigParser.get
         self.has_option = self._ConfigParser.has_option
+        self.has_section = self._ConfigParser.has_section
     
         
     def __str__(self):

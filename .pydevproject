@@ -8,7 +8,5 @@
 
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
 <path>/skemapack/src</path>
-<path>/skemapack/src/Support</path>
-<path>/skemapack/src/Support/iCalendar-1.2/src</path>
 </pydev_pathproperty>
 </pydev_project>

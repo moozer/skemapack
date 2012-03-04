@@ -7,17 +7,8 @@ Created on Oct 29, 2011
 import datetime
 import sys
 
-
-def ReadEvent(InputText, DateFormat = "%Y-%m-%d"):
-    ''' extracts event information from InputText
-    Config needed is 'InputDateformat'
-    @param InputText: text containing the event information
-    @param config: configuration object to use.
-    @param ConfigSet: The sub configuration to use
-    @return: an Event dictionary with 'Date', 'Hours'[2], 'Location', 'Class' and 'Subject'
-    '''
-    NoEntriesInEvent = 6 # to avoid magic values
-    
+def LineParse( InputText ):
+    ''' basic cehck and split of line into elements '''
     if InputText[0] in ['#', '\n']:
         return None
 
@@ -27,20 +18,50 @@ def ReadEvent(InputText, DateFormat = "%Y-%m-%d"):
             continue
         (key, value) = pair.split(': ', 1)
         EventDict[key.strip()] = value.strip()
+    
+    return EventDict
+
+def ReadString(InputText, DateFormat = "%Y-%m-%d"):
+    ''' extracts event information from InputText
+    Config needed is 'InputDateformat'
+    @param InputText: text containing the event information
+    @param config: configuration object to use.
+    @param ConfigSet: The sub configuration to use
+    @return: a Weeksum dictionary 
+            or an Event dictionary with 'Date', 'Hours'[2], 'Location', 'Class', 'Subject', 'Teacher'
+    '''
+    NumEntriesInEvent = 7 # to avoid magic values
+    NumEntriesInWeeksum = 6 # to avoid magic values
+    
+    EventDict = LineParse( InputText )
         
-    if len( EventDict) != NoEntriesInEvent:
-        sys.stderr.write( "Bad line in input: '%s'\n"%(InputText) )
+    if not EventDict:
         return None
     
-    Event = { 
-             'Date': datetime.datetime.strptime(EventDict['Date'], DateFormat ),
+    if len( EventDict) == NumEntriesInEvent:
+        Event = { 
+             'Date': datetime.datetime.strptime(EventDict['Date'], DateFormat ).date(),
              'Hours': [datetime.datetime.strptime(EventDict['StartTime'], DateFormat+" %H:%M:%S"), 
                        datetime.datetime.strptime(EventDict['EndTime'], DateFormat+" %H:%M:%S")],
              'Location': EventDict['Location'],
              'Class': EventDict['Class'],
-             'Subject': EventDict['Subject']
+             'Subject': EventDict['Subject'],
+             'Teacher': EventDict['Teacher']
              }
-    return Event
+        return Event
+    elif len( EventDict) == NumEntriesInWeeksum:
+        Ws = { 
+             'Year':        int(EventDict['Year']),
+             'Week':        int(EventDict['Week']),
+             'LessonCount': int(EventDict['LessonCount']),
+             'Class':       EventDict['Class'],
+             'Subject':     EventDict['Subject'],
+             'Teacher':     EventDict['Teacher']
+             }
+        return Ws
+    
+    sys.stderr.write( "failed to interpret line: %s"%InputText)
+
 
 def MakeEventText(  event, DateFormat ):
     EventText = {   'Date':       event['Date'].strftime( DateFormat ),
@@ -48,14 +69,15 @@ def MakeEventText(  event, DateFormat ):
                     'EndTime':    event['Hours'][1].strftime( DateFormat +" %H:%M:%S"),
                     'Location':   event['Location'],
                     'Class':      event['Class'],
-                    'Subject':    event['Subject']                              
+                    'Subject':    event['Subject'],
+                    'Teacher':    event['Teacher']                             
                  }
     return EventText
     
 def MakeEventString( event, DateFormat  ):
     EvStr = ""
     EventT = MakeEventText(event, DateFormat )
-    for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject']:
+    for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject', 'Teacher']:
         EvStr += "%s: %s; "%(key, EventT[key])
     EvStr += "\n" # adding final newline
     return EvStr
@@ -66,7 +88,27 @@ def WriteEvents( events, config, ConfigSet  ):
     
     for event in events:
         EventT = MakeEventText(event, config.get( ConfigSet, 'OutputDateformat') )
-        for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject']:
+        for key in ['Date', 'StartTime', 'EndTime', 'Location', 'Class', 'Subject', 'Teacher']:
             print "%s: %s;"%(key, EventT[key]),
         print "" # adding final newline
         
+## ------ weeksum stuff below
+def MakeWeeksumText( Weeksum, DateFormat ):
+    EventText = {   'Year':         int(Weeksum['Year']),
+                    'Week':         int(Weeksum['Week']),
+                    'LessonCount':  int(Weeksum['LessonCount']),
+                    'Class':        Weeksum['Class'],
+                    'Subject':      Weeksum['Subject'],
+                    'Teacher':      Weeksum['Teacher']                             
+                 }
+    return EventText
+
+def MakeWeeksumString( Weeksum, DateFormat  ):
+    WsStr = ""
+    EventT = MakeWeeksumText(Weeksum, DateFormat )
+    for key in ['Year', 'Week', 'LessonCount', 'Class', 'Subject', 'Teacher']:
+        WsStr += "%s: %s; "%(key, EventT[key])
+    WsStr += "\n" # adding final newline
+    return WsStr
+    
+    

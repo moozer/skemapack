@@ -11,7 +11,7 @@ import datetime
 	
 	
 class SdeSkemaScraper( ):
-	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M"):
+	def __init__(self, DateFormat = "%m/%d/%Y", TimeFormat = "%H:%M", Teacher = ""):
 		""" Initialisation """
 		
 		self.DateFormat = DateFormat
@@ -22,6 +22,7 @@ class SdeSkemaScraper( ):
 		self.LessonContent = []
 		self.LessonHours = []
 		self.Appointments = []
+		self.Teacher = Teacher
 		
 	def feed( self, data ):
 		''' entry ser således ud
@@ -117,22 +118,24 @@ class SdeSkemaScraper( ):
 		
 	def DumpLesson( self ):
 		""" Appends current data as new appointment """
-		#print self.LessonContent
+		# we use self.LessonHours[0].date() instead of self.WeekdayDate
+		# because WeekDayDate is for the next entry.
 		if len( self.LessonContent ) > 9:
-			self.Appointments.append( {	"Date": self.WeekdayDate, 
+			self.Appointments.append( {	"Date": self.LessonHours[0].date(), 
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
 										"Subject": self.LessonContent[2].contents[0],
 										"Class": self.LessonContent[6].contents[0],
-										"Location": self.LessonContent[10].contents[0]
+										"Location": self.LessonContent[10].contents[0],
+										"Teacher": self.Teacher
 									} )
 		else: # entries with "BOOKED"
-			#print self.LessonContent[2].contents[0]
-			self.Appointments.append( {	"Date": self.WeekdayDate, 
+			self.Appointments.append( {	"Date": self.LessonHours[0].date(), 
 										"Hours": [self.LessonHours[0], self.LessonHours[1]], 
 										#"Subject": unicode( self.LessonContent[2].contents[0], 'utf-8'),
 										"Subject":  self.LessonContent[2].contents[0],
 										"Class": "",
 										"Location": "",
+										"Teacher": self.Teacher
 									} )
 		#print "lesson dump", self.Appointments[-1]
 	

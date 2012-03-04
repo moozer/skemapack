@@ -45,9 +45,9 @@ SimpleSkemaData = """
 </div>
 """
 SimpleSkemaDataResult = [
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}, 
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}, 
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}
+    {'Date': datetime.date(2010, 2, 17), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}, 
+    {'Date': datetime.date(2010, 2, 17), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}, 
+    {'Date': datetime.date(2010, 2, 17), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}
 ]
 
 SkemaDataBadChars = """
@@ -68,9 +68,9 @@ SkemaDataBadChars = """
 </div>
 """
 SkemaDataBadCharsResult =  [
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302æøåæøå', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'}, 
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP'},
-    {'Date': datetime.datetime(2010, 2, 17, 0, 0), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1æøåæøå', 'Subject': u'Netvxrk/OOP'},
+    {'Date': datetime.date( 2010, 2, 17), 'Hours': [datetime.datetime(2010, 2, 17, 9, 0), datetime.datetime(2010, 2, 17, 9, 45)], 'Location': u'A-302æøåæøå', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''}, 
+    {'Date': datetime.date( 2010, 2, 17), 'Hours': [datetime.datetime(2010, 2, 17, 10, 5), datetime.datetime(2010, 2, 17, 10, 50)], 'Location': u'A-302', 'Class': u'10OIT2bH1', 'Subject': u'Netvxrk/OOP', 'Teacher': u''},
+    {'Date': datetime.date( 2010, 2, 17), 'Hours': [datetime.datetime(2010, 2, 17, 10, 55), datetime.datetime(2010, 2, 17, 11, 40)], 'Location': u'A-302', 'Class': u'10OIT2bH1æøåæøå', 'Subject': u'Netvxrk/OOP', 'Teacher': u''},
     ]
 
 class TestInstantiations(unittest.TestCase):                            
@@ -139,6 +139,14 @@ class TestInstantiations(unittest.TestCase):
         self.assertEqual(i,72)
         pass
     
+    def testDateAndDateFromHours(self):
+        """ SdeSkemaScraper : Compare 'date' with date from 'hours' """
+        parser = SdeSkemaScraper(DateFormat = "%d-%m-%Y")
+        parser.feed( WebPageFromChrome43_43_19lektioner )
+        parser.close()
+        for app in parser.Appointments:
+            self.assertEqual( app['Hours'][0].date(), app['Date'] )
+        pass
 
 def main():
     suite = unittest.TestLoader().loadTestsFromTestCase(TestInstantiations)

@@ -1,19 +1,19 @@
 '''
-Created on 28 Jan 2012
+Created on 7 Feb 2012
 
 @author: moz
 '''
 import unittest
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Configuration.SkemaPackConfig import SkemaPackConfig
-from Export.ExportIcs import ExportIcs
 from Import.ImportFile import ImportFile
+#from Export.ExportFile import ExportFile
+from Convert.ConvertToWeeksum import ConvertToWeeksum
+from testpackage.Utilities.TestdataSupport.WeeksumData import * 
 
-ImportFileWorkDir = 'ExportIcs'
-ImportFileCfgFilename = 'ExportIcs.cfg'
+ImportFileWorkDir = 'ImportFile'
+ImportFileCfgFilename = 'ImportFile.cfg'
 
-IcsFilename = 'ExportIcsResult.ics'
-IcsKnownResultFile = 'ExportIcsKnownResult.ics'
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -31,14 +31,11 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
-
-    def testKnownEventExport(self):
-        ''' ExportIcs : exporting known entries '''
+    def testSimpleConvert(self):
+        ''' ConvertToWeeksum : basic init '''
         events, config = ImportFile( self.myConfig ) #@UnusedVariable
-        ExportIcs( events, self.myConfig )
-        
-        ret = os.system( 'diff %s %s ' % (IcsFilename, IcsKnownResultFile ))
-        self.assertEqual( ret, 0 )
+        Sum = ConvertToWeeksum( events, self.myConfig )
+        self.assertEqual(Sum, ImportFileTestDataSum )
         pass
 
 

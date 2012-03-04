@@ -8,8 +8,6 @@ from Import.ImportSdeSkema import ImportSdeSkema
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
-from Datatypes.EventFunctions import WriteEvents, ReadEvent, MakeEventString
-
 
 CfgFilename = 'BasicSdeSkemaImportFromFile.cfg'
 EventsInFile = 38
@@ -36,7 +34,7 @@ class Test(unittest.TestCase):
         ''' ImportSdeSkema : Test reading from file (as opposed to the net)'''
         events =  ImportSdeSkema( self.myConfig, ConfigSet = CfgSet )
         # WriteEvents(events, self.myConfig, CfgSet )
-        KnownResult = ImportFile( self.myConfig )
+        KnownResult, config = ImportFile( self.myConfig ) #@UnusedVariable
         
         self.assertEqual(len(events), len(KnownResult) )
         

@@ -7,7 +7,7 @@ Created on 28 Jan 2012
 @author: moz
 '''
 
-from Datatypes.EventFunctions import MakeEventString
+from Datatypes.EventFunctions import MakeEventString, MakeWeeksumString
 #from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
 import sys
 
@@ -30,9 +30,22 @@ def ExportFile( Events, config = None, ConfigSet = "ExportFile" ):
         else:
             DateFormat = config.get(ConfigSet, "OutputDateformat")
 
-    # looping over events and outputting
-    for event in Events:
-        fp.write(MakeEventString(event, DateFormat ) )
+    # outputting config first
+    if config:
+        fp.write( str(config) ) 
+        
+
+    try: # is this an event?
+        # looping over events and outputting
+        for event in Events:
+            fp.write(MakeEventString(event, DateFormat ) )
+    except KeyError:
+        # is this a weeksum?
+        for event in Events:
+            fp.write(MakeWeeksumString(event, DateFormat ) )
+    
+
+
 
 
 #if __name__ == '__main__':
