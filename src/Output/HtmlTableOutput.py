@@ -101,6 +101,9 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
 
     # append row with clumn sums    
     if ColSums:
+        
+        SumRowSum = 0
+        
         HtmlTable += "\t<tr>"        
         for entry in Header: #@UnusedVariable
             HtmlTable += "<td></td>"
@@ -110,6 +113,14 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
                 HtmlTable += "<td>.</td>"                
             else:
                 HtmlTable += "<td>%d</td>"%ColumnSums[weekno]
+            
+            # calculating the sum of columns also
+            SumRowSum += ColumnSums[weekno]
+            
+        if RowSums:
+            HtmlTable += "<td>%d</td>"%SumRowSum
+            
+        
         HtmlTable += "</tr>\n"
 
     # table end    

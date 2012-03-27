@@ -18,6 +18,7 @@ ResultHtml = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 </table>
 '''
+
 ResultHtmlWithRowSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td><td>Sum</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td><td>6</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td><td>8</td></tr>
@@ -28,6 +29,13 @@ ResultHtmlWithColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 \t<tr><td></td><td></td><td>9</td><td>5</td></tr>
+</table>
+'''
+
+ResultHtmlWithRowAndColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td><td>Sum</td></tr>
+\t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td><td>6</td></tr>
+\t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td><td>8</td></tr>
+\t<tr><td></td><td></td><td>9</td><td>5</td><td>14</td></tr>
 </table>
 '''
 
@@ -67,7 +75,12 @@ class Test(unittest.TestCase):
         self.assertEqual( ResultHtmlWithColSums, Html )
         pass
     
-
+    def testTableWithRowAndColSums(self):
+        ''' HtmlTableOutput : table with both row and column sums '''
+        Html = HtmlTableOutput( Weeksums, ColSums = True, RowSums = True )
+        self.assertEqual( ResultHtmlWithRowAndColSums, Html )
+        pass
+  
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
