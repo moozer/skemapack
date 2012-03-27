@@ -5,7 +5,7 @@ Created on 10 Feb 2012
 '''
 from datetime import date, timedelta
 
-def HtmlTableOutput( Weeksums ):
+def HtmlTableOutput( Weeksums, RowSums = False ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
         
     WeekRange = None
@@ -48,6 +48,10 @@ def HtmlTableOutput( Weeksums ):
         HtmlTable += "<td>%d-%d</td>"%(Year, Week)        
         CurWeek += timedelta(7) # add 7 days
     
+    # Rowsums
+    if RowSums:
+        HtmlTable += "<td>Sum</td>"
+    
     HtmlTable += "</tr>\n"
 
     # output content
@@ -55,8 +59,9 @@ def HtmlTableOutput( Weeksums ):
         CurEntry = Data[Entry]
         
         # new row
+        CurRowSum = 0
         HtmlTable += "\t<tr>"
-
+        
         # output class and subject
         for text in Header:
             HtmlTable += "<td>%s</td>"%CurEntry[0][text]
@@ -65,7 +70,7 @@ def HtmlTableOutput( Weeksums ):
         CurWeek = WeekRange[0]
         EntryCounter = 0
         while CurWeek <= WeekRange[1]:
-            # are we looking at a week af the last of current lessons?
+            # are we looking at a week of the last of current lessons?
             if EntryCounter >= len(CurEntry):
                 HtmlTable += "<td>.</td>"
                 CurWeek += timedelta(7) # add 7 days
@@ -75,12 +80,15 @@ def HtmlTableOutput( Weeksums ):
             if      (CurEntry[EntryCounter]['Year'] == Year) \
                 and (CurEntry[EntryCounter]['Week'] == Week):
                 HtmlTable += "<td>%d</td>"%CurEntry[EntryCounter]['LessonCount']
+                CurRowSum += CurEntry[EntryCounter]['LessonCount']
                 EntryCounter += 1
             else:
                 HtmlTable += "<td>.</td>"
             CurWeek += timedelta(7) # add 7 days
         
         # end row
+        if RowSums:
+            HtmlTable += "<td>%d</td>"%CurRowSum
         HtmlTable += "</tr>\n"
     
     # table end    
