@@ -24,6 +24,12 @@ ResultHtmlWithRowSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011
 </table>
 '''
 
+ResultHtmlWithColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td></tr>
+\t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
+\t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
+\t<tr><td></td><td></td><td>9</td><td>5</td></tr>
+</table>
+'''
 
 
 IcsFilename = 'ExportIcsResult.ics'
@@ -49,16 +55,21 @@ class Test(unittest.TestCase):
         self.assertEqual( ResultHtml, Html )
         pass
     
-    def testTableWithRowSumst(self):
-        ''' HtmlTableOutput : Row sums '''
+    def testTableWithRowSums(self):
+        ''' HtmlTableOutput : table with Row sums '''
         Html = HtmlTableOutput( Weeksums, RowSums = True )
         self.assertEqual( ResultHtmlWithRowSums, Html )
         pass
     
+    def testTableWithColSums(self):
+        ''' HtmlTableOutput : table with Column sums '''
+        Html = HtmlTableOutput( Weeksums, ColSums = True )
+        self.assertEqual( ResultHtmlWithColSums, Html )
+        pass
     
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
-    
+  
     

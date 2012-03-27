@@ -5,7 +5,7 @@ Created on 10 Feb 2012
 '''
 from datetime import date, timedelta
 
-def HtmlTableOutput( Weeksums, RowSums = False ):
+def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
         
     WeekRange = None
@@ -42,13 +42,15 @@ def HtmlTableOutput( Weeksums, RowSums = False ):
         HtmlTable += "<td>%s</td>"%text
 
     # output weeks in header row.
+    ColumnSums = {}
     CurWeek = WeekRange[0]
     while CurWeek <= WeekRange[1]:
         Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
-        HtmlTable += "<td>%d-%d</td>"%(Year, Week)        
+        HtmlTable += "<td>%d-%d</td>"%(Year, Week)
+        ColumnSums[Week] = 0
         CurWeek += timedelta(7) # add 7 days
     
-    # Rowsums
+    # Row sums, if applicable
     if RowSums:
         HtmlTable += "<td>Sum</td>"
     
@@ -80,7 +82,13 @@ def HtmlTableOutput( Weeksums, RowSums = False ):
             if      (CurEntry[EntryCounter]['Year'] == Year) \
                 and (CurEntry[EntryCounter]['Week'] == Week):
                 HtmlTable += "<td>%d</td>"%CurEntry[EntryCounter]['LessonCount']
+                
+                # updating row sums
                 CurRowSum += CurEntry[EntryCounter]['LessonCount']
+
+                # updating column sums
+                ColumnSums[Week] += CurEntry[EntryCounter]['LessonCount']
+
                 EntryCounter += 1
             else:
                 HtmlTable += "<td>.</td>"
@@ -90,7 +98,20 @@ def HtmlTableOutput( Weeksums, RowSums = False ):
         if RowSums:
             HtmlTable += "<td>%d</td>"%CurRowSum
         HtmlTable += "</tr>\n"
-    
+
+    # append row with clumn sums    
+    if ColSums:
+        HtmlTable += "\t<tr>"        
+        for entry in Header: #@UnusedVariable
+            HtmlTable += "<td></td>"
+            
+        for weekno in ColumnSums.keys():
+            if ColumnSums[weekno] == 0:
+                HtmlTable += "<td>.</td>"                
+            else:
+                HtmlTable += "<td>%d</td>"%ColumnSums[weekno]
+        HtmlTable += "</tr>\n"
+
     # table end    
     HtmlTable += "</table>\n"
     
