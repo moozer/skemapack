@@ -3,10 +3,10 @@ Created on Mar 3, 2011
 
 @author: morten
 '''
-import unittest, os
+import unittest
 from Input.TfImporter.TfExtraCsvImport import TfExtraCsvImport
 from Datatypes.ActivityData import ActivityData
-from testpackage.Utilities.SupportStuff import *
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 
 Teacher1Initials = 'Teacher 7'
 TfExtraInputCsvFile = 'TfImporter/TF_extra_1.csv'
