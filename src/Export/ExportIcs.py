@@ -24,7 +24,7 @@ def ExportIcs( Events, config, ConfigSet = "ExportIcs" ):
 
     # save to file or stdout as specified in the config.
     outfile = config.get( ConfigSet, 'OutFile' )
-    sys.stderr.write( "ExportIcs output to file: %s\n" % ( outfile ,) )
+
     f = open( outfile, "wb" )
     f.write( io.GetIcsString() )
     f.close()
@@ -35,8 +35,6 @@ if __name__ == '__main__':
         cfgfile = open( sys.argv[1] )
     else:
         cfgfile = SkemaPackConfig_stdin_eal()
-
-    sys.stderr.write( "ExportIcs : config file is %s\n"%cfgfile.name)
 
     # 1) read config/parameter
     config = SkemaPackConfig( cfgfile )
