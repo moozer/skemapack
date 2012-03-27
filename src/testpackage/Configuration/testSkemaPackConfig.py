@@ -34,7 +34,6 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
     
-    #@unittest.skip("Skipped : Errors related to file locations")    
     def testLoadFromFile(self):
         ''' SkemaPackConfig : simple read '''
         self.config = SkemaPackConfig(open('config_test.cfg'))
@@ -75,6 +74,13 @@ class Test(unittest.TestCase):
         self.config = SkemaPackConfig(open('config_test.cfg'))
         configstr = str( self.config )
         self.assertEqual( configstr, ConfigStringResult )
+
+    def testTrueFalseConfig(self):
+        ''' SkemaPackConfig : simple read of true/false'''
+        self.config = SkemaPackConfig(open('TrueFalseTest.cfg'))
+        self.assertEquals(self.config.getboolean("TrueFalseTest", "ThisIsTrue"), True )
+        self.assertEquals(self.config.getboolean("TrueFalseTest", "ThisIsFalse"), False )
+
     
 
 if __name__ == "__main__":
