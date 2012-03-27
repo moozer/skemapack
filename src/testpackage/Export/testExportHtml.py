@@ -13,6 +13,7 @@ import filecmp
 ExportHtmlWorkDir = "ExportHtml"
 ExportHtmlCfgFile = "ExportHtml.cfg"
 ExportHtmlKnownResult = "KnownExportHtml.html"
+ExportHtmlWithSumsKnownResult = "KnownExportHtmlWithSums.html"
 ExportHtmlOutputfile = "ExportHtml.html"
 
 WeeksumData = [{'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
@@ -49,6 +50,12 @@ class Test(unittest.TestCase):
         ws, config = ImportFile( self.myConfig, "ImportFileSemester" ) #@UnusedVariable
         ExportHtml( ws, self.myConfig, "ExportHtmlSemester") 
         self.assertTrue( filecmp.cmp(ExportHtmlSemesterOutput, ExportHtmlSemesterKnownResult) )
+        
+    def testTableWithBothSums(self):
+        ExportHtml( WeeksumData, self.myConfig, ConfigSet = 'ExportHtmlWithSums' ) 
+        self.assertTrue( filecmp.cmp(ExportHtmlOutputfile, ExportHtmlWithSumsKnownResult) )
+        pass
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
