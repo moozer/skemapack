@@ -1,0 +1,26 @@
+Howto/usage/notes/whatever file
+
+Working:
+ImportSdeSkema MyConf.cfg | ExportToIcs
+import schedule from sde skema with config from MyConf.cfg and makes an ics from it.
+
+ImportSdeSkema MyConf.cfg | ConvertToWeekSums | ExportHtml
+import schedule from sde skema with config from MyConf.cfg,
+convert from event to weekly sums
+and output as HTML
+
+TODO: 
+ImportTf TF2012A.cfg | ExportHtml
+should take the tf and output it as html as defined in the cfg file
+
+ImportTf TF2012A.cfg > TF2012A.txt
+ImportCsv TF2012A_MON.cfg > TF2012A_mon.txt
+ImportCsv TF2012A_common.cfg > TF2012A_vacation.txt
+ImportFile Combined.cfg | ExportHtml
+should take TF from file defined in TF2012A.cfg, 
+should take weekly data from file defined in TF2012A_MON.cfg, 
+should take weekly data from file defined in TF2012A_common.cfg, 
+and in Combined.cfg is the ordered list of the 3 txt files, 
+which are to be merged
+and converted to HTML
+

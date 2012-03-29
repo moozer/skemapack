@@ -7,6 +7,9 @@ import unittest
 from Configuration.SkemaPackConfig import SkemaPackConfig
 import os
 import exceptions
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
+
+ConfigWorkDir = 'Configuration'
 
 ConfigStringResult = '''# [SkemaScraper]
 # teacherid = 5421
@@ -18,8 +21,19 @@ ConfigStringResult = '''# [SkemaScraper]
 '''
 
 class Test(unittest.TestCase):
+    def setUp(self):
+        CloneTestData() 
+        self._StartDir = ChDirToSrc()
+        os.chdir(TempDataDir)
+        os.chdir( ConfigWorkDir)
+        pass
 
-    @unittest.skip("Skipped : Errors related to file locations")    
+    def tearDown(self):
+        ''' Removes temporary data '''
+        RemoveTestData()        
+        os.chdir(self._StartDir )
+        pass
+    
     def testLoadFromFile(self):
         ''' SkemaPackConfig : simple read '''
         self.config = SkemaPackConfig(open('config_test.cfg'))
@@ -36,7 +50,7 @@ class Test(unittest.TestCase):
         self.assertEquals(self.config.get("SkemaScraper", "LastWeek"), "52", "LastWeek is not correct")
         self.assertEquals(self.config.get("SkemaScraper", "Year"), "2011", "Year is not correct")
     
-    @unittest.skip("Skipped to have all unittests working")    
+    @unittest.skip("(MON) How is this working?")    
     def testLoadFromCurrent(self):
         os.system("cp config_test.cfg skemapack.cfg")
         self.config = SkemaPackConfig()
@@ -46,7 +60,7 @@ class Test(unittest.TestCase):
         self.assertEquals(self.config.get("SkemaScraper", "Year"), "2011", "Year is not correct")
         os.system("rm skemapack.cfg")
         
-    @unittest.skip("Skipped to have all unittests working")    
+    @unittest.skip("(MON) How is this working?")    
     def testLoadNoFile(self):
         HomeFileName = os.path.expanduser("~/.skemapack/skemapack.cfg")
         os.system("mv %s %s.old"%(HomeFileName,HomeFileName))
@@ -54,12 +68,19 @@ class Test(unittest.TestCase):
         self.assertRaises( exceptions.ValueError, SkemaPackConfig, "" )
         os.system("mv %s.old %s"%(HomeFileName,HomeFileName))
         
-    @unittest.skip("Skipped : Errors related to file locations")    
+    #@unittest.skip("Skipped : Errors related to file locations")    
     def testPrintConfig(self):
         ''' SkemaPackConfig : check output string '''
         self.config = SkemaPackConfig(open('config_test.cfg'))
         configstr = str( self.config )
         self.assertEqual( configstr, ConfigStringResult )
+
+    def testTrueFalseConfig(self):
+        ''' SkemaPackConfig : simple read of true/false'''
+        self.config = SkemaPackConfig(open('TrueFalseTest.cfg'))
+        self.assertEquals(self.config.getboolean("TrueFalseTest", "ThisIsTrue"), True )
+        self.assertEquals(self.config.getboolean("TrueFalseTest", "ThisIsFalse"), False )
+
     
 
 if __name__ == "__main__":

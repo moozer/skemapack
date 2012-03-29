@@ -3,7 +3,7 @@ Created on May 8, 2011
 
 @author: morten
 '''
-import unittest, os
+import unittest
 from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 
 from Datatypes.ActivityDb import ActivityDb

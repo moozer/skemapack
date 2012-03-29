@@ -5,7 +5,7 @@ Created on 10 Feb 2012
 '''
 from datetime import date, timedelta
 
-def HtmlTableOutput( Weeksums ):
+def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
         
     WeekRange = None
@@ -42,11 +42,17 @@ def HtmlTableOutput( Weeksums ):
         HtmlTable += "<td>%s</td>"%text
 
     # output weeks in header row.
+    ColumnSums = {}
     CurWeek = WeekRange[0]
     while CurWeek <= WeekRange[1]:
         Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
-        HtmlTable += "<td>%d-%d</td>"%(Year, Week)        
+        HtmlTable += "<td>%d-%d</td>"%(Year, Week)
+        ColumnSums[Week] = 0
         CurWeek += timedelta(7) # add 7 days
+    
+    # Row sums, if applicable
+    if RowSums:
+        HtmlTable += "<td>Sum</td>"
     
     HtmlTable += "</tr>\n"
 
@@ -55,8 +61,9 @@ def HtmlTableOutput( Weeksums ):
         CurEntry = Data[Entry]
         
         # new row
+        CurRowSum = 0
         HtmlTable += "\t<tr>"
-
+        
         # output class and subject
         for text in Header:
             HtmlTable += "<td>%s</td>"%CurEntry[0][text]
@@ -65,7 +72,7 @@ def HtmlTableOutput( Weeksums ):
         CurWeek = WeekRange[0]
         EntryCounter = 0
         while CurWeek <= WeekRange[1]:
-            # are we looking at a week af the last of current lessons?
+            # are we looking at a week of the last of current lessons?
             if EntryCounter >= len(CurEntry):
                 HtmlTable += "<td>.</td>"
                 CurWeek += timedelta(7) # add 7 days
@@ -75,14 +82,47 @@ def HtmlTableOutput( Weeksums ):
             if      (CurEntry[EntryCounter]['Year'] == Year) \
                 and (CurEntry[EntryCounter]['Week'] == Week):
                 HtmlTable += "<td>%d</td>"%CurEntry[EntryCounter]['LessonCount']
+                
+                # updating row sums
+                CurRowSum += CurEntry[EntryCounter]['LessonCount']
+
+                # updating column sums
+                ColumnSums[Week] += CurEntry[EntryCounter]['LessonCount']
+
                 EntryCounter += 1
             else:
                 HtmlTable += "<td>.</td>"
             CurWeek += timedelta(7) # add 7 days
         
         # end row
+        if RowSums:
+            HtmlTable += "<td>%d</td>"%CurRowSum
         HtmlTable += "</tr>\n"
-    
+
+    # append row with clumn sums    
+    if ColSums:
+        
+        SumRowSum = 0
+        
+        HtmlTable += "\t<tr>"        
+        for entry in Header: #@UnusedVariable
+            HtmlTable += "<td></td>"
+            
+        for weekno in ColumnSums.keys():
+            if ColumnSums[weekno] == 0:
+                HtmlTable += "<td>.</td>"                
+            else:
+                HtmlTable += "<td>%d</td>"%ColumnSums[weekno]
+            
+            # calculating the sum of columns also
+            SumRowSum += ColumnSums[weekno]
+            
+        if RowSums:
+            HtmlTable += "<td>%d</td>"%SumRowSum
+            
+        
+        HtmlTable += "</tr>\n"
+
     # table end    
     HtmlTable += "</table>\n"
     
