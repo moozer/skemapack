@@ -42,8 +42,6 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
     else:
         DateFormat = config.get(ConfigSet, "InputDateformat")
 
-    sys.stderr.write( "ImportFile : using %s for input\n"%FileToUse.name)
-
     try:
         # read events
         Events = []
