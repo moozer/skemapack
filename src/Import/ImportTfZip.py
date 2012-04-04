@@ -10,6 +10,7 @@ from Datatypes.EventFunctions import ReadString
 from Configuration.SkemaPackConfig import SkemaPackConfig, SkemaPackConfig_stdin_eal
 import sys
 from Export.ExportFile import ExportFile
+from zipfile import ZipFile
 
 
 def ImportTfZip( config = None, ConfigSet = "ImportFile" ):
@@ -20,5 +21,21 @@ def ImportTfZip( config = None, ConfigSet = "ImportFile" ):
     @raise KeyError: If supplied ConfigSet is not in config
     @return: (events, config) or (weeksums, config) 
     '''  
+
+    # fetch config values
+    ZipDataDir = config.get( ConfigSet, "ZipDataDir" )
+    ZipFilename = config.get( ConfigSet, "ZipFile" )
+
+    ZipFile( ZipFilename ).extractall( ZipDataDir )
+    
+#    mbers, pwd)
+#    TfZip = zipfile.ZipFile(zipfile_new)
+#    print "files in archive"
+#    files = TfZip.namelist()
+#    print files
+#    TfZip.extractall(Directories['Raw'])
+#    return files
+
+    
     return [], config
 

@@ -13,6 +13,12 @@ from Import.ImportTfZip import ImportTfZip
 ImportTfZipWorkDir = "ImportTfZip"
 ImportTfZipCfgFilename = "ImportTfZip.cfg"
 
+FilesInZip = [ "Kopi af IT budget 2012.xlsx", "TFopsum_2012_ver0_0HHAL.xls",
+              "Timefag_E2012_ver0_0HHAL.xls", "Timefag_F2012_ver1_0hhal.xls",
+              "Timefag_F2013_ver0_0hhal.xls" ]
+
+ZipDataDir = "ziptemp/"
+
 class Test(unittest.TestCase):
 
     def setUp(self):
@@ -33,6 +39,10 @@ class Test(unittest.TestCase):
     def testBasicUnzip(self):
         ''' ImportTfZip : simple unzip a check content '''
         events, config = ImportTfZip( self.myConfig, "ImportTfZip" )
+        
+        for FileName in FilesInZip:
+            self.assertTrue( os.path.exists( ZipDataDir + FileName), "%s not found"%FileName )
+        
         pass
 
 
