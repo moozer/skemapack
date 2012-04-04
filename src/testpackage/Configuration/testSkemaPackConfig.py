@@ -81,6 +81,17 @@ class Test(unittest.TestCase):
         self.assertEquals(self.config.getboolean("TrueFalseTest", "ThisIsTrue"), True )
         self.assertEquals(self.config.getboolean("TrueFalseTest", "ThisIsFalse"), False )
 
+    def testSetGet(self):
+        ''' SkemaPackConfig : simple set and read of value'''
+        self.config = SkemaPackConfig(open('config_test.cfg'))
+        
+        SectionToUse =  "SkemaScraper"
+        OptionToUse = "MyVal"
+        ValueToUse = "Test123"
+        self.config.set( SectionToUse, OptionToUse, ValueToUse )
+         
+        self.assertEquals(self.config.get(SectionToUse, OptionToUse), ValueToUse )
+
     
 
 if __name__ == "__main__":

@@ -60,6 +60,7 @@ class SkemaPackConfig(object):
         self._ConfigParser.readfp(ConfigFilename)
         
         self.get = self._ConfigParser.get
+        self.set = self._ConfigParser.set
         self.getboolean = self._ConfigParser.getboolean        
         self.has_option = self._ConfigParser.has_option
         self.has_section = self._ConfigParser.has_section
