@@ -33,7 +33,7 @@ class Test(unittest.TestCase):
 
     def tearDown(self):
         ''' Removes temporary data '''
-        RemoveTestData()        
+        #RemoveTestData()        
         os.chdir(self._StartDir )
         pass
 
