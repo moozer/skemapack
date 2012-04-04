@@ -18,6 +18,10 @@ ImportTfZipCfgFilename = "ImportTf.cfg"
 #              "Timefag_F2013_ver0_0hhal.xls" ]
 #
 #ZipDataDir = "ziptemp/"
+TfKnownResultLength = 321
+TfKnownResultFirstEntry = {'Week': 35, 'Class': u'1. Sem A Elektronik', 
+                           'LessonCount': 9, 'Year': 2012, 
+                           'Teacher': u'Teacher1', 'Subject': u'Subject A1'} 
 
 class Test(unittest.TestCase):
 
@@ -36,10 +40,11 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
-    def testBasicUnzip(self):
-        ''' ImportTfZip : simple TF csv import '''
+    def testBasicConstruction(self):
+        ''' ImportTf : simple TF construction test '''
         events, config = ImportTf( self.myConfig )
-                
+        self.assertEqual(len(events), TfKnownResultLength )
+        self.assertEqual( events[0],TfKnownResultFirstEntry  )
         pass
 
 

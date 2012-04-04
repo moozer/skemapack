@@ -9,8 +9,9 @@ Created on 28 Jan 2012
 from Configuration.SkemaPackConfig import SkemaPackConfig
 import sys
 from Export.ExportFile import ExportFile
-from zipfile import ZipFile
 from Configuration.SkemaPackConfig import SkemaPackConfig_stdin
+from Input.TfImporter.TfCsvImport import TfCsvImport
+from Datatypes.EventFunctions import AdToWeeksum
 
 
 def ImportTf( config = None, ConfigSet = "ImportTf" ):
@@ -21,20 +22,17 @@ def ImportTf( config = None, ConfigSet = "ImportTf" ):
     @raise KeyError: If supplied ConfigSet is not in config
     @return: (weeksums, config) 
     '''  
+    TfFilename = config.get( ConfigSet, "Infile" )
 
-#    # fetch config values
-#    ZipDataDir = config.get( ConfigSet, "ZipDataDir" )
-#    ZipFilename = config.get( ConfigSet, "ZipFile" )
-#
-#    zf = ZipFile( ZipFilename )
-#    zf.extractall( ZipDataDir )
-#
-#    ImportTfSection = "ImportTf" 
-#    for DataFile in zf.namelist():    
-#        config.set( ImportTfSection, "Infile", DataFile )
-#        print "%s"%config
-#    
-    return [], config
+    events = []
+    tfi = TfCsvImport(TfFilename )
+    tfi.EnableImportAll()
+    for Ad in tfi:
+        NewEvents = AdToWeeksum( Ad )
+        for e in NewEvents:
+            events.append( e )
+    
+    return events, config
 
 
 if __name__ == '__main__':
