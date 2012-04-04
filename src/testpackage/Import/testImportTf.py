@@ -42,7 +42,7 @@ class Test(unittest.TestCase):
 
     def testBasicConstruction(self):
         ''' ImportTf : simple TF construction test '''
-        events, config = ImportTf( self.myConfig )
+        events, config = ImportTf( self.myConfig ) #@UnusedVariable
         self.assertEqual(len(events), TfKnownResultLength )
         self.assertEqual( events[0],TfKnownResultFirstEntry  )
         pass
