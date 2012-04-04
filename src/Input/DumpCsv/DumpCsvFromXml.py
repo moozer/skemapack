@@ -2,6 +2,11 @@
 Created on Mar 29, 2012
 
 @author: flindt
+
+
+Starting, stopping, etc.
+http://www.linuxjournal.com/content/starting-stopping-and-connecting-openoffice-python
+
 '''
 import os,time
 import getopt,sys
@@ -12,33 +17,47 @@ import unohelper
 from com.sun.star.beans import PropertyValue
 
 
-def DumpNamedSheet(XmlFileName, CsvFileName, SheetName, Separator):
-    
-    
+
+def LaunchCalcWithFile(XmlFileName):
+    ''' Launches libreoofice with specified file
+    Only works with files detected to be opened by calc (?)
+    Breaks badly if libreoofice is running on port 2002 already
+    @return: (model, desktop) - Model object (must be model.dispose()'d after use, and use desktop.terminate()
+    '''
+        
     Cmd = "libreoffice"
-    Cmd = '%s %s --headless --norestore "--accept=socket,host=localhost,port=2002;urp;"'%(Cmd, "\"%s\""%XmlFileName)
-       
-    print "issuing: %s"%Cmd
+    Cmd = '%s %s --headless --norestore "--accept=socket,host=localhost,port=2002;urp;"' % (Cmd, "\"%s\"" % XmlFileName)
+
+    print "issuing: %s" % Cmd
     # os.system( Cmd ) wont work, since it wait for the process to end...
-    #os.popen(Cmd)
+    os.popen(Cmd)
     time.sleep(0.5)
     
     # get the uno component context from the PyUNO runtime
     localContext = uno.getComponentContext()
-    
+
     # create the UnoUrlResolver
-    resolver = localContext.ServiceManager.createInstanceWithContext(
-                    "com.sun.star.bridge.UnoUrlResolver", localContext )
-    
+    resolver = localContext.ServiceManager.createInstanceWithContext("com.sun.star.bridge.UnoUrlResolver", localContext)
+
     # connect to the running office
-    ctx = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext" )
+    ctx = resolver.resolve("uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext")
     smgr = ctx.ServiceManager
-    
+
     # get the central desktop object
-    desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",ctx)
-    
+    desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
+
     # access the current calc document
     model = desktop.getCurrentComponent()
+    
+    return model, desktop
+
+def ShutdownCalc( desktop ):
+    desktop.terminate()
+
+def DumpNamedSheet(XmlFileName, CsvFileName, SheetName, Separator):
+    
+    
+    model, desktop = LaunchCalcWithFile(XmlFileName)
     
     
     sheet = model.Sheets.getByName(SheetName)
@@ -58,7 +77,7 @@ def DumpNamedSheet(XmlFileName, CsvFileName, SheetName, Separator):
     
     time.sleep(1)
     model.dispose()
-
+    ShutdownCalc( desktop )
     
     
     pass

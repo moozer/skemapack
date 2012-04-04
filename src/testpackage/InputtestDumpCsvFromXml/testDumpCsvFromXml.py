@@ -37,6 +37,12 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
+    def testLaunchCalc(self):
+        model, desktop = DumpCsvFromXml.LaunchCalcWithFile( "test123.xls")
+        model.dispose()
+        DumpCsvFromXml.ShutdownCalc( desktop )
+        pass
+
     def testNoInput(self):
         XmlFileName = "TF_skema.ods"
         CsvFileName = "TF_skema_test.csv"
