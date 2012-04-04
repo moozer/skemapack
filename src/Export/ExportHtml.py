@@ -32,8 +32,7 @@ Footer = '''    </body>
 def ExportHtml( Weeksums, config, ConfigSet = "ExportHtml"):
     # open output file.
     Outfile = config.get( ConfigSet, 'OutFile' )
-    sys.stderr.write( "ExportHtml : output file is %s\n"%Outfile )
-
+    
     f = open(Outfile, "w")
     f.write( Header )
 
@@ -44,8 +43,6 @@ def ExportHtml( Weeksums, config, ConfigSet = "ExportHtml"):
     IncludeColumnSums = config.getboolean( ConfigSet, 'ColumnSums' )
     
     # output all - filter elsewhere
-    sys.stderr.write(  "Processing data and writing HTML using all entries\n" )
-    
     Html = HtmlTableOutput( Weeksums, RowSums = IncludeRowSums, ColSums = IncludeColumnSums )
 
     # save to html
