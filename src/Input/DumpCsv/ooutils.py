@@ -6,6 +6,13 @@
 #   Licensed under the GNU LGPL v2.1 - or any later version.
 #   http://www.gnu.org/licenses/lgpl-2.1.html
 #
+# From:
+#   http://www.linuxjournal.com/content/starting-stopping-and-connecting-openoffice-python
+#
+# MON: 
+#   adapted paths to standard debian/ubuntu and libreoffice
+#   updated parameters
+
 
 import sys
 import os
@@ -14,23 +21,9 @@ import atexit
 
 
 OPENOFFICE_PORT = 8100
-
-# Find OpenOffice.
-_oopaths=(
-        ('/usr/lib64/ooo-2.0/program',   '/usr/lib64/ooo-2.0/program'),
-        ('/opt/openoffice.org3/program', '/opt/openoffice.org/basis3.0/program'),
-     )
-
-for p in _oopaths:
-    if os.path.exists(p[0]):
-        OPENOFFICE_PATH    = p[0]
-        OPENOFFICE_BIN     = os.path.join(OPENOFFICE_PATH, 'soffice')
-        OPENOFFICE_LIBPATH = p[1]
-
-        # Add to path so we can find uno.
-        if sys.path.count(OPENOFFICE_LIBPATH) == 0:
-            sys.path.insert(0, OPENOFFICE_LIBPATH)
-        break
+OPENOFFICE_PATH    = "/usr/bin"
+OPENOFFICE_BIN     = os.path.join(OPENOFFICE_PATH, 'libreoffice')
+OPENOFFICE_LIBPATH = ""
 
 
 import uno
@@ -96,11 +89,11 @@ class OORunner:
         Start a headless instance of OpenOffice.
         """
         args = [OPENOFFICE_BIN,
-                '-accept=socket,host=localhost,port=%d;urp;StarOffice.ServiceManager' % self.port,
-                '-norestore',
-                '-nofirststartwizard',
-                '-nologo',
-                '-headless',
+                '--accept=socket,host=localhost,port=%d;urp;StarOffice.ServiceManager' % self.port,
+                '--norestore',
+                '--nofirststartwizard',
+                '--nologo',
+                '--headless',
                 ]
         env  = {'PATH'       : '/bin:/usr/bin:%s' % OPENOFFICE_PATH,
                 'PYTHONPATH' : OPENOFFICE_LIBPATH,

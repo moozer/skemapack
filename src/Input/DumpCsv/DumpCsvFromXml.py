@@ -5,7 +5,8 @@ Created on Mar 29, 2012
 
 
 Starting, stopping, etc.
-http://www.linuxjournal.com/content/starting-stopping-and-connecting-openoffice-python
+  http://www.linuxjournal.com/content/starting-stopping-and-connecting-openoffice-python
+  http://www.linuxjournal.com/content/convert-spreadsheets-csv-files-python-and-pyuno
 
 '''
 import os,time
@@ -15,6 +16,7 @@ import uno
 import unohelper
 
 from com.sun.star.beans import PropertyValue
+from Input.DumpCsv.ssconverter import SSConverter
 
 
 
@@ -82,4 +84,7 @@ def DumpNamedSheet(XmlFileName, CsvFileName, SheetName, Separator):
     
     pass
 
-
+def ConvertToCsv( XmlFileName, CsvFileName, SheetName, Separator ):
+    converter = SSConverter()
+    
+    converter.convert( XmlFileName, CsvFileName )
