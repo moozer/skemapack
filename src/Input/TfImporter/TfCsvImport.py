@@ -13,7 +13,7 @@ class TfCsvImport():
     Import TF data from csv file 
     '''
 
-    def __init__( self, CsvInputFilename):
+    def __init__( self, CsvInputFilename, CsvDelimiter = "\t"):
         '''
         @param CsvInputFilename The file to retrieve data from.
         '''
@@ -27,7 +27,7 @@ class TfCsvImport():
         # constants
         self._NewClassKeywords = [u"ANTAL STUDERENDE:"]
         self._EndClassKeywords = [u"I ALT", u"I  ALT"]
-        self._CsvDelimiter = '\t'
+        self._CsvDelimiter = CsvDelimiter
         self._LinenoWithWeekinfo = 2
         
         self._InitSearchParams()

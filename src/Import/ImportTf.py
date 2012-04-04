@@ -12,6 +12,7 @@ from Export.ExportFile import ExportFile
 from Configuration.SkemaPackConfig import SkemaPackConfig_stdin
 from Input.TfImporter.TfCsvImport import TfCsvImport
 from Datatypes.EventFunctions import AdToWeeksum
+from Input.DumpCsv.DumpCsvFromXml import DumpNamedSheet
 
 
 def ImportTf( config = None, ConfigSet = "ImportTf" ):
@@ -22,10 +23,18 @@ def ImportTf( config = None, ConfigSet = "ImportTf" ):
     @raise KeyError: If supplied ConfigSet is not in config
     @return: (weeksums, config) 
     '''  
+    # filename from config
     TfFilename = config.get( ConfigSet, "Infile" )
+    CsvTempFilename = config.get( ConfigSet, "CsvFile" )
+    SheetName = config.get( ConfigSet, "Sheetname" )
+    Separator = config.get( ConfigSet, "CsvSeparator" )
 
+    # convert to csv
+    DumpNamedSheet( TfFilename, CsvTempFilename, SheetName, Separator)
+
+    # read csv file
     events = []
-    tfi = TfCsvImport(TfFilename )
+    tfi = TfCsvImport(CsvTempFilename, Separator )
     tfi.EnableImportAll()
     for Ad in tfi:
         NewEvents = AdToWeeksum( Ad )
