@@ -3,10 +3,10 @@
 Testing basic tf import
 @author: mon
 '''
-import unittest, os
+import unittest
 from Input.TfImporter.TfCsvImport import TfCsvImport
 from Datatypes.ActivityData import ActivityData
-from testpackage.Utilities.SupportStuff import *
+from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 
 
 # Test data

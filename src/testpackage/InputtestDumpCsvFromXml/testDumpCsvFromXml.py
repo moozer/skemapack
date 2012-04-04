@@ -64,6 +64,7 @@ class Test(unittest.TestCase):
         ConvertToCsv( XmlFileName, CsvFileName, SheetName, Seperator)
         
         #shutil.copy("TF_skema.csv", "TF_skema_test.csv")
+        # TODO: this test will never succeed since the page include a dynamic timestamnp...
         self.assertEqual( filecmp.cmp("TF_skema.csv", "TF_skema_test.csv", False), True)
         
         pass
