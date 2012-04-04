@@ -111,4 +111,23 @@ def MakeWeeksumString( Weeksum, DateFormat  ):
     WsStr += "\n" # adding final newline
     return WsStr
     
+# activity data conversion
+def AdToWeeksum( Ad ):
+    WsBase = { 
+             'Year':        0,
+             'Week':        0,
+             'LessonCount': 0,
+             'Class':       Ad.getClass(),
+             'Subject':     Ad.getCourse(),
+             'Teacher':     Ad.getTeacher()
+             }
+    WsList = []
+    
+    for WeekNo in Ad.getListOfWeeks():
+        print "this is ridiculous!!"
+        WsBase['Year'] = 2012
+        WsBase['Week'] = WeekNo
+        WsBase['LessonCount'] = Ad.getLessons(WeekNo)
+        WsList.append( WsBase )
+    return WsList
     
