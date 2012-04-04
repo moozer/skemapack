@@ -6,12 +6,11 @@ Created on 28 Jan 2012
 
 @author: moz
 '''
-from Datatypes.EventFunctions import ReadString
-from Configuration.SkemaPackConfig import SkemaPackConfig, SkemaPackConfig_stdin_eal
+from Configuration.SkemaPackConfig import SkemaPackConfig
 import sys
 from Export.ExportFile import ExportFile
 from zipfile import ZipFile
-from Configuration.SkemaPackConfig import SkemaPackConfig,SkemaPackConfig_stdin
+from Configuration.SkemaPackConfig import SkemaPackConfig_stdin
 
 
 def ImportTfZip( config = None, ConfigSet = "ImportFile" ):
