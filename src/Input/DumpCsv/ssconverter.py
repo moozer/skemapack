@@ -14,7 +14,7 @@
 # MON:
 #   Added filter options and a delimiter option
 #   Added sheetname as parameter
-#   Now issuing KeyError on bad Sheetname
+#   Now issuing ValueError on bad Sheetname
 
 import os
 import ooutils
@@ -22,7 +22,7 @@ import ooutils
 import uno
 from com.sun.star.task import ErrorCodeIOException
 from com.sun.star.container import NoSuchElementException
-
+from com.sun.star.lang import IllegalArgumentException
 
 class SSConverter:
     """
@@ -50,7 +50,11 @@ class SSConverter:
 
         inputUrl  = uno.systemPathToFileUrl(os.path.abspath(inputFile))
         outputUrl = uno.systemPathToFileUrl(os.path.abspath(outputFile))
-        document  = self.desktop.loadComponentFromURL(inputUrl, "_blank", 0, ooutils.oo_properties(Hidden=True))
+        
+        try:
+            document  = self.desktop.loadComponentFromURL(inputUrl, "_blank", 0, ooutils.oo_properties(Hidden=True))
+        except IllegalArgumentException, e:
+            raise ValueError( "Failed to open '%s': %s" % (inputFile, e.Message) )
 
         try:
             # Additional property option:
@@ -72,7 +76,7 @@ class SSConverter:
                                                                  FilterOptions="%d,34,76,1"%DelimiterInAscii))
 
         except NoSuchElementException:
-            raise KeyError( "No sheet named '%s' in file '%s'"%(SheetName, inputFile))
+            raise ValueError( "No sheet named '%s' in file '%s'"%(SheetName, inputFile))
         finally:
             document.close(True)
 
