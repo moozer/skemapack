@@ -12,7 +12,7 @@ from Export.ExportFile import ExportFile
 from Configuration.SkemaPackConfig import SkemaPackConfig_stdin
 from Input.TfImporter.TfCsvImport import TfCsvImport
 from Datatypes.EventFunctions import AdToWeeksum
-from Input.DumpCsv.DumpCsvFromXml import DumpNamedSheet
+from Input.DumpCsv.DumpCsvFromXml import ConvertToCsv
 
 
 def ImportTf( config = None, ConfigSet = "ImportTf" ):
@@ -27,10 +27,11 @@ def ImportTf( config = None, ConfigSet = "ImportTf" ):
     TfFilename = config.get( ConfigSet, "Infile" )
     CsvTempFilename = config.get( ConfigSet, "CsvFile" )
     SheetName = config.get( ConfigSet, "Sheetname" )
-    Separator = config.get( ConfigSet, "CsvSeparator" )
+    Separator = config.get( ConfigSet, "CsvSeparator" ).decode("string_escape")
+
 
     # convert to csv
-    DumpNamedSheet( TfFilename, CsvTempFilename, SheetName, Separator)
+    ConvertToCsv( TfFilename, CsvTempFilename, SheetName, Separator)
 
     # read csv file
     events = []

@@ -85,6 +85,9 @@ def DumpNamedSheet(XmlFileName, CsvFileName, SheetName, Separator):
     pass
 
 def ConvertToCsv( XmlFileName, CsvFileName, SheetName, Separator ):
+    '''
+    @param Separator: the delimiter, gets converted to the corresponding integer value
+    '''
     converter = SSConverter()
     
-    converter.convert( XmlFileName, CsvFileName )
+    converter.convert( XmlFileName, CsvFileName, SheetName, ord( Separator ) )
