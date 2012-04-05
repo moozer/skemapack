@@ -14,7 +14,7 @@
 # MON:
 #   Added filter options and a delimiter option
 #   Added sheetname as parameter
-#   Now issuing ValueError on bad Sheetname
+#   Now issuing ValueError on bad Sheetname and IOError on bad filename
 
 import os
 import ooutils
@@ -54,7 +54,7 @@ class SSConverter:
         try:
             document  = self.desktop.loadComponentFromURL(inputUrl, "_blank", 0, ooutils.oo_properties(Hidden=True))
         except IllegalArgumentException, e:
-            raise ValueError( "Failed to open '%s': %s" % (inputFile, e.Message) )
+            raise IOError( "Failed to open '%s': %s" % (inputFile, e.Message) )
 
         try:
             # Additional property option:
