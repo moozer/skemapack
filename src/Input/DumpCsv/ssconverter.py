@@ -13,13 +13,15 @@
 #
 # MON:
 #   Added filter options and a delimiter option
+#   Added sheetname as parameter
+#   Now issuing KeyError on bad Sheetname
 
 import os
 import ooutils
 
 import uno
 from com.sun.star.task import ErrorCodeIOException
-
+from com.sun.star.container import NoSuchElementException
 
 
 class SSConverter:
@@ -33,7 +35,7 @@ class SSConverter:
         self.oorunner = None
 
 
-    def convert(self, inputFile, outputFile, DelimiterInAscii = 9):
+    def convert(self, inputFile, outputFile, SheetName = None, DelimiterInAscii = 9):
         """
         Convert the input file (a spreadsheet) to a CSV file.
         @param DelimiterInAscii: the delimiter. Default value \t (Ascii: 9) 
@@ -61,8 +63,16 @@ class SSConverter:
             # For more information see:
             #   http://wiki.services.openoffice.org/wiki/Documentation/DevGuide/Spreadsheets/Filter_Options
             #
+
+            # change sheet is applicable
+            if SheetName:
+                sheet = document.Sheets.getByName(SheetName)
+                
             document.storeToURL(outputUrl, ooutils.oo_properties(FilterName="Text - txt - csv (StarCalc)",
                                                                  FilterOptions="%d,34,76,1"%DelimiterInAscii))
+
+        except NoSuchElementException:
+            raise KeyError( "No sheet named '%s' in file '%s'"%(SheetName, inputFile))
         finally:
             document.close(True)
 
