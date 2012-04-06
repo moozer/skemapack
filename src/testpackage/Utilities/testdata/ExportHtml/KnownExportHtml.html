@@ -6,12 +6,16 @@
         <!-- 
             table { border: solid 1px black; } 
             tr    { background: #ddd }
+            td.WeekHeader { -webkit-transform: rotate(270deg);
+                            -moz-transform: rotate(270deg);
+                            -o-transform: rotate(270deg);
+                            writing-mode: lr-tb; }
         --> 
         </style>
     </header>
     <body>
     <h2>Schedule showing all entries</h2><br /><table>
-	<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td></tr>
+	<tr><td>Class</td><td>Subject</td><td class="WeekHeader">2011-34</td><td class="WeekHeader">2011-35</td></tr>
 	<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
 	<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 </table>

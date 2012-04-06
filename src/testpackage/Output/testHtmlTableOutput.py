@@ -13,26 +13,26 @@ Weeksums = [{'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '1
              {'Week': 35, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
              {'Week': 35, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}]
 
-ResultHtml = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td></tr>
+ResultHtml = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 </table>
 '''
 
-ResultHtmlWithRowSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td><td>Sum</td></tr>
+ResultHtmlWithRowSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td><td>Sum</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td><td>6</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td><td>8</td></tr>
 </table>
 '''
 
-ResultHtmlWithColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td></tr>
+ResultHtmlWithColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 \t<tr><td></td><td></td><td>9</td><td>5</td></tr>
 </table>
 '''
 
-ResultHtmlWithRowAndColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td>2011-34</td><td>2011-35</td><td>Sum</td></tr>
+ResultHtmlWithRowAndColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td><td>Sum</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td><td>6</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td><td>8</td></tr>
 \t<tr><td></td><td></td><td>9</td><td>5</td><td>14</td></tr>

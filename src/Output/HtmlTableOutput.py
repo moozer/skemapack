@@ -46,7 +46,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
     CurWeek = WeekRange[0]
     while CurWeek <= WeekRange[1]:
         Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
-        HtmlTable += "<td>%d-%d</td>"%(Year, Week)
+        HtmlTable += "<td class=\"WeekHeader\">%d-%d</td>"%(Year, Week)
         ColumnSums[Week] = 0
         CurWeek += timedelta(7) # add 7 days
     

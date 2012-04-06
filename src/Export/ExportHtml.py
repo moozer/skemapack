@@ -20,6 +20,10 @@ Header = '''<html>
         <!-- 
             table { border: solid 1px black; } 
             tr    { background: #ddd }
+            td.WeekHeader { -webkit-transform: rotate(270deg);
+                            -moz-transform: rotate(270deg);
+                            -o-transform: rotate(270deg);
+                            writing-mode: lr-tb; }
         --> 
         </style>
     </header>
