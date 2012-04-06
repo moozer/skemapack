@@ -14,7 +14,7 @@ from Configuration.SkemaPackConfig import SkemaPackConfig_stdin
 from Import.ImportTf import ImportTf
 
 
-def ImportTfZip( config = None, ConfigSet = "ImportFile" ):
+def ImportTfZip( config = None, ConfigSet = "ImportTfZip" ):
     '''
     Imports events and config from file (or stdin)
     @param config: The config object to use. If None, then we try to use defaults or stdin

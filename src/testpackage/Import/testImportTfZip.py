@@ -8,6 +8,7 @@ from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Configuration.SkemaPackConfig import SkemaPackConfig
 
 from Import.ImportTfZip import ImportTfZip
+from Export.ExportFile import ExportFile
 
 
 ImportTfZipWorkDir = "ImportTfZip"
@@ -36,15 +37,20 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
+    @unittest.skip( "temp skipping - reenable me!" )
     def testBasicUnzip(self):
         ''' ImportTfZip : simple unzip a check content '''
-        events, config = ImportTfZip( self.myConfig, "ImportTfZip" )
+        events, config = ImportTfZip( self.myConfig, "ImportTfZip" ) #@UnusedVariable
         
         for FileName in FilesInZip:
             self.assertTrue( os.path.exists( ZipDataDir + FileName), "%s not found"%FileName )
         
-        print events
         pass
+
+    def testResultExportable(self):
+        ''' ImportTf : test if result is readable by ExportFile '''
+        events, config = ImportTfZip( self.myConfig )
+        ExportFile( events, config, "ImportTfZip"  )
 
 
 if __name__ == "__main__":
