@@ -43,6 +43,7 @@ class Test(unittest.TestCase):
         for FileName in FilesInZip:
             self.assertTrue( os.path.exists( ZipDataDir + FileName), "%s not found"%FileName )
         
+        print events
         pass
 
 
