@@ -124,7 +124,7 @@ def AdToWeeksum( Ad ):
     WsList = []
     
     for WeekNo in Ad.getListOfWeeks():
-        print "this is ridiculous!!"
+        sys.stderr.write( "Year is hardcoded to 2012\n" )
         WsBase['Year'] = 2012
         WsBase['Week'] = WeekNo
         WsBase['LessonCount'] = Ad.getLessons(WeekNo)
