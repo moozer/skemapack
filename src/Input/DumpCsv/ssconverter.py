@@ -52,7 +52,7 @@ class SSConverter:
         outputUrl = uno.systemPathToFileUrl(os.path.abspath(outputFile))
         
         try:
-            document  = self.desktop.loadComponentFromURL(inputUrl, "_blank", 0, ooutils.oo_properties(Hidden=True))
+            document  = self.desktop.loadComponentFromURL(inputUrl, "_blank", 0, ooutils.oo_properties(Hidden=False))
         except IllegalArgumentException, e:
             raise IOError( "Failed to open '%s': %s" % (inputFile, e.Message) )
 
@@ -69,8 +69,28 @@ class SSConverter:
             #
 
             # change sheet is applicable
+            controller = document.getCurrentController()
+            sheets     = document.getSheets()
+                
+            
             if SheetName:
-                sheet = document.Sheets.getByName(SheetName)
+#          1             controller = document.getCurrentController()
+#102             sheets     = document.getSheets()
+#103 
+#104             # If the output file name contains a %d or %s format specifier, convert all sheets.
+#105             # Use the sheet number if the format is %d, otherwise the sheet name.
+#106             dfmt = re.search(r'%[0-9]*d', outputFile)
+#107             sfmt = re.search(r'%s', outputFile)
+#108 
+#109             if dfmt  or  sfmt:
+#110                 i = 0
+#111                 while i < sheets.getCount():
+#112                     # Activate the sheet.
+#113                     sheet = sheets.getByIndex(i)
+#114                     controller.setActiveSheet(sheet)      
+                
+                sheet = sheets.getByName(SheetName)
+                controller.setActiveSheet(sheet) 
                 
             document.storeToURL(outputUrl, ooutils.oo_properties(FilterName="Text - txt - csv (StarCalc)",
                                                                  FilterOptions="%d,34,76,1"%DelimiterInAscii))

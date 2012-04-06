@@ -38,23 +38,25 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
-#    def testLaunchCalc(self):
-#        model, desktop = DumpCsvFromXml.LaunchCalcWithFile( "test123.xls")
-#        model.dispose()
-#        DumpCsvFromXml.ShutdownCalc( desktop )
-#        pass
-#
-#    def testNoInput(self):
-#        XmlFileName = "TF_skema.ods"
-#        CsvFileName = "TF_skema_test.csv"
-#        SheetName = "IT-Skema"
-#        Seperator = "\t"
-#        DumpCsvFromXml.DumpNamedSheet( XmlFileName, CsvFileName, SheetName, Seperator)
-#        
-#        #shutil.copy("TF_skema.csv", "TF_skema_test.csv")
-#        self.assertEqual( filecmp.cmp("TF_skema.csv", "TF_skema_test.csv", False), True)
-#        
-#        pass
+    @unittest.skip("fails and stalls unittesting")    
+    def testLaunchCalc(self):
+        model, desktop = DumpCsvFromXml.LaunchCalcWithFile( "test123.xls")
+        model.dispose()
+        DumpCsvFromXml.ShutdownCalc( desktop )
+        pass
+
+    @unittest.skip("fails and stalls unittesting")    
+    def testNoInput(self):
+        XmlFileName = "TF_skema.ods"
+        CsvFileName = "TF_skema_test.csv"
+        SheetName = "IT-Skema"
+        Seperator = "\t"
+        DumpCsvFromXml.DumpNamedSheet( XmlFileName, CsvFileName, SheetName, Seperator)
+        
+        #shutil.copy("TF_skema.csv", "TF_skema_test.csv")
+        self.assertEqual( filecmp.cmp("TF_skema.csv", "TF_skema_test.csv", False), True)
+        
+        pass
 
     def testConvertToCsv(self):
         XmlFileName = "TF_skema.ods"
@@ -77,6 +79,25 @@ class Test(unittest.TestCase):
         data2 = fh2.read(150)
         self.assertEqual( data1, data2)
 
+        pass
+
+    def testConvertToCsvWithMultipleSheets(self):
+        XmlFileName = "TF_skema_multiple_sheets.ods"
+        CsvFileName = "TF_skema_test_multiple.csv"
+        SheetName = "IT-skema"
+        Seperator = "\t"
+        ConvertToCsv( XmlFileName, CsvFileName, SheetName, Seperator)
+        
+        # open data files, skip the first 100 bytes and then read some more before comaping.     
+        fh1 = open("TF_skema.csv")
+        fh2 = open(CsvFileName)
+        
+        fh1.read(200)
+        fh2.read(200)
+        
+        data1 = fh1.read(150)
+        data2 = fh2.read(150)
+        self.assertEqual( data1, data2)
 
         pass
 
