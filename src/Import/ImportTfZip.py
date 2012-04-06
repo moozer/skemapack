@@ -35,7 +35,7 @@ def ImportTfZip( config = None, ConfigSet = "ImportFile" ):
     AllEvents = []
     for DataFile in zf.namelist():    
         config.set( ImportTfSection, "InFile", "%s/%s"%(ZipDataDir, DataFile) )
-        config.set( ImportTfSection, "CsvFile", "%s.%s.%s"%(DataFile,SheetName,u'.csv') )
+        config.set( ImportTfSection, "CsvFile", "%s/%s.%s.%s"%(ZipDataDir, DataFile,SheetName,u'csv') )
         try:
             events, config = ImportTf( config, ImportTfSection )
             AllEvents += events
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     ConfigSet = "ImportTfZip"
 
     # 3) import from skema
-    Events = ImportTfZip( config, ConfigSet )
+    Events, config = ImportTfZip( config, ConfigSet )
     
     # 4) output all events to stdout
     ExportFile( Events, config, ConfigSet )

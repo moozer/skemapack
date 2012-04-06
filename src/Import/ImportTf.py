@@ -58,8 +58,8 @@ if __name__ == '__main__':
     ConfigSet = "ImportTf"
 
     # 3) import from skema
-    Events = ImportTf( config, ConfigSet )
-    
+    Events, config = ImportTf( config, ConfigSet )
+
     # 4) output all events to stdout
     ExportFile( Events, config, ConfigSet )
     

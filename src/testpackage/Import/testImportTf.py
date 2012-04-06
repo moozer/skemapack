@@ -8,6 +8,7 @@ from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Configuration.SkemaPackConfig import SkemaPackConfig
 
 from Import.ImportTf import ImportTf
+from Export.ExportFile import ExportFile
 
 
 ImportTfZipWorkDir = "ImportTf"
@@ -46,6 +47,11 @@ class Test(unittest.TestCase):
         self.assertEqual(len(events), TfKnownResultLength )
         self.assertEqual( events[0],TfKnownResultFirstEntry  )
         pass
+
+    def testResultExportable(self):
+        ''' ImportTf : test if result is readable by ExportFile '''
+        events, config = ImportTf( self.myConfig )
+        ExportFile( events, config, "ImportTf"  )
 
 
 if __name__ == "__main__":
