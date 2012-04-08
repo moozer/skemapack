@@ -5,29 +5,53 @@ Created on 10 Feb 2012
 '''
 from datetime import date, timedelta
 
-def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
-    ''' No filtering or sorting is done. Data is dumped as supplied '''
-        
+
+def _CreateSumRow(RowSums, Header, ColumnSums):
+    SumRowSum = 0
+    HtmlTable = "\t<tr>"
+    for entry in Header: #@UnusedVariable
+        HtmlTable += "<td></td>"
+    
+    for weekno in ColumnSums.keys():
+        if ColumnSums[weekno] == 0:
+            HtmlTable += "<td>.</td>"
+        else:
+            HtmlTable += "<td>%d</td>" % ColumnSums[weekno]
+        # calculating the sum of columns also
+        SumRowSum += ColumnSums[weekno]
+    
+    if RowSums:
+        HtmlTable += "<td>%d</td>" % SumRowSum
+    HtmlTable += "</tr>\n"
+    
+    return HtmlTable
+
+
+def _PreprocessData(Weeksums):
     WeekRange = None
     Data = {}
-    for Week in Weeksums:
-        # get the range for week in data
+    for Week in Weeksums: # get the range for week in data
         # dec 31th is never week 1. jan 1st might be.
-        WeekDate = date( Week['Year']-1, 12, 31) + timedelta( 7 * Week['Week'] )
+        WeekDate = date(Week['Year'] - 1, 12, 31) + timedelta(7 * Week['Week'])
         if not WeekRange:
             WeekRange = [WeekDate, WeekDate]
-        
         if WeekDate > WeekRange[1]:
             WeekRange[1] = WeekDate
         if WeekDate < WeekRange[0]:
             WeekRange[0] = WeekDate
-            
         # process for same Class-Subject combo.
-        DataStr = "%s-%s"%(Week['Class'], Week['Subject'])
+        #DataStr = "%s-%s"%(Week['Class'], Week['Subject'])
+        DataStr = Week['Class'], Week['Subject']
         if not DataStr in Data.keys():
             Data[DataStr] = []
-            
         Data[DataStr].append(Week)
+    
+    return WeekRange, Data
+
+def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
+    ''' No filtering or sorting is done. Data is dumped as supplied '''
+        
+    WeekRange, Data = _PreprocessData(Weeksums)
 
     # output header line
     # TODO: Header = ("Class", "Teacher", "Course")
@@ -99,29 +123,9 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
             HtmlTable += "<td>%d</td>"%CurRowSum
         HtmlTable += "</tr>\n"
 
-    # append row with clumn sums    
+    # append row with column sums    
     if ColSums:
-        
-        SumRowSum = 0
-        
-        HtmlTable += "\t<tr>"        
-        for entry in Header: #@UnusedVariable
-            HtmlTable += "<td></td>"
-            
-        for weekno in ColumnSums.keys():
-            if ColumnSums[weekno] == 0:
-                HtmlTable += "<td>.</td>"                
-            else:
-                HtmlTable += "<td>%d</td>"%ColumnSums[weekno]
-            
-            # calculating the sum of columns also
-            SumRowSum += ColumnSums[weekno]
-            
-        if RowSums:
-            HtmlTable += "<td>%d</td>"%SumRowSum
-            
-        
-        HtmlTable += "</tr>\n"
+        HtmlTable += _CreateSumRow(RowSums, Header, ColumnSums)
 
     # table end    
     HtmlTable += "</table>\n"
