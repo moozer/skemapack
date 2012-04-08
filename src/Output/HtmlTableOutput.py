@@ -4,7 +4,7 @@ Created on 10 Feb 2012
 @author: moz
 '''
 from datetime import date, timedelta
-
+from operator import itemgetter
 
 def _CreateSumRow(RowSums, Header, ColumnSums):
     SumRowSum = 0
@@ -28,6 +28,7 @@ def _CreateSumRow(RowSums, Header, ColumnSums):
 
 
 def _PreprocessData(Weeksums):
+    ''' Extracts weekrange and sorts '''
     WeekRange = None
     Data = {}
     for Week in Weeksums: # get the range for week in data
@@ -40,13 +41,14 @@ def _PreprocessData(Weeksums):
         if WeekDate < WeekRange[0]:
             WeekRange[0] = WeekDate
         # process for same Class-Subject combo.
-        #DataStr = "%s-%s"%(Week['Class'], Week['Subject'])
         DataStr = Week['Class'], Week['Subject']
         if not DataStr in Data.keys():
             Data[DataStr] = []
         Data[DataStr].append(Week)
     
-    return WeekRange, Data
+    SortedData = sorted( Weeksums, key=itemgetter("Class", "Subject", "Year", "Week") )
+    
+    return WeekRange, SortedData
 
 def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
@@ -81,47 +83,64 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
     HtmlTable += "</tr>\n"
 
     # output content
-    for Entry in Data.keys():
-        CurEntry = Data[Entry]
+    LastEntry = ""
+    CurRowSum = 0
+
+    for CurEntry in Data:
         
-        # new row
-        CurRowSum = 0
-        HtmlTable += "\t<tr>"
+        for Id in Header:
+            try:
+                if CurEntry[Id] == LastEntry[Id]:
+                    continue
+            except:
+                pass
+            
+            if LastEntry != "":
+                # end row
+                while CurWeek <= WeekRange[1]:
+                    HtmlTable += "<td>.</td>"
+                    CurWeek += timedelta(7)
+                
+                if RowSums:
+                    HtmlTable += "<td>%d</td>"%CurRowSum
+                HtmlTable += "</tr>\n"
         
-        # output class and subject
-        for text in Header:
-            HtmlTable += "<td>%s</td>"%CurEntry[0][text]
+            # new row
+            CurRowSum = 0
+            CurWeek = WeekRange[0]
+            HtmlTable += "\t<tr>"
+            
+            # output class and subject
+            for text in Header:
+                HtmlTable += "<td>%s</td>"%CurEntry[text]
+            
+            break
     
         # loop through the week of current class+subject combination (the DataStr from above)
-        CurWeek = WeekRange[0]
-        EntryCounter = 0
         while CurWeek <= WeekRange[1]:
-            # are we looking at a week of the last of current lessons?
-            if EntryCounter >= len(CurEntry):
-                HtmlTable += "<td>.</td>"
-                CurWeek += timedelta(7) # add 7 days
-                continue
-            
             Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
-            if      (CurEntry[EntryCounter]['Year'] == Year) \
-                and (CurEntry[EntryCounter]['Week'] == Week):
-                HtmlTable += "<td>%d</td>"%CurEntry[EntryCounter]['LessonCount']
-                
+            if      (CurEntry['Year'] == Year) \
+                and (CurEntry['Week'] == Week):
+                HtmlTable += "<td>%d</td>"%CurEntry['LessonCount']
+            
                 # updating row sums
-                CurRowSum += CurEntry[EntryCounter]['LessonCount']
+                CurRowSum += CurEntry['LessonCount']
 
                 # updating column sums
-                ColumnSums[Week] += CurEntry[EntryCounter]['LessonCount']
+                ColumnSums[Week] += CurEntry['LessonCount']
+                
+                LastEntry = CurEntry
+                CurWeek += timedelta(7) # add 7 days
 
-                EntryCounter += 1
+                break
             else:
                 HtmlTable += "<td>.</td>"
             CurWeek += timedelta(7) # add 7 days
         
-        # end row
-        if RowSums:
-            HtmlTable += "<td>%d</td>"%CurRowSum
-        HtmlTable += "</tr>\n"
+    # end row
+    if RowSums:
+        HtmlTable += "<td>%d</td>"%CurRowSum
+    HtmlTable += "</tr>\n"
 
     # append row with column sums    
     if ColSums:

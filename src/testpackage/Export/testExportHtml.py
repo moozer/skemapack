@@ -21,6 +21,14 @@ WeeksumData = [{'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class':
              {'Week': 35, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
              {'Week': 35, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}]
 
+WeeksumDataUnsorted = [
+             {'Week': 34, 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}, 
+             {'Week': 35, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
+            {'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
+             {'Week': 35, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}
+             ]
+
+
 ExportHtmlSemesterOutput = "ExportHtmlSemester.html"
 ExportHtmlSemesterKnownResult = "KnownExportHtmlSemester.html"
 
@@ -45,14 +53,23 @@ class Test(unittest.TestCase):
         self.assertTrue( filecmp.cmp(ExportHtmlOutputfile, ExportHtmlKnownResult) )
         pass
     
+    #@unittest.skip("reenable me")
     def testCompleteSemesterFail(self):
         ''' ExportHtml : recreate error running exporthtml on real semester dataset '''
         ws, config = ImportFile( self.myConfig, "ImportFileSemester" ) #@UnusedVariable
         ExportHtml( ws, self.myConfig, "ExportHtmlSemester") 
         self.assertTrue( filecmp.cmp(ExportHtmlSemesterOutput, ExportHtmlSemesterKnownResult) )
         
+    #@unittest.skip("reenable me")
     def testTableWithBothSums(self):
+        ''' ExportHtml : Export to html with both row and column sums '''
         ExportHtml( WeeksumData, self.myConfig, ConfigSet = 'ExportHtmlWithSums' ) 
+        self.assertTrue( filecmp.cmp(ExportHtmlOutputfile, ExportHtmlWithSumsKnownResult) )
+        pass
+        
+    def testTableExportWithUnsortedData(self):
+        ''' ExportHtml : Export to html of unsorted data '''
+        ExportHtml( WeeksumDataUnsorted, self.myConfig, ConfigSet = 'ExportHtmlWithSums' ) 
         self.assertTrue( filecmp.cmp(ExportHtmlOutputfile, ExportHtmlWithSumsKnownResult) )
         pass
         
