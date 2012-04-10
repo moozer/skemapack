@@ -41,13 +41,16 @@ def ExportHtml( Weeksums, config, ConfigSet = "ExportHtml"):
     f.write( Header )
 
     # get flags
-    # TODO: add flag support to 
-#    IncludeHeader = config.get( ConfigSet, 'HeaderSums' )
+    Headers = config.get( ConfigSet, 'GroupBy' )
     IncludeRowSums = config.getboolean( ConfigSet, 'RowSums' ) 
     IncludeColumnSums = config.getboolean( ConfigSet, 'ColumnSums' )
     
+    HeadersList = filter(lambda x: x.strip(), Headers.split(','))
+    
     # output all - filter elsewhere
-    Html = HtmlTableOutput( Weeksums, RowSums = IncludeRowSums, ColSums = IncludeColumnSums )
+    Html = HtmlTableOutput( Weeksums, 
+                            RowSums = IncludeRowSums, ColSums = IncludeColumnSums,
+                            Headers =  HeadersList )
 
     # save to html
     f.write( "<h2>Schedule showing all entries</h2><br />")
