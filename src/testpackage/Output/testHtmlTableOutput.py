@@ -8,10 +8,10 @@ from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Output.HtmlTableOutput import HtmlTableOutput
 
 WorkDir = 'ExportHtml'
-Weeksums = [{'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
-             {'Week': 34, 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}, 
-             {'Week': 35, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011}, 
-             {'Week': 35, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011}]
+Weeksums = [{'Week': 34, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
+             {'Week': 34, 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
+             {'Week': 35, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
+             {'Week': 35, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}]
 
 ResultHtml = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
@@ -36,6 +36,12 @@ ResultHtmlWithRowAndColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><t
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td><td>6</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td><td>8</td></tr>
 \t<tr><td></td><td></td><td>9</td><td>5</td><td>14</td></tr>
+</table>
+'''
+
+ResultHtmlWithTeacherClassSubject = '''<table>\n\t<tr><td>Teacher</td><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td></tr>
+\t<tr><td>mon</td><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
+\t<tr><td>mon</td><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 </table>
 '''
 
@@ -80,9 +86,15 @@ class Test(unittest.TestCase):
         Html = HtmlTableOutput( Weeksums, ColSums = True, RowSums = True )
         self.assertEqual( ResultHtmlWithRowAndColSums, Html )
         pass
+
+    def testTableWithTeacherClassSubject(self):
+        ''' HtmlTableOutput : table with teacher, class, and subject columns '''
+        Html = HtmlTableOutput( Weeksums, ColSums = False, RowSums = False, Headers=["Teacher", "Class", "Subject"] )
+        self.assertEqual( ResultHtmlWithTeacherClassSubject, Html )
+        pass
+  
   
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
-  
-    
+ 

@@ -50,21 +50,21 @@ def _PreprocessData(Weeksums):
     
     return WeekRange, SortedData
 
-def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
+def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Class", "Subject"] ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
         
     WeekRange, Data = _PreprocessData(Weeksums)
 
     # output header line
     # TODO: Header = ("Class", "Teacher", "Course")
-    Header = ("Class", "Subject")
+    #Header = ("Class", "Subject")
     
     # table start
     HtmlTable = "<table>\n"
     
     # header output
     HtmlTable += "\t<tr>"
-    for text in Header:
+    for text in Headers:
         HtmlTable += "<td>%s</td>"%text
 
     # output weeks in header row.
@@ -88,7 +88,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
 
     for CurEntry in Data:
         
-        for Id in Header:
+        for Id in Headers:
             try:
                 if CurEntry[Id] == LastEntry[Id]:
                     continue
@@ -111,7 +111,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
             HtmlTable += "\t<tr>"
             
             # output class and subject
-            for text in Header:
+            for text in Headers:
                 HtmlTable += "<td>%s</td>"%CurEntry[text]
             
             break
@@ -144,7 +144,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False ):
 
     # append row with column sums    
     if ColSums:
-        HtmlTable += _CreateSumRow(RowSums, Header, ColumnSums)
+        HtmlTable += _CreateSumRow(RowSums, Headers, ColumnSums)
 
     # table end    
     HtmlTable += "</table>\n"
