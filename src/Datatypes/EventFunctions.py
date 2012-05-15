@@ -128,6 +128,6 @@ def AdToWeeksum( Ad ):
         WsBase['Year'] = 2012
         WsBase['Week'] = WeekNo
         WsBase['LessonCount'] = Ad.getLessons(WeekNo)
-        WsList.append( WsBase )
+        WsList.append( WsBase.copy() )
     return WsList
     
