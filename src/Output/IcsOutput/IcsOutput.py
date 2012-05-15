@@ -23,7 +23,7 @@
 # import icalendar or die (with some help)
 try:
 	from icalendar import Event, Calendar
-except:
+except: 
 	print "Icalendar import error"
 	print "Get the module from http://codespeak.net/icalendar/"
 	exit()
