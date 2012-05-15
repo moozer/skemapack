@@ -77,7 +77,9 @@ event.add('priority', 5)
 			# print "Event added", App
 		
 	def GetIcsString( self ):
-		return self.cal.as_string()
+		# iCalendar changed API (Im using the git master/HEAD 2012-5-13)
+		# The output was also changed slightly -> knownResult file has been changed as well
+		return self.cal.to_ical()
 
 def main():
 	from datetime import datetime
