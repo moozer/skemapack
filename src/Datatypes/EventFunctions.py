@@ -95,7 +95,7 @@ def WriteEvents( events, config, ConfigSet  ):
 ## ------ weeksum stuff below
 def MakeWeeksumText( Weeksum, DateFormat ):
     EventText = {   'Year':         int(Weeksum['Year']),
-                    'Week':         int(Weeksum['Week']),
+                    'Week':         Weeksum['Week'],
                     'LessonCount':  int(Weeksum['LessonCount']),
                     'Class':        Weeksum['Class'],
                     'Subject':      Weeksum['Subject'],

@@ -7,13 +7,20 @@ Created on Nov 6, 2010
 '''
 import csv, os
 from Datatypes.ActivityData import ActivityData
+import datetime
+
+# took this function from : http://stackoverflow.com/questions/396913/in-python-how-do-i-find-the-date-of-the-first-monday-of-a-given-week
+def first_monday(year, week):
+    d = datetime.date(year, 1, 4)  # The Jan 4th must be in week 1  according to ISO
+    return d + datetime.timedelta(weeks=(week-1), days=-d.weekday())
+
 
 class TfCsvImport():
     '''
     Import TF data from csv file 
     '''
 
-    def __init__( self, CsvInputFilename, CsvDelimiter = "\t"):
+    def __init__( self, CsvInputFilename, CsvDelimiter = "\t", StartYear = 1999):
         '''
         @param CsvInputFilename The file to retrieve data from.
         '''
@@ -29,6 +36,7 @@ class TfCsvImport():
         self._EndClassKeywords = [u"I ALT", u"I  ALT"]
         self._CsvDelimiter = CsvDelimiter
         self._LinenoWithWeekinfo = 2
+        self._StartYear = int(StartYear)
         
         self._InitSearchParams()
  
@@ -204,8 +212,8 @@ class TfCsvImport():
                         # enforce increasing week numbers
                         if not int(cell) > LastWeekNo:
                             return
-                                                                                                
-                        self._WeekNoByColumn[int(cell)] = ColumnNo
+                                                                                               
+                        self._WeekNoByColumn[first_monday(self._StartYear, int(cell)).strftime( "%Y-%m-%d" )] = ColumnNo
                         QuitOnNextError = True
                     except( ValueError ):
                         if QuitOnNextError:
