@@ -52,7 +52,7 @@ def ReadString(InputText, DateFormat = "%Y-%m-%d"):
     elif len( EventDict) == NumEntriesInWeeksum:
         Ws = { 
              'Year':        int(EventDict['Year']),
-             'Week':        int(EventDict['Week']),
+             'Week':        EventDict['Week'],
              'LessonCount': int(EventDict['LessonCount']),
              'Class':       EventDict['Class'],
              'Subject':     EventDict['Subject'],

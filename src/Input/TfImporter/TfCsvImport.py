@@ -37,6 +37,7 @@ class TfCsvImport():
         self._CsvDelimiter = CsvDelimiter
         self._LinenoWithWeekinfo = 2
         self._StartYear = int(StartYear)
+        self._NewYear = 0
         
         self._InitSearchParams()
  
@@ -211,9 +212,9 @@ class TfCsvImport():
                     try:
                         # enforce increasing week numbers
                         if not int(cell) > LastWeekNo:
-                            return
-                                                                                               
-                        self._WeekNoByColumn[first_monday(self._StartYear, int(cell)).strftime( "%Y-%m-%d" )] = ColumnNo
+                            self._NewYear += 1
+                        LastWeekNo = int(cell)                                                                     
+                        self._WeekNoByColumn[first_monday(self._StartYear+self._NewYear, int(cell)).strftime( "%Y-%m-%d" )] = ColumnNo
                         QuitOnNextError = True
                     except( ValueError ):
                         if QuitOnNextError:

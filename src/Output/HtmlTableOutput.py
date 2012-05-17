@@ -5,6 +5,7 @@ Created on 10 Feb 2012
 '''
 from datetime import date, timedelta
 from operator import itemgetter
+import datetime
 
 def _CreateSumRow(RowSums, Header, ColumnSums):
     SumRowSum = 0
@@ -33,7 +34,8 @@ def _PreprocessData(Weeksums):
     Data = {}
     for Week in Weeksums: # get the range for week in data
         # dec 31th is never week 1. jan 1st might be.
-        WeekDate = date(Week['Year'] - 1, 12, 31) + timedelta(7 * Week['Week'])
+        #WeekDate = date(Week['Year'] - 1, 12, 31) + timedelta(7 * Week['Week'])
+        WeekDate = Week['Week']
         if not WeekRange:
             WeekRange = [WeekDate, WeekDate]
         if WeekDate > WeekRange[1]:
@@ -69,8 +71,10 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
 
     # output weeks in header row.
     ColumnSums = {}
-    CurWeek = WeekRange[0]
-    while CurWeek <= WeekRange[1]:
+    #CurWeek = WeekRange[0]
+    CurWeek = datetime.datetime.strptime(WeekRange[0], "%Y-%m-%d" ).date()
+    #print(CurWeek)
+    while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
         Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
         HtmlTable += "<td class=\"WeekHeader\">%d-%d</td>"%(Year, Week)
         ColumnSums[Week] = 0
@@ -97,7 +101,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
             
             if LastEntry != "":
                 # end row
-                while CurWeek <= WeekRange[1]:
+                while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
                     HtmlTable += "<td>.</td>"
                     CurWeek += timedelta(7)
                 
@@ -107,7 +111,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
         
             # new row
             CurRowSum = 0
-            CurWeek = WeekRange[0]
+            CurWeek = datetime.datetime.strptime(WeekRange[0], "%Y-%m-%d" ).date()
             HtmlTable += "\t<tr>"
             
             # output class and subject
@@ -117,10 +121,10 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
             break
     
         # loop through the week of current class+subject combination (the DataStr from above)
-        while CurWeek <= WeekRange[1]:
+        while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
             Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
             if      (CurEntry['Year'] == Year) \
-                and (CurEntry['Week'] == Week):
+                and (datetime.datetime.strptime(CurEntry['Week'], "%Y-%m-%d" ).date() == CurWeek):
                 HtmlTable += "<td>%d</td>"%CurEntry['LessonCount']
             
                 # updating row sums
