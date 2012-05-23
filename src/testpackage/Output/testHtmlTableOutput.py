@@ -19,26 +19,30 @@ Weeksums2Years = [{'Week': '2013-01-07', 'LessonCount': 5, 'Subject': 'IT Securi
              {'Week': '2012-12-17', 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2012, 'Teacher': 'mon'}]
 
 
-ResultHtml = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td></tr>
+ResultHtml = '''<table>
+\t<tr><td>Class</td><td>Subject</td><td class="WeekHeader">2011-32</td><td class="WeekHeader">2011-33</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 </table>
 '''
 
-ResultHtmlWithRowSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td><td>Sum</td></tr>
+ResultHtmlWithRowSums = '''<table>
+\t<tr><td>Class</td><td>Subject</td><td class="WeekHeader">2011-32</td><td class="WeekHeader">2011-33</td><td>Sum</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td><td>6</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td><td>8</td></tr>
 </table>
 '''
 
-ResultHtmlWithColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td></tr>
+ResultHtmlWithColSums = '''<table>
+\t<tr><td>Class</td><td>Subject</td><td class="WeekHeader">2011-32</td><td class="WeekHeader">2011-33</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 \t<tr><td></td><td></td><td>9</td><td>5</td></tr>
 </table>
 '''
 
-ResultHtmlWithRowAndColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td><td>Sum</td></tr>
+ResultHtmlWithRowAndColSums = '''<table>
+\t<tr><td>Class</td><td>Subject</td><td class="WeekHeader">2011-32</td><td class="WeekHeader">2011-33</td><td>Sum</td></tr>
 \t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td><td>6</td></tr>
 \t<tr><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td><td>8</td></tr>
 \t<tr><td></td><td></td><td>9</td><td>5</td><td>14</td></tr>
@@ -46,14 +50,10 @@ ResultHtmlWithRowAndColSums = '''<table>\n\t<tr><td>Class</td><td>Subject</td><t
 '''
 
 ResultHtmlWithRowAndColSums2Years = '''<table>
- <tr><td>Class</td><td>Subject</td><td class="WeekHeader">2012-51</td><td class="WeekHeader"
-  >2012-52</td><td class="WeekHeader">2013-1</td><td class="WeekHeader">2013-
-  2</td><td>Sum</td></tr>
- <tr><td>11OIT3bH2</td><td>Adv. networking</td><td>2</td><td>.</td><td>.
-  </td><td>4</td><td>6</td></tr>
- <tr><td>11OIT3bH2</td><td>IT Security</td><td>3</td><td>.</td><td>.
-  </td><td>5</td><td>8</td></tr>
- <tr><td></td><td></td><td>5</td><td></td>.<td>.</td><td>9</td><td>14</td></tr>
+\t<tr><td>Class</td><td>Subject</td><td class="WeekHeader">2012-51</td><td class="WeekHeader">2012-52</td><td class="WeekHeader">2013-1</td><td class="WeekHeader">2013-2</td><td>Sum</td></tr>
+\t<tr><td>11OIT3bH2</td><td>Adv. networking</td><td>2</td><td>.</td><td>.</td><td>4</td><td>6</td></tr>
+\t<tr><td>11OIT3bH2</td><td>IT Security</td><td>3</td><td>.</td><td>.</td><td>5</td><td>8</td></tr>
+\t<tr><td></td><td></td><td>5</td><td>.</td><td>.</td><td>9</td><td>14</td></tr>
 </table>
 '''
 
@@ -61,7 +61,8 @@ ResultHtmlWithRowAndColSums2Years = '''<table>
 
 
 
-ResultHtmlWithTeacherClassSubject = '''<table>\n\t<tr><td>Teacher</td><td>Class</td><td>Subject</td><td class=\"WeekHeader\">2011-34</td><td class=\"WeekHeader\">2011-35</td></tr>
+ResultHtmlWithTeacherClassSubject = '''<table>
+\t<tr><td>Teacher</td><td>Class</td><td>Subject</td><td class="WeekHeader">2011-32</td><td class="WeekHeader">2011-33</td></tr>
 \t<tr><td>mon</td><td>11OIT3bH2</td><td>Adv. networking</td><td>4</td><td>2</td></tr>
 \t<tr><td>mon</td><td>11OIT3bH2</td><td>IT Security</td><td>5</td><td>3</td></tr>
 </table>
