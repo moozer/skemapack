@@ -77,7 +77,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
     while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
         Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
         HtmlTable += "<td class=\"WeekHeader\">%d-%d</td>"%(Year, Week)
-        ColumnSums[Week] = 0
+        ColumnSums[str(Year)+str(Week)] = 0
         CurWeek += timedelta(7) # add 7 days
     
     # Row sums, if applicable
@@ -131,7 +131,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
                 CurRowSum += CurEntry['LessonCount']
 
                 # updating column sums
-                ColumnSums[Week] += CurEntry['LessonCount']
+                ColumnSums[str(Year)+str(Week)] += CurEntry['LessonCount']
                 
                 LastEntry = CurEntry
                 CurWeek += timedelta(7) # add 7 days
