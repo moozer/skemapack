@@ -13,7 +13,7 @@ def _CreateSumRow(RowSums, Header, ColumnSums):
     for entry in Header: #@UnusedVariable
         HtmlTable += "<td></td>"
     
-    for weekno in ColumnSums.keys():
+    for weekno in sorted(ColumnSums.keys()):
         if ColumnSums[weekno] == 0:
             HtmlTable += "<td>.</td>"
         else:
@@ -123,10 +123,9 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
         # loop through the week of current class+subject combination (the DataStr from above)
         while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
             Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
-            if      (CurEntry['Year'] == Year) \
-                and (datetime.datetime.strptime(CurEntry['Week'], "%Y-%m-%d" ).date() == CurWeek):
+            if (datetime.datetime.strptime(CurEntry['Week'], "%Y-%m-%d" ).date() == CurWeek):
                 HtmlTable += "<td>%d</td>"%CurEntry['LessonCount']
-            
+                #todo: remove Year form weeksums entries - it is no longer needed since weeks are based on date of mondays
                 # updating row sums
                 CurRowSum += CurEntry['LessonCount']
 
@@ -140,6 +139,11 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
             else:
                 HtmlTable += "<td>.</td>"
             CurWeek += timedelta(7) # add 7 days
+    
+    # this loop will add empty spaced to the last subject
+    while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
+        HtmlTable += "<td>.</td>"
+        CurWeek += timedelta(7) # add 7 days
         
     # end row
     if RowSums:
