@@ -9,6 +9,8 @@ import schedule from sde skema with config from MyConf.cfg,
 convert from event to weekly sums
 and output as HTML
 
+
+
 TODO: 
 ImportTf TF2012A.cfg | ExportHtml
 should take the tf and output it as html as defined in the cfg file
