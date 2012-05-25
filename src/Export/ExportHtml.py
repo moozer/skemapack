@@ -66,10 +66,8 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         cfgfile = open( sys.argv[1] )
         config = SkemaPackConfig( cfgfile )
-        sys.stderr.write( "ExportHtml : config file is %s\n"%cfgfile.name)
     else:
         config = None
-        sys.stderr.write( "ExportHtml : config file is %s\n"%"<stdin>")
 
 
 #    # 1) read config/parameter
