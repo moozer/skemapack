@@ -20,7 +20,7 @@ ImportTfZipCfgFilename = "ImportTf.cfg"
 #
 #ZipDataDir = "ziptemp/"
 TfKnownResultLength = 321
-TfKnownResultFirstEntry = {'Week': '2012-08-27', 'Class': u'1. Sem A Elektronik', 
+TfKnownResultFirstEntry = {'Week': 35, 'Class': u'1. Sem A Elektronik', 
                            'LessonCount': 9, 'Year': 2012, 
                            'Teacher': u'Teacher1', 'Subject': u'Subject A1'} 
 
@@ -41,7 +41,6 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
-    @unittest.skip("reenable me")
     def testBasicConstruction(self):
         ''' ImportTf : simple TF construction test '''
         events, config = ImportTf( self.myConfig ) #@UnusedVariable
@@ -49,7 +48,6 @@ class Test(unittest.TestCase):
         self.assertEqual( events[0],TfKnownResultFirstEntry  )
         pass
 
-    @unittest.skip("reenable me")
     def testResultExportable(self):
         ''' ImportTf : test if result is readable by ExportFile '''
         events, config = ImportTf( self.myConfig )
@@ -57,7 +55,7 @@ class Test(unittest.TestCase):
 
     
     def testNoDuplicates(self):
-        ''' ImportTf : simple TF construction test '''
+        ''' ImportTf : Check if two events in succession are the same'''
         events, config = ImportTf( self.myConfig ) #@UnusedVariable
         
         oldevent = {}

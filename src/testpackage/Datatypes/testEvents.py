@@ -7,7 +7,7 @@ import unittest
 from Datatypes.ActivityData import ActivityData
 from Datatypes.EventFunctions import AdToWeeksum
 
-Ad = ActivityData( 'Teacher1', 'Class1', 'Course1', { 35: 9 } )
+Ad = ActivityData( 'Teacher1', 'Class1', 'Course1', { "2012-35": 9 } )
 EventResult = [{'Class': 'Class1',
    'LessonCount': 9,
    'Subject': 'Course1',

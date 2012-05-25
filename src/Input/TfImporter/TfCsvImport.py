@@ -214,7 +214,7 @@ class TfCsvImport():
                         if not int(cell) > LastWeekNo:
                             self._NewYear += 1
                         LastWeekNo = int(cell)                                                                     
-                        self._WeekNoByColumn[first_monday(self._StartYear+self._NewYear, int(cell)).strftime( "%Y-%m-%d" )] = ColumnNo
+                        self._WeekNoByColumn["%s-%s"%(self._StartYear,LastWeekNo)] = ColumnNo
                         QuitOnNextError = True
                     except( ValueError ):
                         if QuitOnNextError:
