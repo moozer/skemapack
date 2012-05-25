@@ -42,17 +42,26 @@ Teacher1Initials = 'Teacher 7'
 #                    ]
 Teacher1Classes = [ ActivityData( LessonsList = {'2012-39': 4, '2012-43': 10, '2012-41': 8, '2012-40': 6}, 
                     Course = 'Subject H1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
-                    ActivityData( LessonsList = {1: 4, 2: 4, 3: 4, 44: 4, 45: 4, 46: 4, 47: 4, 48: 4, 49: 4, 50: 4},
+                    ActivityData( LessonsList = {'2012-1': 4, '2012-2': 4, '2012-3': 4, 
+                                                 '2012-44': 4, '2012-45': 4, '2012-46': 4, 
+                                                 '2012-47': 4, '2012-48': 4, '2012-49': 4, 
+                                                 '2012-50': 4},
                     Course = 'Subject L1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
-                    ActivityData( LessonsList = {1: 8, 2: 8, 3: 8, 50: 4}, 
+                    ActivityData( LessonsList = {'2012-1': 8, '2012-2': 8, '2012-3': 8, 
+                                                 '2012-50': 4}, 
                     Course = 'Subject O1', Teacher = 'Teacher 7', Class = '1. Sem A Elektronik'),
-                    ActivityData( LessonsList = {40: 6, 41: 8, 39: 4}, 
+                    ActivityData( LessonsList = {'2012-40': 6, '2012-41': 8, '2012-39': 4}, 
                     Course = 'Subject D1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk'),
-                    ActivityData( LessonsList = {40: 8, 41: 8, 43: 8, 39: 4}, 
+                    ActivityData( LessonsList = {'2012-40': 8, '2012-41': 8, '2012-43': 8, 
+                                                 '2012-39': 4}, 
                     Course = 'Subject G1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk'),
-                    ActivityData( LessonsList = {36: 4, 37: 6, 38: 8, 39: 10}, 
+                    ActivityData( LessonsList = {'2012-36': 4, '2012-37': 6, '2012-38': 8, 
+                                                 '2012-39': 10}, 
                     Course = 'Subject H1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk'),
-                    ActivityData( LessonsList = {1: 8, 2: 8, 3: 8, 44: 6, 45: 6, 46: 6, 47: 6, 48: 8, 49: 8, 50: 8}, 
+                    ActivityData( LessonsList = {'2012-1': 8, '2012-2': 8, '2012-3': 8, 
+                                                 '2012-44': 6, '2012-45': 6, '2012-46': 6, 
+                                                 '2012-47': 6, '2012-48': 8, '2012-49': 8, 
+                                                 '2012-50': 8}, 
                     Course = 'Subject T1', Teacher = 'Teacher 7', Class = '1. Sem B Netværk')
                     ]
 Teacher1FirstClass = Teacher1Classes[0]
@@ -67,7 +76,7 @@ TeacherData = { 'Teacher2': {'FirstCourse': Teacher2FirstClass},
                'Teacher 7': {'FirstCourse': Teacher1FirstClass} }
 
 Class1Name = "1. Sem B Netværk"
-Class1FirstClass = ActivityData ( Course = 'Subject A1', LessonsList = {"2012-35": 9}, 
+Class1FirstClass = ActivityData ( Course = 'Subject A1', LessonsList = {"1999-35": 9}, 
                                 Teacher = 'Teacher 9', Class = '1. Sem B Netværk' )
 
 FirstActivityInFile = ActivityData( "Teacher1", "1. Sem A Elektronik", "Subject A1", {"1999-35": 9})
@@ -142,7 +151,8 @@ class Test(unittest.TestCase):
         tfi.EnableImportByTeacher(Teacher1Initials)        
             
         for i in range(0, len(Teacher1Classes )):
-            self.assertEqual( tfi.next(), Teacher1Classes[i], "entry #%d mismatch"%i )
+            ad = tfi.next()
+            self.assertEqual( ad, Teacher1Classes[i], "entry #%d mismatch"%i )
             
     def testGetDefaultMetadata(self):
         ''' TfImporter : test we have some base metadata '''
@@ -188,7 +198,8 @@ class Test(unittest.TestCase):
         ''' TfImporter : test the retrieval of the first entry (Class 1)'''
         tfi = TfCsvImport(TfInputCsvFile )
         tfi.EnableImportByClass(Class1Name)        
-        self.assertEqual( tfi.next(), Class1FirstClass )
+        ad = tfi.next()
+        self.assertEqual( ad, Class1FirstClass )
 
     def testGetNextEntryEverything(self):
         ''' TfImporter : test the retrieval of the first entry (Class 1)'''
