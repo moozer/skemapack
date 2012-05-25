@@ -52,7 +52,7 @@ def ReadString(InputText, DateFormat = "%Y-%m-%d"):
     elif len( EventDict) == NumEntriesInWeeksum:
         Ws = { 
              'Year':        int(EventDict['Year']),
-             'Week':        int(EventDict['Week']),
+             'Week':        EventDict['Week'],
              'LessonCount': int(EventDict['LessonCount']),
              'Class':       EventDict['Class'],
              'Subject':     EventDict['Subject'],
@@ -95,7 +95,7 @@ def WriteEvents( events, config, ConfigSet  ):
 ## ------ weeksum stuff below
 def MakeWeeksumText( Weeksum, DateFormat ):
     EventText = {   'Year':         int(Weeksum['Year']),
-                    'Week':         int(Weeksum['Week']),
+                    'Week':         Weeksum['Week'],
                     'LessonCount':  int(Weeksum['LessonCount']),
                     'Class':        Weeksum['Class'],
                     'Subject':      Weeksum['Subject'],
@@ -124,10 +124,11 @@ def AdToWeeksum( Ad ):
     WsList = []
     
     for WeekNo in Ad.getListOfWeeks():
-        sys.stderr.write( "Year is hardcoded to 2012\n" )
-        WsBase['Year'] = 2012
+        # sys.stderr.write( "Year is hardcoded to 2012\n" )
+        # todo: Year could be removed, but it might break stuff elsewhere...
+        WsBase['Year'] = int(WeekNo.split('-')[0])
         WsBase['Week'] = WeekNo
         WsBase['LessonCount'] = Ad.getLessons(WeekNo)
-        WsList.append( WsBase )
+        WsList.append( WsBase.copy() )
     return WsList
     

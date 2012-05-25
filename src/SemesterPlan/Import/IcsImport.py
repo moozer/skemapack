@@ -17,7 +17,7 @@ def IcsImport( IcsFileToUse ):
     f = open( IcsFileToUse, "r" )
     FileContent = f.read()
     
-    cal = Calendar.from_string(FileContent)
+    cal = Calendar.from_ical(FileContent)
     for event in cal.walk('vevent'):
         try:
             desc = event.decoded('description')

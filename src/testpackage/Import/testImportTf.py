@@ -20,7 +20,7 @@ ImportTfZipCfgFilename = "ImportTf.cfg"
 #
 #ZipDataDir = "ziptemp/"
 TfKnownResultLength = 321
-TfKnownResultFirstEntry = {'Week': 35, 'Class': u'1. Sem A Elektronik', 
+TfKnownResultFirstEntry = {'Week': '2012-08-27', 'Class': u'1. Sem A Elektronik', 
                            'LessonCount': 9, 'Year': 2012, 
                            'Teacher': u'Teacher1', 'Subject': u'Subject A1'} 
 

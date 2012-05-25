@@ -28,6 +28,7 @@ def ImportTf( config = None, ConfigSet = "ImportTf" ):
     CsvTempFilename = config.get( ConfigSet, "CsvFile" )
     SheetName = config.get( ConfigSet, "Sheetname" )
     Separator = config.get( ConfigSet, "CsvSeparator" ).decode("string_escape")
+    StartYear = config.get( ConfigSet, "Year" )
 
 
     # convert to csv
@@ -35,7 +36,7 @@ def ImportTf( config = None, ConfigSet = "ImportTf" ):
 
     # read csv file
     events = []
-    tfi = TfCsvImport(CsvTempFilename, Separator )
+    tfi = TfCsvImport(CsvTempFilename, Separator, StartYear )
     tfi.EnableImportAll()
     for Ad in tfi:
         NewEvents = AdToWeeksum( Ad )
