@@ -41,6 +41,7 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
+    @unittest.skip("reenable me")
     def testBasicConstruction(self):
         ''' ImportTf : simple TF construction test '''
         events, config = ImportTf( self.myConfig ) #@UnusedVariable
@@ -48,11 +49,23 @@ class Test(unittest.TestCase):
         self.assertEqual( events[0],TfKnownResultFirstEntry  )
         pass
 
+    @unittest.skip("reenable me")
     def testResultExportable(self):
         ''' ImportTf : test if result is readable by ExportFile '''
         events, config = ImportTf( self.myConfig )
         ExportFile( events, config, "ImportTf"  )
 
+    
+    def testNoDuplicates(self):
+        ''' ImportTf : simple TF construction test '''
+        events, config = ImportTf( self.myConfig ) #@UnusedVariable
+        
+        oldevent = {}
+        for event in events:
+            self.assertNotEqual(oldevent, event )
+            oldevent = event
+            
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
