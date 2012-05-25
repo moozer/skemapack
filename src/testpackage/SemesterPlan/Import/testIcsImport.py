@@ -30,17 +30,20 @@ class Test(unittest.TestCase):
         pass
 
 
+    @unittest.skip( "this part is currently unused")
     def testIcsImportBasicIteration(self):
         for entry in IcsImport( IcsFile ):
             self.assertEqual(True, True)
             print entry
         pass
 
+    @unittest.skip( "this part is currently unused")
     def testIcsImportFirstEntry(self):
         for entry in IcsImport( IcsFile ):
             self.assertEqual(entry, FirstEnry)
             break
         
+    @unittest.skip( "this part is currently unused")
     def testIcsImportBadFilename(self):
         try:
             for entry in IcsImport( BadIcsFilename ): #@UnusedVariable
