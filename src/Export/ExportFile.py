@@ -44,7 +44,8 @@ def ExportFile( Events, config = None, ConfigSet = "ExportFile" ):
         for event in Events:
             ws_str = MakeWeeksumString(event, DateFormat )
             #TODO: fix this proper
-            fp.write( ws_str.encode("Utf-8") )
+            #fp.write( ws_str.encode("Utf-8") )
+            fp.write( ws_str )
     
 
 

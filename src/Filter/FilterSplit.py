@@ -6,6 +6,10 @@ Created on 26 May 2012
 
 @author: moz
 '''
+from Configuration.SkemaPackConfig import SkemaPackConfig
+import sys
+from Import.ImportFile import ImportFile
+from Export.ExportFile import ExportFile
 
 def FilterSplit( Events, config = None, ConfigSet="FilterSplit" ):
     
@@ -19,3 +23,23 @@ def FilterSplit( Events, config = None, ConfigSet="FilterSplit" ):
     return res, config
 
 
+if __name__ == '__main__':
+        # initial vars
+    Module = "FilterSplit"
+    ConfigSet = "FilterSplit"
+    
+    # handle command line config file (if set)
+    if len(sys.argv) > 2:
+        config = SkemaPackConfig( sys.argv[1] )
+        sys.stderr.write( "%s : config file is %s\n"%(Module, config.name))
+    else:
+        config = None
+        sys.stderr.write( "%s : data and config from stdin\n"%Module)
+        
+    # import from file
+    Events, config = ImportFile( config, ConfigSet )
+    
+    Ws, config = FilterSplit( Events, config, ConfigSet )
+    
+    # output to file
+    ExportFile( Ws, config, ConfigSet )
