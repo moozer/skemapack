@@ -8,15 +8,15 @@ from testpackage.Utilities.SupportStuff import * #@UnusedWildImport
 from Output.HtmlTableOutput import HtmlTableOutput
 
 WorkDir = 'ExportHtml'
-Weeksums = [{'Week': '2011-08-11', 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
-             {'Week': '2011-08-11', 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
-             {'Week': '2011-08-18', 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
-             {'Week': '2011-08-18', 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}]
+Weeksums = [{'Week': 32, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
+             {'Week': 32, 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
+             {'Week': 33, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}, 
+             {'Week': 33, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2011, 'Teacher': 'mon'}]
 
-Weeksums2Years = [{'Week': '2013-01-07', 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2013, 'Teacher': 'mon'}, 
-             {'Week': '2013-01-07', 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2013, 'Teacher': 'mon'}, 
-             {'Week': '2012-12-17', 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2012, 'Teacher': 'mon'}, 
-             {'Week': '2012-12-17', 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2012, 'Teacher': 'mon'}]
+Weeksums2Years = [{'Week': 2, 'LessonCount': 5, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2013, 'Teacher': 'mon'}, 
+             {'Week': 2, 'LessonCount': 4, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2013, 'Teacher': 'mon'}, 
+             {'Week': 51, 'LessonCount': 3, 'Subject': 'IT Security', 'Class': '11OIT3bH2', 'Year': 2012, 'Teacher': 'mon'}, 
+             {'Week': 51, 'LessonCount': 2, 'Subject': 'Adv. networking', 'Class': '11OIT3bH2', 'Year': 2012, 'Teacher': 'mon'}]
 
 
 ResultHtml = '''<table>
