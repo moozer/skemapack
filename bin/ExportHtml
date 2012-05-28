@@ -7,7 +7,7 @@ Created on 10 Feb 2012
 @author: moz
 '''
 
-import sys
+import sys, codecs
 from Configuration.SkemaPackConfig import SkemaPackConfig
 from Import.ImportFile import ImportFile
 from Output.HtmlTableOutput import HtmlTableOutput
@@ -37,7 +37,7 @@ def ExportHtml( Weeksums, config, ConfigSet = "ExportHtml"):
     # open output file.
     Outfile = config.get( ConfigSet, 'OutFile' )
     
-    f = open(Outfile, "w")
+    f = codecs.open(Outfile, 'w', 'utf-8')
     f.write( Header )
 
     # get flags
