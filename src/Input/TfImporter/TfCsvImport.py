@@ -55,7 +55,8 @@ class TfCsvImport():
         self._CurrentTeacher = ""
         self._CurrentCourse = ""
         self._WeekNoByColumn = {}
-        
+        self._NewYear = 0
+     
 # --- get/set functions --
     def GetCsvFilename( self ):
         ''' returns the csv file specified for input '''
@@ -214,7 +215,7 @@ class TfCsvImport():
                         if not int(cell) > LastWeekNo:
                             self._NewYear += 1
                         LastWeekNo = int(cell)                                                                     
-                        self._WeekNoByColumn["%s-%s"%(self._StartYear,LastWeekNo)] = ColumnNo
+                        self._WeekNoByColumn["%s-%s"%(self._StartYear+self._NewYear,LastWeekNo)] = ColumnNo
                         QuitOnNextError = True
                     except( ValueError ):
                         if QuitOnNextError:
