@@ -45,28 +45,9 @@ def ExportFile( Events, config = None, ConfigSet = "ExportFile" ):
         # is this a weeksum?
         for event in Events:
             ws_str = MakeWeeksumString(event, DateFormat )
-            #TODO: fix this proper
-            #fp.write( ws_str.encode("Utf-8") )
-            fp.write( ws_str )
-    
-
-
-
-
-#if __name__ == '__main__':
-#
-#    if len(sys.argv) > 2:
-#        cfgfile = sys.argv[1]
-#    else:
-#        cfgfile = SkemaPackConfig_stdin()
-#
-##    # 1) read config/parameter
-#    config = SkemaPackConfig( cfgfile )
-#    ConfigSet = "SkemaScraper"
-#
-#    # 3) import from skema
-#    Events = ImportFile( config, ConfigSet )
-#    
-#    # 4) output all events to stdout
-#    print config # placed here to allow config to be changed...
-#    WriteEvents( Events, config, ConfigSet )
+            #.encode("Utf-8")
+            try:
+                fp.write( ws_str )
+            except UnicodeDecodeError:
+                sys.stderr.write( "Unicode error on line: %s"%ws_str)
+            

@@ -10,6 +10,7 @@ from Datatypes.EventFunctions import ReadString
 from Configuration.SkemaPackConfig import SkemaPackConfig, SkemaPackConfig_stdin_eal
 import sys
 from Export.ExportFile import ExportFile
+import codecs
 
 def ImportFile( config = None, ConfigSet = "ImportFile" ):
     '''
@@ -32,7 +33,7 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
       
     # read data from file or net
     if not config.has_option(ConfigSet, "Infile"):
-        FileToUse = sys.stdin
+        FileToUse = codecs.getreader('utf8')(sys.stdin)
     else:
         FileToUse = open( config.get(ConfigSet, "Infile") )
 
