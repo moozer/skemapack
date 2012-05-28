@@ -26,6 +26,11 @@ KnownFilteredWeeksums = [
     {'Week': 35, 'Class': '11OIT3bH2', 'LessonCount': 2, 'Year': 2011, 'Teacher': 'mon2', 'Subject': 'Adv. networking'} 
     ]   
 
+KnownPeriodicFilteredWeeksums = [
+    {'Week': 35, 'Class': '11OIT3bH2', 'LessonCount': 2, 'Year': 2011, 'Teacher': 'mon2', 'Subject': 'Adv. networking'}, 
+    {'Week': 35, 'Class': '11OIT3bH2', 'LessonCount': 3, 'Year': 2011, 'Teacher': 'mon3', 'Subject': 'IT Security'}
+    ]
+
 class Test(unittest.TestCase):
     
     def setUp(self):
@@ -58,6 +63,19 @@ class Test(unittest.TestCase):
         self.assertEqual(FilteredWeeksums, KnownFilteredWeeksums )
         pass
 
+    def testNoFiltering(self):
+        events, config = ImportFile( self.myConfig, ConfigSet = "ImportFileWeeksums" )
+        FilteredWeeksums, config = FilterSplit( events, config, ConfigSet="NoFilter" )
+        
+        self.assertEqual(FilteredWeeksums, events )
+        pass
+
+    def testPeriodFiltering(self):
+        events, config = ImportFile( self.myConfig, ConfigSet = "ImportFileWeeksums" )
+        FilteredWeeksums, config = FilterSplit( events, config, ConfigSet="FilterOnPeriod" )
+        
+        self.assertEqual(FilteredWeeksums, KnownPeriodicFilteredWeeksums )
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
