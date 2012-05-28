@@ -23,7 +23,9 @@ def ExportFile( Events, config = None, ConfigSet = "ExportFile" ):
         if config.has_option(ConfigSet, "Outfile"):
             fp = codecs.open(config.get(ConfigSet, "Outfile"), 'w', 'utf-8')
         else:
-            fp = sys.stdout
+            # handling utf-8 issues
+            # see: http://stackoverflow.com/questions/492483/setting-the-correct-encoding-when-piping-stdout-in-python
+            fp = codecs.getwriter('utf8')(sys.stdout)
 
         # read data from file or net
         if not config.has_option(ConfigSet, "OutputDateformat"):

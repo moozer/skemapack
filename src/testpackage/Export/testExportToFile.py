@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 '''
 Created on 28 Jan 2012
 
@@ -55,6 +58,14 @@ class Test(unittest.TestCase):
         ''' ExportFile : test if exportfile can handle weeksums '''
         ExportFile(ImportFileTestDataSum, self.myConfig )
         self.assertTrue( filecmp.cmp( ExportfileResultFile, ExportFileWeeksumKnownResult, shallow=False ) )
+        pass
+    
+    def testReadWriteSpecialChars(self):
+        ''' ExportFile : test if exportfile can handle æøå '''
+        myConfig = SkemaPackConfig( open( "testSpecialChars.cfg" ) )
+        Events, config = ImportFile( myConfig, ConfigSet = "ImportSpecialChars" ) #@UnusedVariable
+        ExportFile(Events, myConfig, ConfigSet = "ExportSpecialChars" )
+        #self.assertTrue( filecmp.cmp( ExportfileResultFile, ExportFileWeeksumKnownResult, shallow=False ) )
         pass
 
 if __name__ == "__main__":
