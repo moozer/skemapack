@@ -12,6 +12,7 @@ from Export.ExportFile import ExportFile
 from zipfile import ZipFile
 from Configuration.SkemaPackConfig import SkemaPackConfig_stdin
 from Import.ImportTf import ImportTf
+import re
 
 
 def ImportTfZip( config = None, ConfigSet = "ImportTfZip" ):
@@ -36,6 +37,11 @@ def ImportTfZip( config = None, ConfigSet = "ImportTfZip" ):
     for DataFile in zf.namelist():    
         config.set( ImportTfSection, "InFile", "%s/%s"%(ZipDataDir, DataFile) )
         config.set( ImportTfSection, "CsvFile", "%s/%s.%s.%s"%(ZipDataDir, DataFile,SheetName,u'csv') )
+
+        m = re.findall( "[0-9]{4}", DataFile )
+        if m:
+            config.set( ImportTfSection, "Year", m[0] )
+        
         try:
             events, config = ImportTf( config, ImportTfSection )
             AllEvents += events

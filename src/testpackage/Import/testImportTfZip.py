@@ -37,7 +37,6 @@ class Test(unittest.TestCase):
         os.chdir(self._StartDir )
         pass
 
-    @unittest.skip( "temp skipping - reenable me!" )
     def testBasicUnzip(self):
         ''' ImportTfZip : simple unzip a check content '''
         events, config = ImportTfZip( self.myConfig, "ImportTfZip" ) #@UnusedVariable
