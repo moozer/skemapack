@@ -31,10 +31,8 @@ if __name__ == '__main__':
     # handle command line config file (if set)
     if len(sys.argv) > 2:
         config = SkemaPackConfig( sys.argv[1] )
-        sys.stderr.write( "%s : config file is %s\n"%(Module, config.name))
     else:
         config = None
-        sys.stderr.write( "%s : data and config from stdin\n"%Module)
         
     # import from file
     Events, config = ImportFile( config, ConfigSet )
