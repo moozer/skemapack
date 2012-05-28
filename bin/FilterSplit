@@ -14,8 +14,13 @@ from Export.ExportFile import ExportFile
 def FilterSplit( Events, config = None, ConfigSet="FilterSplit" ):
     
     Teacher = config.get(ConfigSet, "Teacher")
-    StartWeek = [int(x) for x in config.get(ConfigSet, "StartWeek").split("-") ]
-    EndWeek = [int(x) for x in config.get(ConfigSet, "EndWeek").split("-") ]
+
+    StartWeekText = config.get(ConfigSet, "StartWeek")
+    if StartWeekText != "":
+        StartWeek = [int(x) for x in StartWeekText.split("-") ]
+    EndWeekText = config.get(ConfigSet, "EndWeek")
+    if EndWeekText != "":
+        EndWeek = [int(x) for x in EndWeekText.split("-") ]
     
     res = []
     for e in Events:
@@ -25,13 +30,13 @@ def FilterSplit( Events, config = None, ConfigSet="FilterSplit" ):
                 continue
 
         # handling period
-        if len( StartWeek ) == 2:
+        if StartWeekText != "":
             if (e['Year'] < StartWeek[0]):
                 continue
             if (e['Year'] == StartWeek[0]) and (e['Week'] < StartWeek[1]):
                 continue
             
-        if len( EndWeek ) == 2:
+        if EndWeekText != "":
             if (e['Year'] > EndWeek[0]):
                 continue
             if (e['Year'] == EndWeek[0]) and (e['Week'] > EndWeek[1]):
