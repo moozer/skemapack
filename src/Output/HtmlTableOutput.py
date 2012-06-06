@@ -56,6 +56,9 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
         
     WeekRange, Data = _PreprocessData(Weeksums)
 
+    if not WeekRange:
+        return "No data"
+
     # output header line
     # TODO: Header = ("Class", "Teacher", "Course")
     #Header = ("Class", "Subject")

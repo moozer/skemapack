@@ -80,6 +80,9 @@ class Test(unittest.TestCase):
         self.assertTrue( filecmp.cmp(ExportHtmlOutputfile, ExportHtmlWithTeacherKnownResult) )
         pass
         
+    def testExportOfNoData(self):
+        ExportHtml( [], self.myConfig, ConfigSet = 'ExportHtmlWithTeacher' ) 
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
