@@ -1,8 +1,10 @@
-#Sun Feb 05 00:21:47 CET 2012
+#Fri Jun 29 00:48:25 CEST 2012
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
 eclipse.preferences.version=1
+encoding//bin/ExportFile=UTF-8
+encoding//bin/ExportHtml=UTF-8
 encoding//src/Configuration/__init__.py=utf-8
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
