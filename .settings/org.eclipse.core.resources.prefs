@@ -1,4 +1,4 @@
-#Fri Jun 29 00:48:25 CEST 2012
+#Sun Aug 12 21:13:03 CEST 2012
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
@@ -6,9 +6,15 @@ eclipse.preferences.version=1
 encoding//bin/ExportFile=UTF-8
 encoding//bin/ExportHtml=UTF-8
 encoding//src/Configuration/__init__.py=utf-8
+encoding//src/Export/ExportFile.py=UTF-8
+encoding//src/Export/ExportHtml.py=UTF-8
+encoding//src/Export/ExportIcs.py=UTF-8
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
+encoding//src/Input/TfImporter/TfCsvImport.py=UTF-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
 encoding//src/Output/TableOutput/__init__.py=utf-8
 encoding//src/Utilities/HtmlToIcs.py=UTF-8
+encoding//src/testpackage/Export/testExportToFile.py=UTF-8
 encoding//src/testpackage/Input/testHtmlScraper/TestSdeSkemaScraper.py=utf-8
+encoding//src/testpackage/Input/testTfImporter/testTfImporter.py=UTF-8
 encoding//src/testpackage/Output/testTableOutput/testTableOutput.py=utf-8

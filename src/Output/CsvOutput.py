@@ -1,11 +1,11 @@
 '''
-Created on 10 Feb 2012
+Created on Aug 12, 2012
 
 @author: moz
 '''
+
 from datetime import date, timedelta
 from operator import itemgetter
-#import datetime
 
 def _CreateSumRow(RowSums, Header, ColumnSums):
     SumRowSum = 0
@@ -51,7 +51,7 @@ def _PreprocessData(Weeksums):
     
     return WeekRange, SortedData
 
-def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Class", "Subject"] ):
+def CsvOutput( Weeksums, Headers = ["Class", "Subject"] ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
         
     WeekRange, Data = _PreprocessData(Weeksums)
@@ -63,13 +63,12 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
     # TODO: Header = ("Class", "Teacher", "Course")
     #Header = ("Class", "Subject")
     
-    # table start
-    HtmlTable = "<table>\n"
-    
+    CsvList = []
+
     # header output
-    HtmlTable += "\t<tr>"
+    HeaderList = []
     for text in Headers:
-        HtmlTable += "<td>%s</td>"%text
+        HeaderList.append( text )
 
     # output weeks in header row.
     ColumnSums = {}
@@ -79,20 +78,18 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
     #while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
     while CurWeek <= WeekRange[1]:
         Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
-        HtmlTable += "<td class=\"WeekHeader\">%d-%d</td>"%(Year, Week)
+        HeaderList.append( u"%d-%d"%(Year, Week) )
         ColumnSums[str(Year)+str(Week)] = 0
         CurWeek += timedelta(7) # add 7 days
     
-    # Row sums, if applicable
-    if RowSums:
-        HtmlTable += "<td>Sum</td>"
-    
-    HtmlTable += "</tr>\n"
+    CsvList.append( HeaderList )
+
 
     # output content
     LastEntry = ""
     CurRowSum = 0
-
+    CurList = []
+    
     for CurEntry in Data:
         for Id in Headers:
             try:
@@ -104,22 +101,20 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
             if LastEntry != "":
                 # end row
                 while CurWeek <= WeekRange[1]:
-                    HtmlTable += "<td>.</td>"
+                    CurList.append( u'.' )
                     CurWeek += timedelta(7)
                 
-                if RowSums:
-                    HtmlTable += "<td>%d</td>"%CurRowSum
-                HtmlTable += "</tr>\n"
+                CsvList.append( CurList )
         
             # new row
             CurRowSum = 0
             #CurWeek = datetime.datetime.strptime(WeekRange[0], "%Y-%m-%d" ).date()
             CurWeek = WeekRange[0]
-            HtmlTable += "\t<tr>"
+            CurList = []
             
             # output class and subject
             for text in Headers:
-                HtmlTable += "<td>%s</td>"%CurEntry[text]
+                CurList.append( CurEntry[text] )
             
             break
     
@@ -129,7 +124,7 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
             Year, Week, Weekday = CurWeek.isocalendar() #@UnusedVariable
             #if (datetime.datetime.strptime(CurEntry['Week'], "%Y-%m-%d" ).date() == CurWeek):
             if (CurEntry['Week'] == Week):
-                HtmlTable += "<td>%d</td>"%CurEntry['LessonCount']
+                CurList.append( CurEntry['LessonCount'] )
                 #todo: remove Year form weeksums entries - it is no longer needed since weeks are based on date of mondays
                 # updating row sums
                 CurRowSum += CurEntry['LessonCount']
@@ -142,27 +137,17 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
 
                 break
             else:
-                HtmlTable += "<td>.</td>"
+                CurList.append( u'.' )
             CurWeek += timedelta(7) # add 7 days
     
     # this loop will add empty spaced to the last subject
     #while CurWeek <= datetime.datetime.strptime(WeekRange[1], "%Y-%m-%d" ).date():
     while CurWeek <= WeekRange[1]:
-        HtmlTable += "<td>.</td>"
+        CurList.append( u'.' )
         CurWeek += timedelta(7) # add 7 days
         
     # end row
-    if RowSums:
-        HtmlTable += "<td>%d</td>"%CurRowSum
-    HtmlTable += "</tr>\n"
-
-    # append row with column sums    
-    if ColSums:
-        HtmlTable += _CreateSumRow(RowSums, Headers, ColumnSums)
-
-    # table end    
-    HtmlTable += "</table>\n"
+    CsvList.append( CurList )
     
-    return HtmlTable
-
+    return CsvList
 
