@@ -89,6 +89,8 @@ class Test(unittest.TestCase):
     def testBasicTableoutput(self):
         ''' HtmlTableOutput : basic output '''
         Html = HtmlTableOutput( Weeksums )
+        print Html
+        print ResultHtml
         self.assertEqual( ResultHtml, Html )
         pass
     

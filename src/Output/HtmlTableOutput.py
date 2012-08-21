@@ -5,6 +5,7 @@ Created on 10 Feb 2012
 '''
 from datetime import date, timedelta
 from operator import itemgetter
+from Output.CsvOutput import CsvOutput
 #import datetime
 
 def _CreateSumRow(RowSums, Header, ColumnSums):
@@ -50,6 +51,7 @@ def _PreprocessData(Weeksums):
     SortedData = sorted( Weeksums, key=itemgetter("Class", "Subject", "Year", "Week") )
     
     return WeekRange, SortedData
+
 
 def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Class", "Subject"] ):
     ''' No filtering or sorting is done. Data is dumped as supplied '''
@@ -165,4 +167,20 @@ def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Cla
     
     return HtmlTable
 
+# WIP
+#def HtmlTableOutput( Weeksums, RowSums = False, ColSums = False, Headers = ["Class", "Subject"] ):
+#    CsvList = CsvOutput( Weeksums, Headers )
+#    
+#    HtmlTable = "<table>\n"
+#    
+#    for entry in CsvList:
+#        HtmlTable += "\t<tr>"
+#        for col in entry:
+#            HtmlTable += "<td>%s</td>"%col
+#        HtmlTable += "</tr>\n"
+#
+#    # table end    
+#    HtmlTable += "</table>\n"
+#    return HtmlTable
 
+        
