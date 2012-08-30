@@ -16,9 +16,10 @@ class htmlGetter(object):
     '''
 
 
-    def __init__(self):
+    def __init__(self, site = "skema.sde.dk"):
         ''' Initialisation
         '''
+        self._site = site
     
     def getSkemaWithPost(self, idx, weekStart=1, weekEnd=52, year=0):
         ''' Does a POST to get the skema for the person/room indicated by idx 
@@ -56,7 +57,8 @@ class htmlGetter(object):
         return self._params
         
     def _getInitialPage(self, idx ):
-        self._initialPage = urllib.urlopen('http://skema.sde.dk/laererSkema.aspx?idx=%i&lang=da-DK'%idx).read()
+        URL = 'http://%s/laererSkema.aspx?idx=%i&lang=da-DK'%(self._site, idx)
+        self._initialPage = urllib.urlopen( URL ).read()
         if self._initialPage.find( 'IndexOutOfRange' ) <> -1:
             raise IndexError   
         

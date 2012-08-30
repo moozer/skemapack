@@ -21,7 +21,7 @@ def ImportSdeSkema( config, ConfigSet = "SkemaScraper" ):
     if config.has_option(ConfigSet, "Infile"):
         Data = open(config.get(ConfigSet, "Infile")).read()
     else:
-        myLoader = loadWeb.htmlGetter()
+        myLoader = loadWeb.htmlGetter( config.get(ConfigSet, "Site") )
         Data = myLoader.getSkemaWithPost(config.get(ConfigSet, "TeacherId"), 
                                      config.get(ConfigSet, "FirstWeek"), 
                                      config.get(ConfigSet, "LastWeek"), 

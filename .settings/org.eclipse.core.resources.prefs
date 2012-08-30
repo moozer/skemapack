@@ -1,4 +1,4 @@
-#Sun Aug 12 21:13:03 CEST 2012
+#Tue Aug 21 21:52:12 CEST 2012
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
@@ -9,6 +9,7 @@ encoding//src/Configuration/__init__.py=utf-8
 encoding//src/Export/ExportFile.py=UTF-8
 encoding//src/Export/ExportHtml.py=UTF-8
 encoding//src/Export/ExportIcs.py=UTF-8
+encoding//src/Import/ImportSdeSkema.py=UTF-8
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
 encoding//src/Input/TfImporter/TfCsvImport.py=UTF-8
 encoding//src/Output/IcsOutput/IcsOutput.py=utf-8
