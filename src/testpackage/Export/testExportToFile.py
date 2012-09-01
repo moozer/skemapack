@@ -15,6 +15,7 @@ from testpackage.Import.testImportFile import ImportFileData, ImportFileWorkDir,
 import sys
 from testpackage.Utilities.TestdataSupport.WeeksumData import * 
 import filecmp
+import codecs
 # using the same vars as testImportFile
 
 ExportFileTestFileName = "teststdout.txt"
@@ -62,7 +63,7 @@ class Test(unittest.TestCase):
     
     def testReadWriteSpecialChars(self):
         ''' ExportFile : test if exportfile can handle æøå '''
-        myConfig = SkemaPackConfig( open( "testSpecialChars.cfg" ) )
+        myConfig = SkemaPackConfig( codecs.open( "testSpecialChars.cfg", 'r', 'utf-8' ) )
         Events, config = ImportFile( myConfig, ConfigSet = "ImportSpecialChars" ) #@UnusedVariable
         ExportFile(Events, myConfig, ConfigSet = "ExportSpecialChars" )
         #self.assertTrue( filecmp.cmp( ExportfileResultFile, ExportFileWeeksumKnownResult, shallow=False ) )

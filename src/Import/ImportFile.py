@@ -35,7 +35,8 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
     if not config.has_option(ConfigSet, "Infile"):
         FileToUse = codecs.getreader('utf8')(sys.stdin)
     else:
-        FileToUse = open( config.get(ConfigSet, "Infile") )
+        filename = str(config.get(ConfigSet, "Infile"))
+        FileToUse = codecs.open( filename, 'r', 'utf-8' )
 
     # read data from file or net
     if not config.has_option(ConfigSet, "InputDateformat"):
