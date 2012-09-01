@@ -1,6 +1,8 @@
 Howto/usage/notes/whatever file
 
-Working:
+Piping stuff Working:
+---------------------
+
 ImportSdeSkema MyConf.cfg | ExportToIcs
 import schedule from sde skema with config from MyConf.cfg and makes an ics from it.
 
@@ -9,6 +11,16 @@ import schedule from sde skema with config from MyConf.cfg,
 convert from event to weekly sums
 and output as HTML
 
+
+Utilities:
+----------
+UpdateIcs <config file>
+Intended to be used as a cron job.
+Fetches data from skema, and exports it as an .ics.
+If skema has changed, a dif dump is ouputtet also.
+
+ProcessTfZip <config file>
+Unzips the tf.zip file, processes the content and exports the result as html.
 
 
 TODO: 
