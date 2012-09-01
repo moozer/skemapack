@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 '''
 Created on Aug 16, 2012
 
@@ -10,6 +11,12 @@ import sys
 from Output.CsvOutput import CsvOutput
 import csv
 
+def Utf8Encode( col ):
+    try: # all sorts of text
+        return col.encode('utf8')
+    except AttributeError: # eg. integers
+        return col
+    
 def ExportCsv( Events, config, ConfigSet = "ExportCsv" ):
     ''' Configuration items needed are the same as for ReadEvent() 
         and 'OutputFile', 'InputFile'
@@ -28,8 +35,8 @@ def ExportCsv( Events, config, ConfigSet = "ExportCsv" ):
     
     CsvWriter = csv.writer( f, delimiter = d)
     for row in CsvList:
-        CsvWriter.writerow( row )
-        
+        CsvWriter.writerow( [Utf8Encode(col) for col in row] )
+            
     f.close()
     
 if __name__ == '__main__':

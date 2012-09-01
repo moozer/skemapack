@@ -8,12 +8,16 @@ import datetime
 import sys
 
 def LineParse( InputText ):
-    ''' basic cehck and split of line into elements '''
+    ''' basic check and split of line into elements '''
     if InputText[0] in ['#', '\n']:
         return None
 
+    # All text should be unicode.
+    # import should decode to unicode, and export should export (to utf-8) from unicode
+    text = unicode( InputText )
+
     EventDict = {}
-    for pair in InputText.split('; '):
+    for pair in text.split('; '):
         if pair[-1] == '\n':
             continue
         (key, value) = pair.split(': ', 1)

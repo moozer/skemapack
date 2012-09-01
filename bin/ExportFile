@@ -35,7 +35,7 @@ def ExportFile( Events, config = None, ConfigSet = "ExportFile" ):
 
     # outputting config first
     if config:
-        fp.write( str(config) ) 
+        fp.write( str(config).encode('utf-8') ) 
     
     try: # is this an event?
         # looping over events and outputting

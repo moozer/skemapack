@@ -1,4 +1,4 @@
-#Sat Sep 01 17:38:11 CEST 2012
+#Sat Sep 01 21:59:35 CEST 2012
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
@@ -7,9 +7,11 @@ encoding//bin/ExportFile=UTF-8
 encoding//bin/ExportHtml=UTF-8
 encoding//src/Configuration/SkemaPackConfig.py=UTF-8
 encoding//src/Configuration/__init__.py=utf-8
+encoding//src/Export/ExportCsv.py=UTF-8
 encoding//src/Export/ExportFile.py=UTF-8
 encoding//src/Export/ExportHtml.py=UTF-8
 encoding//src/Export/ExportIcs.py=UTF-8
+encoding//src/Import/ImportFile.py=UTF-8
 encoding//src/Import/ImportSdeSkema.py=UTF-8
 encoding//src/Input/HtmlScraper/SdeSkemaScraper.py=utf-8
 encoding//src/Input/TfImporter/TfCsvImport.py=UTF-8
@@ -22,7 +24,10 @@ encoding//src/Utilities/SkemaOnCron.py=UTF-8
 encoding//src/Utilities/SkemaToAppointments.py=UTF-8
 encoding//src/Utilities/SkemaToGmail.py=UTF-8
 encoding//src/Utilities/UpdateIcs.py=UTF-8
+encoding//src/dist/appname-100/Export/ExportFile.py=UTF-8
+encoding//src/testpackage/Export/testExportCsv.py=UTF-8
 encoding//src/testpackage/Export/testExportToFile.py=UTF-8
 encoding//src/testpackage/Input/testHtmlScraper/TestSdeSkemaScraper.py=utf-8
 encoding//src/testpackage/Input/testTfImporter/testTfImporter.py=UTF-8
 encoding//src/testpackage/Output/testTableOutput/testTableOutput.py=utf-8
+encoding//src/testpackage/Utilities/testdata/ImportFile/testSpecialChars.cfg=UTF-8
