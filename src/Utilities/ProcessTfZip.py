@@ -12,6 +12,7 @@ from Import.ImportTfZip import ImportTfZip
 from Export.ExportHtml import ExportHtml
 from Filter.FilterSplit import FilterSplit
 import sys, codecs
+from Export.ExportCsv import ExportCsv
 
 IndexHtmlText = '''
 <html>
@@ -41,6 +42,8 @@ LinksHtmlText = '''
 '''
 IndexHtmlFilename = "index.html"
 LinksHtmlFilename = "links.html"
+LinksCsvFilename = "CsvLinks.html"
+LinksCsvText = LinksHtmlText
 
 if __name__ == '__main__':
     # Read config/parameter
@@ -73,15 +76,22 @@ if __name__ == '__main__':
 
     
     ExportHtmlSection = "ExportHtml"
+    ExportCsvSection = "ExportCsv"
     FilterSplitSection = "FilterSplit"
     HtmlFilenameList = {}
+    CsvFilenameList = {}
     for Teacher in TeacherList.keys():
         print "Export to hmtl: %s "%Teacher
         config.set( ExportHtmlSection, "ClassName", "" )
+        config.set( ExportCsvSection, "ClassName", "" )
         config.set( "DEFAULT", "TeacherIni", Teacher )
         FilteredEvents, config = FilterSplit( events, config )
+    
         ExportHtml( FilteredEvents, config, ConfigSet = ExportHtmlSection )
         HtmlFilenameList[Teacher] = config.get( ExportHtmlSection, "Outfile")
+            
+        ExportCsv( FilteredEvents, config, ConfigSet = ExportCsvSection )
+        CsvFilenameList[Teacher] = config.get( ExportCsvSection, "Outfile")
     
 #    for ClassName in ClassList.keys():
 #        print "Export to hmtl: %s "%ClassName
@@ -97,11 +107,23 @@ if __name__ == '__main__':
     f = codecs.open(IndexHtmlFilename, 'w', 'utf-8')
     f.write(IndexHtmlText%LinksHtmlFilename )
     f.close( )
+
+    print "Output CSV index file: %s"%LinksCsvFilename
+    Links = ""
+    for filedesc in CsvFilenameList.keys():
+        Links += "<a href=\"%s\">%s</a><br/>\n"%(CsvFilenameList[filedesc], filedesc)
+        
+    f = codecs.open(LinksCsvFilename, 'w', 'utf-8')
+    f.write( LinksCsvText%Links )
+    f.close()
+    
     
     print "Output index file: %s"%LinksHtmlFilename
     Links = ""
     for filedesc in HtmlFilenameList.keys():
         Links += "<a href=\"%s\" target =\"showframe\">%s</a><br/>\n"%(HtmlFilenameList[filedesc], filedesc)
+    
+    Links += "<a href=\"%s\" target =\"showframe\">%s</a><br/>\n"%(LinksCsvFilename, "CSV files for Excel")
         
     f = codecs.open(LinksHtmlFilename, 'w', 'utf-8')
     f.write( LinksHtmlText%Links )
