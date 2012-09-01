@@ -35,9 +35,11 @@ def ImportFile( config = None, ConfigSet = "ImportFile" ):
     if not config.has_option(ConfigSet, "Infile"):
         FileToUse = codecs.getreader('utf8')(sys.stdin)
     else:
-        filename = str(config.get(ConfigSet, "Infile"))
-        FileToUse = codecs.open( filename, 'r', 'utf-8' )
-
+        filename = config.get(ConfigSet, "Infile")
+        try:
+            FileToUse = codecs.open( filename, 'r', 'utf-8' )
+        except UnicodeEncodeError:
+            raise ValueError( u"Illegal filename supplied: %s "%filename)
     # read data from file or net
     if not config.has_option(ConfigSet, "InputDateformat"):
         DateFormat = "%Y-%m-%d"

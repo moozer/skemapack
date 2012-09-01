@@ -69,6 +69,12 @@ class Test(unittest.TestCase):
         #self.assertTrue( filecmp.cmp( ExportfileResultFile, ExportFileWeeksumKnownResult, shallow=False ) )
         pass
 
+    def testFailOnSpecCharsInFilenames(self):
+        ''' ExportFile : test that export filename cannot handle æøå '''
+        myConfig = SkemaPackConfig( codecs.open( "testSpecialChars.cfg", 'r', 'utf-8' ) )
+        self.assertRaises(ValueError, ImportFile, myConfig, ConfigSet = "ImportBadFilename" )
+        pass
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
