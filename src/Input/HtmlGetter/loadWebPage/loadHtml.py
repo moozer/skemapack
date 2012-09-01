@@ -77,7 +77,7 @@ class htmlGetter(object):
     def _doPost(self, idx ):
         ''' Use the values from the Initial page to do a post and get the whole skema '''
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn = httplib.HTTPConnection('skema.sde.dk:80')
+        conn = httplib.HTTPConnection('%s:80'%self._site)
         conn.request("POST", "/laererSkema.aspx?idx=%i&amp;lang=da-DK"%idx, self._values, headers)
         self._postResult = conn.getresponse()
         
