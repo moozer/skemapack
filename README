@@ -26,3 +26,14 @@ and in Combined.cfg is the ordered list of the 3 txt files,
 which are to be merged
 and converted to HTML
 
+------
+
+Distributing
+
+We have a setup.py and doing 
+ python setup.py sdist
+ 
+ will make a tar.gz with the correct files in it.
+ 
+ 
+

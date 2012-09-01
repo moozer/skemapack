@@ -12,6 +12,7 @@ from Output.TableOutput.TableOutput import TableOutput
 
 TmpTableOutputFile = "temptable.html"
 
+@unittest.skip("DB is considered obsolete")
 class Test(unittest.TestCase):
     def setUp(self):
         CloneTestData() 

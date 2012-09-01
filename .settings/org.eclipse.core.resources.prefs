@@ -1,10 +1,11 @@
-#Tue Aug 21 21:52:12 CEST 2012
+#Sat Sep 01 17:17:35 CEST 2012
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
 eclipse.preferences.version=1
 encoding//bin/ExportFile=UTF-8
 encoding//bin/ExportHtml=UTF-8
+encoding//src/Configuration/SkemaPackConfig.py=UTF-8
 encoding//src/Configuration/__init__.py=utf-8
 encoding//src/Export/ExportFile.py=UTF-8
 encoding//src/Export/ExportHtml.py=UTF-8

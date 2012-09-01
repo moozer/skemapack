@@ -46,6 +46,7 @@ DalumDataAppointment_Week35 = [
 
 DalumUrl = "http://80.208.123.243/uge%2035/"
 
+@unittest.skip("Test of obsolete code")
 class Test(unittest.TestCase):
     def setUp(self):
         self._StartDir = os.getcwd()
